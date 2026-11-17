@@ -11,7 +11,7 @@ Es independiente del sitio: HTML estático + Supabase (base de datos, login e im
 5. **Project Settings > API**: copiar la URL y la clave *publishable/anon*. **No usar la clave secret/service_role.**
 
 ## 2. Configurar el panel
-Completar `supabase-config.js` con la URL, la clave anon, el email del cliente y la URL del sitio.
+Completar `supabase-config.js` con la URL, la clave anon, el email del cliente y la URL del sitio (la URL y la clave ya están cargadas). Después, ejecutar `seed.sql` una sola vez para cargar los datos actuales del sitio.
 
 ## 3. Publicar el panel
 Subirlo a Netlify o Vercel (este repositorio) en una dirección aparte del sitio, por ejemplo `panel.upsky.com.ar`. Tiene `noindex`: no aparece en buscadores.
