@@ -1,6 +1,6 @@
 -- UP SKY CMS · esquema de base de datos (Supabase / Postgres)
 -- Ejecutar completo en: Supabase > SQL Editor.
--- ANTES: reemplazar CAMBIAR_EMAIL por el email del usuario administrador (el mismo de supabase-config.js).
+-- El administrador es agustinorellanogomez@gmail.com (cuando entregue el cliente, cambiar el email acá y en supabase-config.js).
 
 create table if not exists public.items (
   id         uuid primary key default gen_random_uuid(),
@@ -15,7 +15,7 @@ create index if not exists items_section_position on public.items (section, posi
 alter table public.items enable row level security;
 
 create or replace function public.is_admin() returns boolean
-language sql stable as $$ select coalesce(auth.jwt() ->> 'email', '') = 'CAMBIAR_EMAIL' $$;
+language sql stable as $$ select coalesce(auth.jwt() ->> 'email', '') = 'agustinorellanogomez@gmail.com' $$;
 
 -- El sitio público (clave anon) solo puede LEER lo que está visible.
 drop policy if exists "lectura publica" on public.items;
