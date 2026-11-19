@@ -322,6 +322,38 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 .hx-empty{padding:2.4rem 1.4rem;text-align:center;color:var(--mut);border:1px dashed var(--div);border-radius:16px;background:var(--w)}
 .hx.loading .hx-list{opacity:.55}
 
+/* Equipo y acceso */
+.lg-forgot{background:none;border:0;color:var(--mut);font-size:.85rem;text-decoration:underline;justify-self:center;padding:.2rem}
+.lg-forgot:hover{color:var(--v)}
+.form-error.info{background:var(--okbg);color:var(--ok)}
+.me{font-size:.76rem;color:#b9b9c2;text-align:center;line-height:1.3;word-break:break-word}.me b{display:block;color:#fff;font-weight:600}
+.tm{display:grid;gap:1.2rem}
+.tm-count{display:flex;align-items:center;gap:.7rem;color:var(--mut);font-size:.9rem}
+.tm-dots{display:flex;gap:5px}.tm-dots i{width:10px;height:10px;border-radius:50%;background:var(--div)}.tm-dots i.on{background:var(--v)}
+.tm-list{display:grid;gap:.7rem}
+.tm-row{display:grid;grid-template-columns:44px 1fr auto;gap:1rem;align-items:center;background:var(--w);border:1px solid var(--div);border-radius:18px;padding:.9rem 1rem;box-shadow:var(--sh)}
+.tm-av{width:44px;height:44px;border-radius:50%;background:var(--v);color:#fff;display:grid;place-items:center;font:700 1.15rem var(--f-d)}
+.tm-row.sup .tm-av{background:#14141a}
+.tm-n{font-weight:600;display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}.tm-n small{display:block}
+.tm-e{display:block;color:var(--mut);font-size:.82rem;font-weight:400}
+.tm-pill{font:600 .66rem var(--f-u);border-radius:99px;padding:.15rem .55rem;background:var(--vs);color:var(--v)}
+.tm-pill.sup{background:var(--div);color:var(--mut)}
+.tm-actions{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.tm-actions select{border:1.5px solid var(--div);border-radius:99px;background:var(--w);padding:.45rem .9rem;font-weight:600;font-size:.85rem;width:auto}
+.tm-btn{border-radius:99px;border:1.5px solid var(--div);background:var(--w);padding:.45rem .9rem;font-weight:600;font-size:.82rem;color:var(--txt)}
+.tm-btn:hover{border-color:var(--v);color:var(--v);background:var(--vs)}
+.tm-btn.rm{color:var(--danger)}.tm-btn.rm:hover{border-color:var(--danger);background:var(--dangerbg);color:var(--danger)}
+.tm-invite{background:var(--w);border:1px solid var(--div);border-radius:20px;padding:1.3rem 1.4rem;box-shadow:var(--sh);display:grid;gap:1rem}
+.tm-invite h3{margin:0;font:600 1.1rem var(--f-u)}.tm-invite p{margin:0;color:var(--mut);font-size:.85rem}
+.tm-form{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.tm-form .full{grid-column:1/-1}
+.tm-form input{background:var(--bg);border:1.5px solid transparent;border-radius:14px;padding:.8rem .95rem;font-size:.98rem;color:var(--txt)}
+.tm-form input:focus{outline:0;background:var(--w);border-color:var(--v);box-shadow:0 0 0 4px rgba(236,31,122,.14)}
+.tm-pw{display:flex;gap:.5rem}.tm-pw input{flex:1;font-family:ui-monospace,Menlo,monospace}
+.tm-roles{font-size:.8rem;color:var(--mut);display:grid;gap:.2rem}.tm-roles b{color:var(--txt)}
+.sh-box{background:var(--bg);border-radius:14px;padding:.9rem 1rem;display:grid;gap:.7rem;margin-bottom:.8rem}
+.sh-box div{display:grid;gap:.1rem}.sh-box span{font-size:.72rem;color:var(--mut);text-transform:uppercase;letter-spacing:.08em}
+.sh-box b{font:600 1.05rem ui-monospace,Menlo,monospace;word-break:break-all}
+
 /* Mi plan */
 .nav-sep{margin-top:.7rem;border-top:1px solid rgba(255,255,255,.08);border-radius:0 0 12px 12px;padding-top:.95rem}
 .plan{display:grid;gap:1.2rem}
@@ -542,6 +574,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   .admin-nav.active::before{display:none}
   .pv-ev{grid-template-columns:56px 1fr}.pv-ev .ph{display:none}
   .stats{grid-template-columns:1fr 1fr}.cols{grid-template-columns:1fr}
+  .tm-row{grid-template-columns:40px 1fr}.tm-actions{grid-column:1/-1;justify-content:flex-start}.tm-form{grid-template-columns:1fr}
   .sx-tiles{grid-template-columns:1fr 1fr}.sx-grid{grid-template-columns:1fr}.sx-bar{grid-template-columns:1fr}.hx-row{grid-template-columns:36px 1fr}.hx-row .hx-undo{grid-column:2;justify-self:start}.hx-ic{width:36px;height:36px}
   .pl-current{grid-template-columns:1fr;gap:1rem;padding:1.3rem}.pl-grid{grid-template-columns:1fr}.pl-card{padding:1.4rem 1.2rem}
   .hgrid{grid-template-columns:1fr 1fr}.hc .tx b{font-size:.85rem}.hc .tx span{display:none}.stat{padding:.8rem}.stat b{font-size:1.5rem}.stat .ic{display:none}
@@ -571,10 +604,13 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       </header>
       <form id="login-form" class="lg-form">
         <h1>Hola de nuevo</h1>
-        <p>Ingresá tu contraseña para editar el contenido del sitio.</p>
+        <p>Ingresá con tu email y tu contraseña para editar el contenido del sitio.</p>
+        <label class="lg-field">Email
+          <span class="lg-pw"><input type="email" id="login-email" autocomplete="username" required placeholder="vos@empresa.com"></span>
+        </label>
         <label class="lg-field">Contraseña
           <span class="lg-pw">
-            <input type="password" id="login-pass" autocomplete="current-password" required autofocus placeholder="••••••••">
+            <input type="password" id="login-pass" autocomplete="current-password" required placeholder="••••••••">
             <button type="button" id="pw-toggle" aria-label="Mostrar contraseña" title="Mostrar contraseña">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
@@ -582,7 +618,25 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
         </label>
         <p class="form-error" id="login-error" role="alert" hidden></p>
         <button class="primary lg-btn" type="submit">Ingresar</button>
+        <button type="button" class="lg-forgot" id="forgot">¿Olvidaste tu contraseña?</button>
       </form>
+      <form id="setpw-form" class="lg-form" hidden>
+        <h1>Elegí tu contraseña</h1>
+        <p>Por seguridad, antes de entrar tenés que reemplazar la contraseña inicial por una tuya (mínimo 8 caracteres).</p>
+        <label class="lg-field">Contraseña nueva
+          <span class="lg-pw"><input type="password" id="setpw-1" autocomplete="new-password" required maxlength="72"></span>
+        </label>
+        <label class="lg-field">Repetila
+          <span class="lg-pw"><input type="password" id="setpw-2" autocomplete="new-password" required maxlength="72"></span>
+        </label>
+        <p class="form-error" id="setpw-error" role="alert" hidden></p>
+        <button class="primary lg-btn" type="submit">Guardar y entrar</button>
+      </form>
+      <div id="noaccess" class="lg-form" hidden>
+        <h1>Sin acceso</h1>
+        <p id="noaccess-msg"></p>
+        <button type="button" class="primary lg-btn" id="noaccess-out">Cerrar sesión</button>
+      </div>
       <footer class="lg-foot">© 2026 UP SKY Energy Drink</footer>
     </div>
   </div>
@@ -600,6 +654,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
         <span>Cada cambio que guardes se publica en la web.</span>
         <a class="site-btn" data-site href="#" target="_blank" rel="noopener">Ver sitio web ↗</a>
       </div>
+      <div class="me" id="me" hidden></div>
       <button type="button" id="logout" class="logout-btn">Cerrar sesión</button>
     </div>
   </aside>
@@ -649,6 +704,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     </section>
 
     <section id="plan" class="plan" hidden></section>
+    <section id="teamview" class="tm" hidden></section>
     <section id="sxview" class="sx" hidden></section>
     <section id="hist" class="hx" hidden></section>
 
@@ -725,6 +781,27 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   <div class="pv-stage" id="pv-stage"></div>
 </dialog>
 
+<dialog id="confirm-dialog">
+  <div class="confirm-body">
+    <h2 id="cf-title"></h2><p id="cf-text"></p>
+    <div class="dialog-actions"><button type="button" class="secondary" id="cf-no">Cancelar</button><button type="button" class="danger" id="cf-yes">Confirmar</button></div>
+  </div>
+</dialog>
+
+<dialog id="share-dialog">
+  <div class="confirm-body">
+    <h2 id="sh-title"></h2>
+    <p id="sh-sub" style="margin-bottom:.8rem"></p>
+    <div class="sh-box"><div><span>Email</span><b id="sh-email"></b></div><div><span>Contraseña inicial</span><b id="sh-pass"></b></div></div>
+    <p style="font-size:.82rem">Compartísela por WhatsApp o como prefieras. Al entrar, la persona va a tener que cambiarla por una propia.</p>
+    <div class="dialog-actions" style="flex-wrap:wrap">
+      <button type="button" class="secondary" id="sh-copy">Copiar mensaje</button>
+      <a class="primary" id="sh-wa" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block;border-radius:var(--r);padding:.6rem 1.1rem;font-weight:600">Enviar por WhatsApp</a>
+      <button type="button" class="secondary" id="sh-ok">Listo</button>
+    </div>
+  </div>
+</dialog>
+
 <dialog id="lightbox"><img alt="Vista ampliada"><button type="button" aria-label="Cerrar">×</button></dialog>
 
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
@@ -756,6 +833,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     cal:   svg('<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/>'),
     feed:  svg('<path d="M4 5h16M4 12h16M4 19h10"/>'),
     card:  svg('<rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 10h19M6.5 15h4"/>'),
+    users: svg('<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><path d="M16 4.6a3.5 3.5 0 010 6.8M18 14.5a6.5 6.5 0 013.5 5.5"/>'),
     tag:   svg('<path d="M3 12V4h8l10 10-8 8L3 12z"/><circle cx="8" cy="9" r="1.4"/>'),
     chart: svg('<path d="M4 20V11M10 20V4M16 20v-6M22 20H2"/>'),
     hist:  svg('<path d="M3 12a9 9 0 109-9 9 9 0 00-6.4 2.6L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/>'),
@@ -914,6 +992,11 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   const counts = {};
 
   // ── Arranque / login ────────────────────────────────────────────────────────
+  let me = null, recoveryMode = false;
+  const isAdmin = () => !!me && me.role === 'admin';
+  const ROLE_NAME = { admin: 'Administrador', editor: 'Editor' };
+  const show = id => ['#login-form', '#setpw-form', '#noaccess'].forEach(x => { $(x).hidden = x !== id; });
+
   async function init() {
     document.querySelectorAll('[data-site]').forEach(a => (a.href = CFG.siteUrl || '/'));
     if (!configured) {
@@ -921,15 +1004,38 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       $('#login-form').innerHTML = '<h1>Falta configurar</h1><p>Completá <code>supabase-config.js</code> con la URL y la clave de Supabase. Los pasos están en <code>README.md</code>.</p>';
       return;
     }
+    recoveryMode = /type=recovery/.test(location.hash); // el enlace de "olvidé mi contraseña" trae este marcador
     sb = supabase.createClient(CFG.url, CFG.anonKey);
-    const { data } = await sb.auth.getSession();
-    data.session ? showApp() : showLogin();
+    sb.auth.onAuthStateChange(ev => { if (ev === 'PASSWORD_RECOVERY') recoveryMode = true; });
+    afterAuth();
   }
 
-  function showLogin() { $('#app').hidden = true; $('#login').hidden = false; $('#login-pass').focus(); }
+  // Después de entrar: ¿está en el equipo? ¿tiene que cambiar la contraseña?
+  async function afterAuth() {
+    const { data } = await sb.auth.getSession(), session = data.session;
+    if (!session) return showLogin();
+    const { data: row, error } = await sb.from('team_members').select('email, role, name, is_support').eq('email', (session.user.email || '').toLowerCase()).maybeSingle();
+    if (error || !row) return showNoAccess(session.user.email);
+    me = row;
+    if (recoveryMode || session.user.user_metadata?.must_change) return showSetPassword();
+    showApp();
+  }
+
+  function showLogin() {
+    me = null; $('#app').hidden = true; $('#login').hidden = false; show('#login-form');
+    try { $('#login-email').value = localStorage.getItem('upsky-cms-email') || ''; } catch (e) {}
+    ($('#login-email').value ? $('#login-pass') : $('#login-email')).focus();
+  }
+  function showNoAccess(email) {
+    $('#app').hidden = true; $('#login').hidden = false; show('#noaccess');
+    $('#noaccess-msg').textContent = `La cuenta ${email || ''} todavía no tiene acceso al panel. Pedile a un administrador que te sume al equipo.`;
+  }
+  function showSetPassword() { $('#app').hidden = true; $('#login').hidden = false; show('#setpw-form'); $('#setpw-1').focus(); }
 
   async function showApp() {
     $('#login').hidden = true; $('#app').hidden = false;
+    $('#me').hidden = false; $('#me').innerHTML = `<b>${esc(me.name || me.email)}</b>${esc(ROLE_NAME[me.role] || '')}${me.is_support ? ' · Soporte' : ''}`;
+    if (!isAdmin() && (current === 'plan' || current === 'team')) current = 'inicio';
     buildNav();
     await Promise.all(Object.keys(SECTIONS).map(load));
     buildNav(); render();
@@ -938,19 +1044,43 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   $('#login-form').addEventListener('submit', async e => {
     e.preventDefault();
     if (!sb) return;
-    const err = $('#login-error'); err.hidden = true;
-    const { error } = await sb.auth.signInWithPassword({ email: CFG.adminEmail, password: $('#login-pass').value });
-    if (error) { err.textContent = 'Contraseña incorrecta.'; err.hidden = false; return; }
+    const err = $('#login-error'); err.hidden = true; err.classList.remove('info');
+    const email = $('#login-email').value.trim().toLowerCase();
+    const { error } = await sb.auth.signInWithPassword({ email, password: $('#login-pass').value });
+    if (error) { err.textContent = 'Email o contraseña incorrectos.'; err.hidden = false; return; }
+    try { localStorage.setItem('upsky-cms-email', email); } catch (e2) {}
     $('#login-pass').value = '';
-    showApp();
+    afterAuth();
+  });
+
+  $('#forgot').addEventListener('click', async () => {
+    const err = $('#login-error'), email = $('#login-email').value.trim().toLowerCase();
+    err.hidden = false; err.classList.add('info');
+    if (!email) { err.classList.remove('info'); err.textContent = 'Escribí tu email arriba y volvé a tocar “¿Olvidaste tu contraseña?”.'; return; }
+    await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname });
+    err.textContent = 'Si ese email tiene acceso, te enviamos un enlace para elegir una contraseña nueva. Si no llega, pedile a un administrador que te genere una.';
+  });
+
+  $('#setpw-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const err = $('#setpw-error'), a = $('#setpw-1').value, b = $('#setpw-2').value; err.hidden = true;
+    if (a.length < 8) { err.textContent = 'Tiene que tener al menos 8 caracteres.'; err.hidden = false; return; }
+    if (a !== b) { err.textContent = 'Las dos contraseñas no coinciden.'; err.hidden = false; return; }
+    const { error } = await sb.auth.updateUser({ password: a, data: { must_change: false } });
+    if (error) { err.textContent = 'No se pudo guardar: ' + error.message; err.hidden = false; return; }
+    recoveryMode = false; $('#setpw-1').value = $('#setpw-2').value = '';
+    try { history.replaceState(null, '', location.pathname); } catch (e2) {}
+    afterAuth();
   });
 
   $('#pw-toggle').addEventListener('click', () => {
-    const i = $('#login-pass'), show = i.type === 'password';
-    i.type = show ? 'text' : 'password';
-    $('#pw-toggle').setAttribute('aria-label', show ? 'Ocultar contraseña' : 'Mostrar contraseña');
+    const i = $('#login-pass'), show2 = i.type === 'password';
+    i.type = show2 ? 'text' : 'password';
+    $('#pw-toggle').setAttribute('aria-label', show2 ? 'Ocultar contraseña' : 'Mostrar contraseña');
   });
-  $('#logout').addEventListener('click', async () => { await sb.auth.signOut(); showLogin(); });
+  const signOut = async () => { await sb.auth.signOut(); showLogin(); };
+  $('#logout').addEventListener('click', signOut);
+  $('#noaccess-out').addEventListener('click', signOut);
 
   // ── Datos ───────────────────────────────────────────────────────────────────
   async function load(section) {
@@ -966,7 +1096,8 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
          ${s.icon}<span>${esc(s.label)}</span><span class="n">${counts[k] ?? ''}</span></button>`).join('') +
       `<button class="admin-nav nav-sep${current === 'stats' ? ' active' : ''}" data-view="stats" ${current === 'stats' ? 'aria-current="page"' : ''}>${ICON.chart}<span>Estadísticas</span></button>` +
       `<button class="admin-nav${current === 'hist' ? ' active' : ''}" data-view="hist" ${current === 'hist' ? 'aria-current="page"' : ''}>${ICON.hist}<span>Historial</span></button>` +
-      `<button class="admin-nav${current === 'plan' ? ' active' : ''}" data-view="plan" ${current === 'plan' ? 'aria-current="page"' : ''}>${ICON.card}<span>Mi plan</span></button>`;
+      (isAdmin() ? `<button class="admin-nav${current === 'team' ? ' active' : ''}" data-view="team" ${current === 'team' ? 'aria-current="page"' : ''}>${ICON.users}<span>Equipo</span></button>` +
+        `<button class="admin-nav${current === 'plan' ? ' active' : ''}" data-view="plan" ${current === 'plan' ? 'aria-current="page"' : ''}>${ICON.card}<span>Mi plan</span></button>` : '');
   }
 
   $('#nav').addEventListener('click', e => {
@@ -974,6 +1105,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     setView(b.dataset.view);
   });
   function setView(k) {
+    if ((k === 'plan' || k === 'team') && !isAdmin()) k = 'inicio'; // el Editor no gestiona equipo ni plan
     current = k; filter = 'todos'; query = ''; $('#search').value = '';
     document.querySelectorAll('[data-filter]').forEach(x => x.setAttribute('aria-pressed', x.dataset.filter === 'todos'));
     buildNav(); render(); window.scrollTo({ top: 0 });
@@ -987,13 +1119,14 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   $('#search').addEventListener('input', e => { query = tkey(e.target.value); render(); });
 
   function render() {
-    const VIEWS = { inicio: '#home', plan: '#plan', stats: '#sxview', hist: '#hist' };
+    const VIEWS = { inicio: '#home', plan: '#plan', stats: '#sxview', hist: '#hist', team: '#teamview' };
     Object.values(VIEWS).forEach(sel => { $(sel).hidden = sel !== VIEWS[current]; });
     $('#section-view').hidden = !!VIEWS[current];
     if (current === 'inicio') return renderHome();
     if (current === 'plan') return renderPlan();
     if (current === 'stats') return loadStats();
     if (current === 'hist') return loadHist();
+    if (current === 'team') return loadTeam();
     const S = SECTIONS[current];
     $('#view-title').textContent = S.label;
     $('#view-desc').textContent = S.desc;
@@ -1510,6 +1643,118 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     await refreshAll(); toast('Elemento restaurado');
   });
 
+  // ── Equipo del sitio (solo administradores) ─────────────────────────────────
+  const TEAM_LIMIT = 3;
+  let tm = { rows: null, loading: false, error: null, role: 'editor' };
+  const genPass = () => { const c = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = crypto.getRandomValues(new Uint32Array(12)); const t = Array.from(r, n => c[n % c.length]).join(''); return `${t.slice(0, 4)}-${t.slice(4, 8)}-${t.slice(8)}`; };
+
+  async function callTeam(body) {
+    const { data, error } = await sb.functions.invoke('team', { body });
+    if (error) {
+      let msg = 'No se pudo completar la acción.';
+      try { const j = await error.context.json(); msg = j.error || msg; } catch (e) { msg = error.message || msg; }
+      return { ok: false, error: msg };
+    }
+    return data || { ok: false, error: 'Respuesta vacía.' };
+  }
+
+  function askConfirm({ title, text, ok = 'Confirmar' }) {
+    return new Promise(res => {
+      const d = $('#confirm-dialog'); $('#cf-title').textContent = title; $('#cf-text').textContent = text; $('#cf-yes').textContent = ok;
+      const done = v => { d.close(); $('#cf-yes').onclick = $('#cf-no').onclick = null; res(v); };
+      $('#cf-yes').onclick = () => done(true); $('#cf-no').onclick = () => done(false); d.showModal();
+    });
+  }
+
+  function shareAccess({ title, sub, email, password, name }) {
+    $('#sh-title').textContent = title; $('#sh-sub').textContent = sub; $('#sh-email').textContent = email; $('#sh-pass').textContent = password;
+    const url = location.origin + location.pathname;
+    const msg = `Hola${name ? ' ' + name : ''}! Ya podés entrar al panel de UP SKY: ${url}\nEmail: ${email}\nContraseña inicial: ${password}\n(Te va a pedir que la cambies por una tuya al entrar.)`;
+    $('#sh-wa').href = 'https://wa.me/?text=' + encodeURIComponent(msg);
+    $('#sh-copy').onclick = async () => { try { await navigator.clipboard.writeText(msg); toast('Mensaje copiado'); } catch (e) { toast('No se pudo copiar; seleccionalo a mano.', true); } };
+    $('#sh-ok').onclick = () => $('#share-dialog').close();
+    $('#share-dialog').showModal();
+  }
+
+  async function loadTeam() {
+    tm.loading = true; renderTeam();
+    const { data, error } = await sb.from('team_members').select('*').order('created_at');
+    tm.loading = false; tm.error = error ? error.message : null; if (!error) tm.rows = data; renderTeam();
+  }
+
+  function renderTeam() {
+    const el = $('#teamview'), rows = tm.rows || [], count = rows.filter(r => !r.is_support).length, full = count >= TEAM_LIMIT;
+    el.className = 'tm' + (tm.loading ? ' loading' : '');
+    el.innerHTML = `
+      <header class="admin-top"><span class="top-label">PLAN CRECIMIENTO</span><h1>Equipo del sitio</h1><p>Quién puede entrar al panel y qué puede hacer. Solo para el contenido del sitio.</p></header>
+      <div class="tm-count"><span class="tm-dots">${Array.from({ length: TEAM_LIMIT }, (_, i) => `<i class="${i < count ? 'on' : ''}"></i>`).join('')}</span><span><b>${count} de ${TEAM_LIMIT}</b> personas${rows.some(r => r.is_support) ? ' · el acceso de soporte no cuenta' : ''}</span></div>
+      ${tm.error ? `<div class="hx-empty"><b>No se pudo cargar el equipo</b><br>${esc(tm.error)}</div>` : `
+      <div class="tm-list">${rows.map(r => {
+        const you = r.email === me.email, lock = r.is_support;
+        return `<article class="tm-row${lock ? ' sup' : ''}"><span class="tm-av">${esc((r.name || r.email)[0].toUpperCase())}</span>
+          <div class="tm-n"><span>${esc(r.name || r.email)}${you ? ' <span class="tm-pill">Vos</span>' : ''}${lock ? ' <span class="tm-pill sup">Soporte</span>' : ''}<small class="tm-e">${esc(r.email)}</small></span></div>
+          <div class="tm-actions">
+            <select data-role-of="${esc(r.email)}" aria-label="Rol de ${esc(r.email)}" ${lock || you ? 'disabled' : ''}><option value="editor"${r.role === 'editor' ? ' selected' : ''}>Editor</option><option value="admin"${r.role === 'admin' ? ' selected' : ''}>Administrador</option></select>
+            ${lock ? '' : `<button type="button" class="tm-btn" data-pw="${esc(r.email)}">Nueva contraseña</button>`}
+            ${lock || you ? '' : `<button type="button" class="tm-btn rm" data-rm="${esc(r.email)}">Quitar</button>`}
+          </div></article>`;
+      }).join('')}</div>
+      <div class="tm-invite">
+        <h3>Sumar a alguien</h3>
+        ${full ? `<p>El equipo ya tiene ${TEAM_LIMIT} personas, el máximo del plan. Para sumar a otra persona, primero quitá a alguien.</p>` : `
+        <p>Creás su acceso y le compartís la contraseña inicial. Al entrar, tiene que cambiarla.</p>
+        <form class="tm-form" id="tm-form">
+          <label class="fld">Email<input name="email" type="email" required maxlength="120" placeholder="persona@empresa.com" autocomplete="off"></label>
+          <label class="fld">Nombre (opcional)<input name="name" maxlength="60" placeholder="Julieta" autocomplete="off"></label>
+          <div class="fld full"><span class="fld-l">Rol</span><div class="segs" role="radiogroup" aria-label="Rol"><label class="seg-o"><input type="radio" name="role" value="editor" ${tm.role === 'editor' ? 'checked' : ''}><span>Editor</span></label><label class="seg-o"><input type="radio" name="role" value="admin" ${tm.role === 'admin' ? 'checked' : ''}><span>Administrador</span></label></div></div>
+          <div class="tm-roles full"><span><b>Editor:</b> edita contenido, imágenes y promociones; ve estadísticas e historial.</span><span><b>Administrador:</b> además gestiona el equipo y el plan.</span></div>
+          <label class="fld full">Contraseña inicial<span class="tm-pw"><input name="password" required minlength="8" maxlength="72" value="${esc(genPass())}" autocomplete="off"><button type="button" class="tm-btn" id="tm-gen">Generar otra</button></span></label>
+          <p class="form-error full" id="tm-error" role="alert" hidden></p>
+          <div class="full"><button class="primary pill" type="submit" id="tm-submit">Crear acceso</button></div>
+        </form>`}
+      </div>`}`;
+  }
+
+  $('#teamview').addEventListener('click', async e => {
+    if (e.target.closest('#tm-gen')) { $('#tm-form [name=password]').value = genPass(); return; }
+    const pw = e.target.closest('[data-pw]'), rm = e.target.closest('[data-rm]');
+    if (pw) {
+      const email = pw.dataset.pw, password = genPass();
+      if (!await askConfirm({ title: 'Nueva contraseña', text: `Se reemplaza la contraseña de ${email} por una nueva que vas a poder compartirle. La actual deja de servir.`, ok: 'Generar' })) return;
+      const r = await callTeam({ action: 'reset_password', email, password });
+      if (!r.ok) return toast(r.error, true);
+      const row = (tm.rows || []).find(x => x.email === email);
+      shareAccess({ title: 'Contraseña nueva', sub: 'Compartísela a la persona. Al entrar tiene que cambiarla.', email, password, name: row && row.name });
+    }
+    if (rm) {
+      const email = rm.dataset.rm;
+      if (!await askConfirm({ title: '¿Quitar del equipo?', text: `${email} deja de poder entrar al panel y se borra su cuenta. Lo que editó se conserva.`, ok: 'Quitar' })) return;
+      const r = await callTeam({ action: 'remove', email });
+      if (!r.ok) return toast(r.error, true);
+      toast('Quitado del equipo'); loadTeam();
+    }
+  });
+  $('#teamview').addEventListener('change', async e => {
+    const sel = e.target.closest('[data-role-of]'); if (sel) {
+      const { error } = await sb.from('team_members').update({ role: sel.value }).eq('email', sel.dataset.roleOf);
+      if (error) { toast(error.message, true); return loadTeam(); }
+      toast('Rol actualizado'); return loadTeam();
+    }
+    if (e.target.name === 'role') tm.role = e.target.value;
+  });
+  $('#teamview').addEventListener('submit', async e => {
+    if (e.target.id !== 'tm-form') return;
+    e.preventDefault();
+    const fd = new FormData(e.target), err = $('#tm-error'), btn = $('#tm-submit'); err.hidden = true; btn.disabled = true;
+    const body = { action: 'invite', email: String(fd.get('email')).trim().toLowerCase(), name: String(fd.get('name') || '').trim(), role: fd.get('role'), password: String(fd.get('password')) };
+    const r = await callTeam(body); btn.disabled = false;
+    if (!r.ok) { err.textContent = r.error; err.hidden = false; return; }
+    await loadTeam();
+    shareAccess(r.existed
+      ? { title: 'Acceso creado', sub: 'Esa persona ya tenía cuenta: entra con su contraseña de siempre.', email: body.email, password: '(la suya de siempre)', name: body.name }
+      : { title: 'Acceso creado', sub: 'Compartile estos datos. Al entrar tiene que cambiar la contraseña.', email: body.email, password: body.password, name: body.name });
+  });
+
   // ── Mi plan (suscripción) · DEMOSTRACIÓN: precios de ejemplo y estado simulado ──
   // Cuando se conecte Stripe, "estado" saldrá de la base y los botones abrirán Checkout / el portal.
   const PLAN_CFG = { currency: 'USD', locale: 'es-AR', annualDiscount: 0.15 };
@@ -1517,7 +1762,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     { id: 'basico', name: 'Básico', tag: 'El panel de contenido y el mantenimiento de tu sitio.', price: 100, features: [
       'Mantenimiento de la página web incluido', 'Editar Catálogo, Para negocios y Eventos', 'Subida de imágenes', 'Vista previa del sitio', '1 usuario administrador', 'Soporte por mail y WhatsApp'] },
     { id: 'crecimiento', name: 'Crecimiento', tag: 'Para medir resultados y crecer.', price: 200, hl: true, features: [
-      'Todo lo del Básico, más:', 'Estadísticas de visitas y clics', 'Publicación programada', 'Historial de cambios con deshacer', 'Promociones con fecha de inicio y fin', { t: 'Hasta 3 usuarios con roles', soon: true }] },
+      'Todo lo del Básico, más:', 'Estadísticas de visitas y clics', 'Publicación programada', 'Historial de cambios con deshacer', 'Promociones con fecha de inicio y fin', 'Hasta 3 usuarios con roles'] },
     { id: 'pro', name: 'Pro', tag: 'Para vender y gestionar pedidos.', price: 350, soon: true, features: [
       'Todo lo del Crecimiento, más:', 'Pedidos dentro del panel, con estados', 'Lista de precios por mayorista', 'Pago online en el sitio, con stock', 'Avisos automáticos de pedidos', 'Soporte prioritario e informe mensual'] },
   ];
@@ -1553,7 +1798,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
           <ul class="pl-feat">${pl.features.map((f, i) => { const t = f.t || f, soon = !!f.soon || pl.soon, head = i === 0 && pl.id !== 'basico'; return `<li${head ? ' class="all"' : ''}>${head ? '' : ICON.check}<span>${esc(t)}${soon && !head && !pl.soon ? ' <em class="pl-soon">Próximamente</em>' : ''}</span></li>`; }).join('')}</ul>
           <button type="button" class="pl-cta" data-choose="${pl.id}" ${isCur ? 'disabled' : ''}>${isCur ? 'Plan actual' : 'Elegir ' + esc(pl.name)}</button></article>`;
       }).join('')}</div>
-      <p class="pl-note">Crecimiento ya incluye estadísticas, publicación programada, historial y promociones; los usuarios con roles se suman próximamente. Las funciones de Pro se irán sumando.</p>
+      <p class="pl-note">Crecimiento ya incluye estadísticas, publicación programada, historial, promociones y hasta 3 usuarios con roles. Las funciones de Pro se irán sumando.</p>
       <div class="pl-hist"><h3>Historial de pagos</h3><div class="pl-empty">Todavía no hay pagos registrados. Cuando se conecte el cobro, acá vas a ver cada pago y su factura.</div></div>`;
   }
   $('#plan').addEventListener('click', e => {

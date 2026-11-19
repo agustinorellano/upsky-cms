@@ -30,3 +30,19 @@ Subirlo a Netlify o Vercel (este repositorio) en una dirección aparte del sitio
 | `eventos` | nombre, categoria, lugar, fecha, hora, etiquetas, descripcion, imagen_1 |
 
 El sitio lee con: `GET {URL}/rest/v1/items?section=eq.eventos&order=position` (cabecera `apikey` con la clave anon). Solo devuelve lo visible.
+
+
+## Equipo del sitio (usuarios con roles)
+
+Hasta **3 personas** pueden entrar al panel (el acceso de soporte de la agencia no cuenta). Dos roles, solo para el contenido del sitio:
+
+| Rol | Puede |
+|---|---|
+| **Administrador** | Todo, y además gestionar el equipo (sección *Equipo*) y ver *Mi plan*. |
+| **Editor** | Editar contenido, imágenes y promociones; ver estadísticas e historial. |
+
+- Quién puede entrar lo define la tabla `team_members` (`migrations/005_usuarios.sql`). Una cuenta de Supabase que no esté en esa lista no puede escribir nada.
+- El administrador crea el acceso desde **Equipo**: elige un email y una contraseña inicial, y se la comparte (WhatsApp o como prefiera). Al entrar, la persona tiene que cambiarla. No depende del correo de Supabase.
+- Las cuentas las crea la función `supabase/functions/team` (se despliega con `supabase functions deploy team`; la clave de servicio la pone la plataforma, no hay que cargarla). Solo la usa un administrador.
+- El límite de 3, el acceso de soporte y "siempre queda un administrador" los impone también la base de datos (trigger `team_guard`).
+- El login ahora pide **email y contraseña**. "¿Olvidaste tu contraseña?" envía un enlace; si el correo de Supabase no llega, un administrador puede generar una nueva desde *Equipo*.
