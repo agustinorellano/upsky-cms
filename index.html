@@ -53,9 +53,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--v)}
 /* Shell */
 .admin-shell{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
 .admin-sidebar{background:linear-gradient(180deg,#0a0a0c,#14101a);color:#fff;padding:1.25rem 1rem;display:flex;flex-direction:column;gap:1.5rem;position:sticky;top:0;height:100vh}
-.admin-brand{color:#fff;text-decoration:none;display:grid;justify-items:center;gap:.15rem;padding:.1rem 0 .9rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.admin-brand{color:#fff;text-decoration:none;display:grid;justify-items:center;gap:.15rem;padding:.1rem 0 1.1rem;border-bottom:1px solid rgba(255,255,255,.08)}
 .admin-brand img{width:84px;height:auto;display:block}
-.admin-brand small{font:600 .62rem var(--f-u);letter-spacing:.22em;opacity:.55}
+.admin-brand small{margin-top:.85rem;display:inline-flex;align-items:center;gap:.45rem;font:600 .62rem var(--f-u);letter-spacing:.2em;color:#d9d9e0;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);border-radius:99px;padding:.32rem .75rem .32rem .65rem}
+.admin-brand small::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--v);box-shadow:0 0 8px var(--v)}
 #nav{display:grid;gap:.25rem}
 .admin-nav{display:flex;align-items:center;gap:.65rem;background:transparent;border:0;color:#fff;padding:.7rem .75rem;border-radius:12px;text-align:left;opacity:.78;position:relative;transition:background .15s,opacity .15s}
 .admin-nav svg{width:18px;height:18px;flex:none}
