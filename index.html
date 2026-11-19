@@ -250,8 +250,72 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 .promo a{display:inline-block;background:var(--v);color:#fff;text-decoration:none;font-weight:600;padding:.5rem 1rem;border-radius:99px;font-size:.85rem}
 .side{display:grid;gap:1.1rem}
 
+/* Estados y programación */
+.status.st-programado{background:rgba(80,120,255,.14);color:#4468d8}
+:root[data-theme=dark] .status.st-programado{color:#8aa5ff}
+.status.st-oculto,.status.st-vencido{background:var(--div);color:var(--mut)}
+.chip.sch{background:rgba(80,120,255,.12);color:#4468d8;border-color:rgba(80,120,255,.3)}
+:root[data-theme=dark] .chip.sch{color:#8aa5ff}
+.more summary .chip{margin-left:.5rem;font-size:.7rem}
+
+/* Estadísticas */
+.sx{display:grid;gap:1.2rem}
+.sx-bar-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.sx-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.sx-tile{background:var(--w);border:1px solid var(--div);border-radius:18px;padding:1.1rem 1.2rem;box-shadow:var(--sh)}
+.sx-tile span{display:block;color:var(--mut);font-size:.85rem}
+.sx-tile b{display:block;font:700 2.2rem/1.1 var(--f-d);margin-top:.35rem;color:var(--ink)}
+.sx-tile small{color:var(--mut);font-size:.75rem}
+.sx-card{background:var(--w);border:1px solid var(--div);border-radius:20px;padding:1.2rem 1.3rem;box-shadow:var(--sh);position:relative}
+.sx-card h3{margin:0;font:600 1.05rem var(--f-u)}.sx-card .sub{margin:.15rem 0 .9rem;color:var(--mut);font-size:.82rem}
+.sx-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.sx-link{background:none;border:0;color:var(--v);font-weight:600;font-size:.82rem;padding:0}.sx-link:hover{text-decoration:underline}
+.sx-chart{position:relative;width:100%;touch-action:pan-y}
+.sx-chart svg{display:block;width:100%;height:auto;overflow:visible}
+.sx-chart svg:focus-visible{outline:2px solid var(--v);outline-offset:4px;border-radius:8px}
+.sx-chart text{fill:var(--mut);font:500 11px var(--f-u)}
+.sx-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.sx-bars{display:grid;gap:.55rem}
+.sx-bar{display:grid;grid-template-columns:minmax(90px,38%) 1fr;gap:.8rem;align-items:center;font-size:.85rem;border-radius:8px;padding:.15rem .2rem}
+.sx-bar:hover,.sx-bar:focus-visible{background:var(--bg);outline:0}
+.sx-bl{color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sx-bt{display:flex;align-items:center;gap:.5rem}
+.sx-bt i{display:block;height:14px;border-radius:0 4px 4px 0;background:var(--v);min-width:3px;transition:filter .15s}
+.sx-bar:hover .sx-bt i{filter:brightness(1.18)}
+.sx-bt b{font-weight:700;color:var(--txt);font-variant-numeric:tabular-nums}
+.sx-meter{height:10px;border-radius:99px;background:rgba(236,31,122,.16);overflow:hidden;margin:.6rem 0 .5rem}
+.sx-meter i{display:block;height:100%;background:var(--v);border-radius:99px}
+.sx-legend{display:flex;justify-content:space-between;font-size:.85rem;color:var(--txt)}.sx-legend span{color:var(--mut)}
+.sx-tip{position:absolute;z-index:6;pointer-events:none;background:var(--w);border:1px solid var(--div);border-radius:12px;box-shadow:var(--shh);padding:.5rem .7rem;font-size:.78rem;color:var(--mut);white-space:nowrap;transform:translate(-50%,-110%)}
+.sx-tip b{display:block;font:700 1.15rem var(--f-d);color:var(--txt)}
+.sx-tip i{display:inline-block;width:14px;height:2px;background:var(--v);vertical-align:middle;margin-right:.4rem;border-radius:2px}
+.sx-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.sx-table th,.sx-table td{padding:.45rem .6rem;text-align:left;border-bottom:1px solid var(--div)}.sx-table th{color:var(--mut);font-weight:600}
+.sx-table td:not(:first-child),.sx-table th:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
+.sx-scroll{max-height:290px;overflow:auto}
+.sx-empty{padding:2.2rem 1.4rem;text-align:center;color:var(--mut);border:1px dashed var(--div);border-radius:16px;background:var(--w)}
+.sx-empty b{display:block;color:var(--txt);margin-bottom:.3rem}
+.sx-note{font-size:.78rem;color:var(--mut);text-align:center;margin:0}
+.sx.loading .sx-card,.sx.loading .sx-tile{opacity:.55;transition:opacity .15s}
+
+/* Historial */
+.hx{display:grid;gap:1.1rem}
+.hx-list{display:grid;gap:.7rem}
+.hx-row{display:grid;grid-template-columns:44px 1fr auto;gap:1rem;align-items:center;background:var(--w);border:1px solid var(--div);border-radius:18px;padding:.9rem 1rem;box-shadow:var(--sh)}
+.hx-ic{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--vs);color:var(--v)}
+.hx-ic svg{width:20px;height:20px}
+.hx-ic.del{background:rgba(180,35,24,.12);color:var(--danger)}.hx-ic.ins{background:var(--okbg);color:var(--ok)}
+.hx-t{font-weight:600}.hx-t span{color:var(--mut);font-weight:400}
+.hx-m{font-size:.78rem;color:var(--mut);margin-top:.1rem}
+.hx-d{margin:.45rem 0 0;padding:0;list-style:none;display:grid;gap:.2rem;font-size:.82rem}
+.hx-d li{color:var(--mut)}.hx-d b{color:var(--txt);font-weight:600}.hx-d s{opacity:.7}
+.hx-undo{border-radius:99px;border:1.5px solid var(--div);background:var(--w);padding:.5rem 1rem;font-weight:600;font-size:.85rem;color:var(--txt);white-space:nowrap}
+.hx-undo:hover:not(:disabled){border-color:var(--v);color:var(--v);background:var(--vs)}.hx-undo:disabled{opacity:.5;cursor:default}
+.hx-empty{padding:2.4rem 1.4rem;text-align:center;color:var(--mut);border:1px dashed var(--div);border-radius:16px;background:var(--w)}
+.hx.loading .hx-list{opacity:.55}
+
 /* Mi plan */
-.nav-plan{margin-top:.7rem;border-top:1px solid rgba(255,255,255,.08);border-radius:0 0 12px 12px;padding-top:.95rem}
+.nav-sep{margin-top:.7rem;border-top:1px solid rgba(255,255,255,.08);border-radius:0 0 12px 12px;padding-top:.95rem}
 .plan{display:grid;gap:1.2rem}
 .pl-demo{background:var(--vs);color:var(--v);border:1px solid rgba(236,31,122,.25);border-radius:14px;padding:.7rem 1rem;font-size:.85rem;font-weight:600}
 .pl-current{display:grid;grid-template-columns:1.3fr 1fr auto;gap:1.4rem;align-items:center;border-radius:22px;color:#fff;padding:1.6rem 1.8rem;background:radial-gradient(34% 90% at 85% 40%,rgba(236,31,122,.38),transparent 100%),linear-gradient(115deg,#0a0a0c 35%,#1c0816 100%)}
@@ -470,6 +534,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   .admin-nav.active::before{display:none}
   .pv-ev{grid-template-columns:56px 1fr}.pv-ev .ph{display:none}
   .stats{grid-template-columns:1fr 1fr}.cols{grid-template-columns:1fr}
+  .sx-tiles{grid-template-columns:1fr 1fr}.sx-grid{grid-template-columns:1fr}.sx-bar{grid-template-columns:1fr}.hx-row{grid-template-columns:36px 1fr}.hx-row .hx-undo{grid-column:2;justify-self:start}.hx-ic{width:36px;height:36px}
   .pl-current{grid-template-columns:1fr;gap:1rem;padding:1.3rem}.pl-grid{grid-template-columns:1fr}.pl-card{padding:1.4rem 1.2rem}
   .hgrid{grid-template-columns:1fr 1fr}.hc .tx b{font-size:.85rem}.hc .tx span{display:none}.stat{padding:.8rem}.stat b{font-size:1.5rem}.stat .ic{display:none}
   .hero{padding:1.4rem}.hero h2{font-size:2rem}
@@ -576,6 +641,8 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     </section>
 
     <section id="plan" class="plan" hidden></section>
+    <section id="sxview" class="sx" hidden></section>
+    <section id="hist" class="hx" hidden></section>
 
     <div id="section-view">
     <header class="admin-top">
@@ -681,6 +748,8 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     cal:   svg('<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/>'),
     feed:  svg('<path d="M4 5h16M4 12h16M4 19h10"/>'),
     card:  svg('<rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 10h19M6.5 15h4"/>'),
+    chart: svg('<path d="M4 20V11M10 20V4M16 20v-6M22 20H2"/>'),
+    hist:  svg('<path d="M3 12a9 9 0 109-9 9 9 0 00-6.4 2.6L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/>'),
     check: svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>'),
     img:   svg('<rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/>'),
   };
@@ -746,7 +815,32 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   const ADV = { productos: ['max_por_pedido', 'desc_desde_5', 'desc_desde_10', 'etiqueta', 'colores', 'descripcion', 'detalles'], mayorista: ['nota', 'detalles'], pasos_negocios: [], eventos: ['etiquetas', 'descripcion'] };
   const AFFIX = { precio: { pre: '$' }, desc_desde_5: { suf: '%' }, desc_desde_10: { suf: '%' }, destacado: { sub: 'Aparece entre los productos de la página de inicio' } };
   SECTIONS.productos.galHint = 'En vasos, la foto 1 es del primer color, la 2 del segundo, etc.';
-  Object.entries(SECTIONS).forEach(([k, S]) => S.fields.forEach(f => { if (ADV[k].includes(f.key)) f.adv = true; if (f.type === 'select' || f.key === 'presentacion') f.full = true; Object.assign(f, AFFIX[f.key] || {}); }));
+  Object.entries(SECTIONS).forEach(([k, S]) => {
+    S.fields.forEach(f => { if (ADV[k].includes(f.key)) f.adv = true; if (f.type === 'select' || f.key === 'presentacion') f.full = true; Object.assign(f, AFFIX[f.key] || {}); });
+    // Publicación programada (plan Crecimiento): fechas opcionales guardadas junto al contenido
+    S.fields.push({ key: 'publicar_desde', label: 'Publicar desde', type: 'datetime', sched: true }, { key: 'ocultar_desde', label: 'Ocultar desde', type: 'datetime', sched: true });
+  });
+
+  // Estado real de cada elemento (misma regla que aplica la base: ver migrations/002)
+  const toIso = local => { if (!local) return ''; const d = new Date(local); return isNaN(d) ? '' : d.toISOString(); };
+  const toLocal = iso => { const d = new Date(iso); if (!iso || isNaN(d)) return ''; const q = n => String(n).padStart(2, '0'); return `${d.getFullYear()}-${q(d.getMonth() + 1)}-${q(d.getDate())}T${q(d.getHours())}:${q(d.getMinutes())}`; };
+  const fmtDT = iso => new Date(iso).toLocaleString('es-AR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+  const itemState = it => {
+    if (!it.active) return 'oculto';
+    const t = Date.now(), a = Date.parse(it.data.publicar_desde || ''), b = Date.parse(it.data.ocultar_desde || '');
+    if (!isNaN(a) && t < a) return 'programado';
+    if (!isNaN(b) && t >= b) return 'vencido';
+    return 'visible';
+  };
+  const isLive = it => itemState(it) === 'visible';
+  const STATE_L = { visible: 'Visible', oculto: 'Oculto', programado: 'Programado', vencido: 'Terminó' };
+  const schedChips = it => {
+    const d = it.data, st = itemState(it), out = [];
+    if (st === 'programado') out.push(`<span class="chip sch">Se publica el ${esc(fmtDT(d.publicar_desde))}</span>`);
+    if (st === 'visible' && d.ocultar_desde && !isNaN(Date.parse(d.ocultar_desde))) out.push(`<span class="chip sch">Se oculta el ${esc(fmtDT(d.ocultar_desde))}</span>`);
+    if (st === 'vencido') out.push(`<span class="chip">Terminó el ${esc(fmtDT(d.ocultar_desde))}</span>`);
+    return out.join('');
+  };
 
   function price(i) { return i.precio ? `$${Number(i.precio).toLocaleString('es-AR')}` : ''; }
 
@@ -843,7 +937,9 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     $('#nav').innerHTML = `<button class="admin-nav${current === 'inicio' ? ' active' : ''}" data-view="inicio" ${current === 'inicio' ? 'aria-current="page"' : ''}>${ICON.home}<span>Inicio</span></button>` + Object.entries(SECTIONS).map(([k, s]) =>
       `<button class="admin-nav${k === current ? ' active' : ''}" data-view="${k}" ${k === current ? 'aria-current="page"' : ''}>
          ${s.icon}<span>${esc(s.label)}</span><span class="n">${counts[k] ?? ''}</span></button>`).join('') +
-      `<button class="admin-nav nav-plan${current === 'plan' ? ' active' : ''}" data-view="plan" ${current === 'plan' ? 'aria-current="page"' : ''}>${ICON.card}<span>Mi plan</span></button>`;
+      `<button class="admin-nav nav-sep${current === 'stats' ? ' active' : ''}" data-view="stats" ${current === 'stats' ? 'aria-current="page"' : ''}>${ICON.chart}<span>Estadísticas</span></button>` +
+      `<button class="admin-nav${current === 'hist' ? ' active' : ''}" data-view="hist" ${current === 'hist' ? 'aria-current="page"' : ''}>${ICON.hist}<span>Historial</span></button>` +
+      `<button class="admin-nav${current === 'plan' ? ' active' : ''}" data-view="plan" ${current === 'plan' ? 'aria-current="page"' : ''}>${ICON.card}<span>Mi plan</span></button>`;
   }
 
   $('#nav').addEventListener('click', e => {
@@ -864,33 +960,36 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   $('#search').addEventListener('input', e => { query = tkey(e.target.value); render(); });
 
   function render() {
-    const isHome = current === 'inicio', isPlan = current === 'plan';
-    $('#home').hidden = !isHome; $('#plan').hidden = !isPlan; $('#section-view').hidden = isHome || isPlan;
-    if (isHome) return renderHome();
-    if (isPlan) return renderPlan();
+    const VIEWS = { inicio: '#home', plan: '#plan', stats: '#sxview', hist: '#hist' };
+    Object.values(VIEWS).forEach(sel => { $(sel).hidden = sel !== VIEWS[current]; });
+    $('#section-view').hidden = !!VIEWS[current];
+    if (current === 'inicio') return renderHome();
+    if (current === 'plan') return renderPlan();
+    if (current === 'stats') return loadStats();
+    if (current === 'hist') return loadHist();
     const S = SECTIONS[current];
     $('#view-title').textContent = S.label;
     $('#view-desc').textContent = S.desc;
     $('#new-item').textContent = '+ Agregar';
     const all = cache[current] || [];
     const items = all.filter(it =>
-      (filter === 'todos' || (filter === 'visibles') === it.active) &&
+      (filter === 'todos' || (filter === 'visibles') === isLive(it)) &&
       (!query || tkey(Object.values(it.data).join(' ')).includes(query)));
-    const pub = all.filter(x => x.active).length;
+    const pub = all.filter(isLive).length;
     $('#count').innerHTML = `<span>${items.length} ${items.length === 1 ? 'elemento' : 'elementos'} en esta vista</span>
       <span class="pub-pill">● ${pub} publicado${pub === 1 ? '' : 's'} en el sitio</span>${all.length - pub ? `<span class="pub-pill off">${all.length - pub} oculto${all.length - pub === 1 ? '' : 's'}</span>` : ''}`;
 
     $('#list').innerHTML = items.length ? items.map(it => {
       const d = it.data;
-      const chips = [d.etiqueta && `<span class="chip v">${esc(d.etiqueta)}</span>`, d.destacado === 'SI' && `<span class="chip">★ Destacado</span>`, d.colores && `<span class="chip">${esc(d.colores)}</span>`, d.fecha && `<span class="chip">${esc(fmtDate(d.fecha))}</span>`].filter(Boolean).join('');
+      const chips = [schedChips(it), d.etiqueta && `<span class="chip v">${esc(d.etiqueta)}</span>`, d.destacado === 'SI' && `<span class="chip">★ Destacado</span>`, d.colores && `<span class="chip">${esc(d.colores)}</span>`, d.fecha && `<span class="chip">${esc(fmtDate(d.fecha))}</span>`].filter(Boolean).join('');
       const minis = imgsOf(d).length > 1 ? `<div class="minis">${imgsOf(d).map(u => `<img src="${esc(imgUrl(u))}" alt="" loading="lazy" ${BAD}>`).join('')}</div>` : '';
       const canMove = filter === 'todos' && !query;
       const idx = all.indexOf(it);
-      return `<article class="admin-row${it.active ? '' : ' off'}" data-open-row="${it.id}" tabindex="0" role="button" aria-label="Editar ${esc(S.title(d) || 'elemento')}">
+      return `<article class="admin-row${['oculto', 'vencido'].includes(itemState(it)) ? ' off' : ''}" data-open-row="${it.id}" tabindex="0" role="button" aria-label="Editar ${esc(S.title(d) || 'elemento')}">
         <div>${thumbHtml(it, S, idx)}${minis}</div>
         <div class="admin-row-body"><span class="meta">${esc(S.meta(d) || '')}</span><h2>${esc(S.title(d) || '(sin nombre)')}</h2><p>${esc(S.sub(d) || '')}</p>${chips ? `<div class="chips">${chips}</div>` : ''}</div>
         <div class="admin-actions">
-          <span class="status">${it.active ? 'Visible' : 'Oculto'}</span>
+          <span class="status st-${itemState(it)}">${STATE_L[itemState(it)]}</span>
           ${canMove ? `<button class="mv" data-a="up" data-id="${it.id}" aria-label="Subir" ${idx === 0 ? 'disabled' : ''}>↑</button>
           <button class="mv" data-a="down" data-id="${it.id}" aria-label="Bajar" ${idx === all.length - 1 ? 'disabled' : ''}>↓</button>` : ''}
           <button data-a="toggle" data-id="${it.id}">${it.active ? 'Ocultar' : 'Mostrar'}</button>
@@ -958,6 +1057,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   function fieldHtml(f, v) {
     const val = v ?? f.default ?? '', cls = f.full ? ' full' : '';
     const hint = f.hint ? `<small>${esc(f.hint)}</small>` : '';
+    if (f.type === 'datetime') return `<label class="fld">${esc(f.label)}<span class="inp"><input name="${f.key}" type="datetime-local" value="${esc(toLocal(val))}"></span></label>`;
     if (f.type === 'switch') {
       return `<label class="sw-row"><span><b>${esc(f.label)}</b>${f.sub ? `<small>${esc(f.sub)}</small>` : ''}</span><input class="sw" type="checkbox" name="${f.key}" value="SI" ${val === 'SI' ? 'checked' : ''}></label>`;
     }
@@ -1007,7 +1107,8 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     editing = it;
     const S = SECTIONS[current], d = it ? it.data : {};
     const imgF = S.fields.filter(f => f.type === 'image'), sw = S.fields.filter(f => f.type === 'switch');
-    const basic = S.fields.filter(f => !f.adv && f.type !== 'image' && f.type !== 'switch'), adv = S.fields.filter(f => f.adv);
+    const basic = S.fields.filter(f => !f.adv && f.type !== 'image' && f.type !== 'switch' && !f.sched), adv = S.fields.filter(f => f.adv), sch = S.fields.filter(f => f.sched);
+    const hasSch = sch.some(f => d[f.key]);
     gal = { max: imgF.length, urls: imgF.map(f => d[f.key]).filter(Boolean), fallback: it ? siteFallback(d) : [], busy: 0 };
     $('#dialog-kicker').textContent = `${it ? 'Editar' : 'Nuevo'} · ${S.label.replace('Para negocios · ', 'Negocios · ')}`;
     $('#dialog-title').textContent = (it && S.title(d)) || 'Sin nombre';
@@ -1016,6 +1117,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       (imgF.length ? galleryHtml(S) : '') +
       `<div class="grid2">${basic.map(f => fieldHtml(f, d[f.key])).join('')}</div>` +
       `<div class="list-card">${sw.map(f => fieldHtml(f, d[f.key])).join('')}<label class="sw-row"><span><b>Mostrar en la web</b><small>Si lo apagás, queda guardado pero oculto.</small></span><input class="sw" type="checkbox" name="__active" ${(it ? it.active : true) ? 'checked' : ''}></label></div>` +
+      `<details class="more"${hasSch ? ' open' : ''}><summary>Programar publicación${hasSch ? ' <span class="chip sch">activa</span>' : ''}</summary><div class="grid2">${sch.map(f => fieldHtml(f, d[f.key])).join('')}<small class="full" style="color:var(--mut)">Opcional. Con “Publicar desde” el elemento aparece en el sitio recién en esa fecha; con “Ocultar desde” deja de verse solo. Si lo dejás vacío, se publica ya y sin fecha de fin.</small></div></details>` +
       (adv.length ? `<details class="more"><summary>Más opciones</summary><div class="grid2">${adv.map(f => fieldHtml(f, d[f.key])).join('')}</div></details>` : '');
     if (imgF.length) renderGal();
     $('#form-error').hidden = true;
@@ -1062,10 +1164,13 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     e.preventDefault();
     const S = SECTIONS[current], fd = new FormData(e.target), data = {};
     S.fields.forEach(f => {
-      let v = f.type === 'switch' ? (fd.get(f.key) === 'SI' ? 'SI' : 'NO') : (fd.get(f.key) ?? '').toString().trim();
+      let v = f.type === 'switch' ? (fd.get(f.key) === 'SI' ? 'SI' : 'NO') : f.type === 'datetime' ? toIso(fd.get(f.key)) : (fd.get(f.key) ?? '').toString().trim();
       if (v === '') return;
       data[f.key] = f.type === 'number' ? Number(v) : v;
     });
+    if (data.publicar_desde && data.ocultar_desde && Date.parse(data.ocultar_desde) <= Date.parse(data.publicar_desde)) {
+      const el = $('#form-error'); el.textContent = '“Ocultar desde” tiene que ser posterior a “Publicar desde”.'; el.hidden = false; return;
+    }
     const active = fd.get('__active') === 'on';
     const btn = $('#save-btn'); btn.disabled = true;
     let error;
@@ -1138,7 +1243,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   }
 
   function pageHtml(page, dev) {
-    const pub = k => (cache[k] || []).filter(x => x.active).map(x => x.data);
+    const pub = k => (cache[k] || []).filter(isLive).map(x => x.data);
     const [eye, title, lead, cta] = PV_HERO[page];
     const mobile = dev === 'mobile';
     const nav = `<div class="sv-nav"><img src="logo.png" alt="UP SKY">${mobile ? '<div class="sv-burger"><i></i><i></i><i></i></div>' :
@@ -1185,14 +1290,192 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   $('#pv-pages').addEventListener('click', e => { const b = e.target.closest('[data-pg]'); if (!b) return; pv.page = b.dataset.pg; renderPreview(); });
   $('#pv-device').addEventListener('click', e => { const b = e.target.closest('[data-dev]'); if (!b) return; pv.dev = b.dataset.dev; renderPreview(); });
 
+  // ── Estadísticas (plan Crecimiento) ──────────────────────────────────────────
+  const PAGE_L = { inicio: 'Inicio', catalogo: 'Catálogo', negocios: 'Para negocios', eventos: 'Eventos', evento: 'Detalle de evento', producto: 'Producto' };
+  let sx = { days: 30, data: null, loading: false, error: null, table: false };
+  const nf = new Intl.NumberFormat('es-AR');
+  const compact = n => n >= 10000 ? new Intl.NumberFormat('es-AR', { notation: 'compact', maximumFractionDigits: 1 }).format(n) : nf.format(n);
+  const arToday = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Argentina/Buenos_Aires' }).format(new Date());
+  const dayLabel = ymd => { const [y, m, d] = ymd.split('-').map(Number); return `${d} ${MESES[m - 1]}`; };
+
+  function series() {
+    const by = {}; (sx.data?.daily || []).forEach(r => { by[r.d] = r; });
+    const out = [], base = new Date(arToday() + 'T12:00:00Z');
+    for (let i = sx.days - 1; i >= 0; i--) {
+      const d = new Date(base); d.setUTCDate(d.getUTCDate() - i);
+      const k = d.toISOString().slice(0, 10), r = by[k] || {};
+      out.push({ d: k, v: r.views || 0, w: r.whatsapp || 0 });
+    }
+    return out;
+  }
+
+  async function loadStats() {
+    sx.loading = true; renderStats();
+    const { data, error } = await sb.rpc('analytics_summary', { p_days: sx.days });
+    sx.loading = false; sx.error = error ? error.message : null; if (!error) sx.data = data;
+    renderStats();
+  }
+
+  const niceMax = m => { if (m <= 4) return 4; const p = Math.pow(10, Math.floor(Math.log10(m / 4))), f = [1, 2, 2.5, 5, 10].find(x => x * p * 4 >= m); return f * p * 4; };
+
+  function renderStats() {
+    const el = $('#sxview'), D = sx.data;
+    el.className = 'sx' + (sx.loading ? ' loading' : '');
+    const empty = D && !D.views && !D.whatsapp && !D.cart;
+    const bars = (rows, label) => rows.length ? `<div class="sx-bars">${(() => { const mx = Math.max(...rows.map(r => r.n)); return rows.map(r => `<div class="sx-bar" tabindex="0" data-tip="${esc(label(r.name))}" data-val="${r.n}"><span class="sx-bl">${esc(label(r.name))}</span><span class="sx-bt"><i style="width:${Math.max(3, Math.round(r.n / mx * 78))}%"></i><b>${nf.format(r.n)}</b></span></div>`).join(''); })()}</div>` : '<p class="sx-note" style="text-align:left">Todavía no hay datos.</p>';
+    const dev = (D?.devices || []), totalDev = dev.reduce((a, r) => a + r.n, 0), mob = dev.find(r => r.name === 'mobile')?.n || 0;
+    const mobPct = totalDev ? Math.round(mob / totalDev * 100) : 0;
+    el.innerHTML = `
+      <header class="admin-top"><span class="top-label">PLAN CRECIMIENTO</span><h1>Estadísticas</h1><p>Visitas y clics de tu sitio. No se guardan nombres, IP ni cookies.</p></header>
+      <div class="sx-bar-top"><div class="seg" role="group" aria-label="Período">${[7, 30, 90].map(n => `<button data-days="${n}" aria-pressed="${sx.days === n}">Últimos ${n} días</button>`).join('')}</div></div>
+      ${sx.error ? `<div class="sx-empty"><b>No se pudieron cargar las estadísticas</b>${esc(sx.error)}</div>` : !D ? '' : empty ? `<div class="sx-empty"><b>Todavía no hay datos</b>Las visitas empiezan a contarse cuando el sitio actualizado esté publicado. Volvé en unos días.</div>` : `
+      <div class="sx-tiles">
+        <div class="sx-tile"><span>Visitas</span><b>${compact(D.views)}</b><small>páginas vistas · ${sx.days} días</small></div>
+        <div class="sx-tile"><span>Visitantes</span><b>${compact(D.visitors)}</b><small>visitas distintas</small></div>
+        <div class="sx-tile"><span>Clics en WhatsApp</span><b>${compact(D.whatsapp)}</b><small>${D.views ? (D.whatsapp / D.views * 100).toFixed(1).replace('.', ',') + '% de las visitas' : '—'}</small></div>
+        <div class="sx-tile"><span>Agregados al carrito</span><b>${compact(D.cart)}</b><small>productos sumados</small></div>
+      </div>
+      <div class="sx-card"><div class="sx-head"><div><h3>Visitas por día</h3><p class="sub">Últimos ${sx.days} días</p></div><button type="button" class="sx-link" data-table>${sx.table ? 'Ver gráfico' : 'Ver tabla'}</button></div>
+        ${sx.table ? `<div class="sx-scroll"><table class="sx-table"><thead><tr><th>Día</th><th>Visitas</th><th>Clics WhatsApp</th></tr></thead><tbody>${series().reverse().map(r => `<tr><td>${esc(dayLabel(r.d))}</td><td>${nf.format(r.v)}</td><td>${nf.format(r.w)}</td></tr>`).join('')}</tbody></table></div>` : '<div class="sx-chart" id="sx-line"></div>'}
+      </div>
+      <div class="sx-grid">
+        <div class="sx-card"><h3>Páginas más vistas</h3><p class="sub">Por cantidad de visitas</p>${bars(D.pages || [], n => PAGE_L[n] || n)}</div>
+        <div class="sx-card"><h3>Productos más agregados al carrito</h3><p class="sub">Los que más interés generan</p>${bars(D.products || [], n => n)}</div>
+      </div>
+      <div class="sx-card"><h3>Visitas desde el celular</h3><p class="sub">Cómo te encuentra la gente</p>
+        <div class="sx-meter" role="img" aria-label="${mobPct}% desde celular"><i style="width:${mobPct}%"></i></div>
+        <div class="sx-legend"><div><b>${mobPct}%</b> <span>celular</span></div><div><b>${100 - mobPct}%</b> <span>computadora</span></div></div></div>`}`;
+    if (D && !empty && !sx.table) requestAnimationFrame(drawLine);
+  }
+
+  function drawLine() {
+    const host = $('#sx-line'); if (!host) return;
+    const S = series(), W = Math.max(280, host.clientWidth), H = 250, m = { l: 38, r: 18, t: 16, b: 28 };
+    const max = niceMax(Math.max(...S.map(r => r.v), 1)), iw = W - m.l - m.r, ih = H - m.t - m.b;
+    const X = i => m.l + (S.length === 1 ? iw / 2 : i * iw / (S.length - 1)), Y = v => m.t + ih - v / max * ih;
+    const ticks = [0, 1, 2, 3, 4].map(k => max / 4 * k);
+    const nx = W < 480 ? 3 : 5, xi = Array.from({ length: nx }, (_, k) => Math.round(k * (S.length - 1) / (nx - 1)));
+    const line = S.map((r, i) => `${i ? 'L' : 'M'}${X(i).toFixed(1)},${Y(r.v).toFixed(1)}`).join('');
+    const last = S[S.length - 1], lx = X(S.length - 1), ly = Y(last.v);
+    host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" tabindex="0" aria-label="Visitas por día. Total ${nf.format(S.reduce((a, r) => a + r.v, 0))} en ${S.length} días. Usá las flechas para ver cada día.">
+      ${ticks.map(t => `<line x1="${m.l}" x2="${W - m.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="var(--div)" stroke-width="1"/><text x="${m.l - 8}" y="${Y(t) + 4}" text-anchor="end">${nf.format(Math.round(t))}</text>`).join('')}
+      ${xi.map((i, k) => `<text x="${X(i)}" y="${H - 8}" text-anchor="${k === 0 ? 'start' : k === xi.length - 1 ? 'end' : 'middle'}">${dayLabel(S[i].d)}</text>`).join('')}
+      <path d="${line}L${X(S.length - 1)},${Y(0)}L${X(0)},${Y(0)}Z" fill="var(--v)" fill-opacity=".1"/>
+      <path d="${line}" fill="none" stroke="var(--v)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="${lx}" cy="${ly}" r="4" fill="var(--v)" stroke="var(--w)" stroke-width="2"/>
+      <text x="${lx}" y="${Math.max(12, ly - 12)}" text-anchor="end" style="fill:var(--txt);font-weight:700">${nf.format(last.v)}</text>
+      <line id="sx-x" y1="${m.t}" y2="${m.t + ih}" stroke="var(--mut)" stroke-width="1" opacity="0"/>
+      <circle id="sx-dot" r="5" fill="var(--v)" stroke="var(--w)" stroke-width="2" opacity="0"/>
+      <rect x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="transparent" id="sx-hit"/></svg><div class="sx-tip" id="sx-tip" hidden></div>`;
+    const svg = host.querySelector('svg'), tip = $('#sx-tip');
+    let cur = S.length - 1;
+    const show = i => {
+      i = Math.max(0, Math.min(S.length - 1, i)); cur = i;
+      const r = S[i], x = X(i), y = Y(r.v);
+      const g = $('#sx-x'), d = $('#sx-dot'); g.setAttribute('x1', x); g.setAttribute('x2', x); g.setAttribute('opacity', 1); d.setAttribute('cx', x); d.setAttribute('cy', y); d.setAttribute('opacity', 1);
+      tip.hidden = false; tip.textContent = '';
+      const val = document.createElement('b'); val.textContent = nf.format(r.v);
+      const key = document.createElement('i'); const lab = document.createElement('span'); lab.textContent = `Visitas · ${dayLabel(r.d)}`;
+      tip.append(val, key, lab);
+      tip.style.left = Math.min(Math.max(x, 60), W - 60) + 'px'; tip.style.top = Math.max(y, 40) + 'px';
+    };
+    const hide = () => { tip.hidden = true; $('#sx-x').setAttribute('opacity', 0); $('#sx-dot').setAttribute('opacity', 0); };
+    const at = e => { const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * (W / r.width); return Math.round((x - m.l) / iw * (S.length - 1)); };
+    $('#sx-hit').addEventListener('pointermove', e => show(at(e)));
+    $('#sx-hit').addEventListener('pointerleave', hide);
+    svg.addEventListener('focus', () => show(cur));
+    svg.addEventListener('blur', hide);
+    svg.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') { e.preventDefault(); show(cur - 1); } if (e.key === 'ArrowRight') { e.preventDefault(); show(cur + 1); } });
+  }
+  window.addEventListener('resize', () => { if (current === 'stats' && sx.data && !sx.table) drawLine(); });
+  $('#sxview').addEventListener('click', e => {
+    const dd = e.target.closest('[data-days]'); if (dd) { sx.days = +dd.dataset.days; return loadStats(); }
+    if (e.target.closest('[data-table]')) { sx.table = !sx.table; renderStats(); }
+  });
+  // Etiqueta flotante de las barras (el texto se inserta con textContent: viene de datos del sitio)
+  const barTip = (() => { const t = document.createElement('div'); t.className = 'sx-tip'; t.hidden = true; document.body.appendChild(t); t.style.position = 'fixed'; return t; })();
+  const showBar = (b, x, y) => { barTip.textContent = ''; const v = document.createElement('b'); v.textContent = nf.format(+b.dataset.val); const l = document.createElement('span'); l.textContent = b.dataset.tip; barTip.append(v, l); barTip.hidden = false; barTip.style.left = x + 'px'; barTip.style.top = y + 'px'; };
+  $('#sxview').addEventListener('pointermove', e => { const b = e.target.closest('.sx-bar'); b ? showBar(b, e.clientX, e.clientY - 8) : (barTip.hidden = true); });
+  $('#sxview').addEventListener('pointerleave', () => { barTip.hidden = true; });
+  $('#sxview').addEventListener('focusin', e => { const b = e.target.closest('.sx-bar'); if (b) { const r = b.getBoundingClientRect(); showBar(b, r.left + r.width / 2, r.top); } });
+  $('#sxview').addEventListener('focusout', () => { barTip.hidden = true; });
+
+  // ── Historial de cambios con deshacer (plan Crecimiento) ─────────────────────
+  let hx = { rows: null, group: 'todas', loading: false, error: null };
+  const HX_GROUPS = [['todas', 'Todo'], ['productos', 'Catálogo'], ['negocios', 'Para negocios'], ['eventos', 'Eventos']];
+  const inGroup = (g, sec) => g === 'todas' || (g === 'negocios' ? sec === 'mayorista' || sec === 'pasos_negocios' : g === sec);
+  const rtf = new Intl.RelativeTimeFormat('es', { numeric: 'auto' });
+  const ago = iso => { const s = (new Date(iso) - Date.now()) / 1000, a = Math.abs(s); return a < 60 ? 'recién' : a < 3600 ? rtf.format(Math.round(s / 60), 'minute') : a < 86400 ? rtf.format(Math.round(s / 3600), 'hour') : a < 2592000 ? rtf.format(Math.round(s / 86400), 'day') : new Date(iso).toLocaleDateString('es-AR', { day: 'numeric', month: 'short', year: 'numeric' }); };
+  const fieldLabel = (sec, key) => (SECTIONS[sec]?.fields.find(f => f.key === key)?.label || key).replace(/ \(.*\)$/, '');
+  const fmtVal = (key, v) => {
+    if (v === undefined || v === null || v === '') return '—';
+    if (/^imagen_/.test(key)) return 'foto';
+    if (key === 'precio') return '$' + Number(v).toLocaleString('es-AR');
+    if (/_desde$/.test(key)) return fmtDT(v);
+    const t = String(v); return t.length > 38 ? t.slice(0, 36) + '…' : t;
+  };
+  const diffs = h => {
+    const o = h.old_data || {}, n = h.new_data || {}, out = [];
+    [...new Set([...Object.keys(o), ...Object.keys(n)])].forEach(k => { if (JSON.stringify(o[k]) !== JSON.stringify(n[k])) out.push(`${esc(fieldLabel(h.section, k))}: <s>${esc(fmtVal(k, o[k]))}</s> → <b>${esc(fmtVal(k, n[k]))}</b>`); });
+    if (h.old_active !== h.new_active) out.unshift(`Visibilidad: <s>${h.old_active ? 'Visible' : 'Oculto'}</s> → <b>${h.new_active ? 'Visible' : 'Oculto'}</b>`);
+    return out;
+  };
+  const currentItem = id => Object.values(cache).flat().find(x => x.id === id);
+
+  async function loadHist() {
+    hx.loading = true; renderHist();
+    const { data, error } = await sb.from('item_history').select('*').order('changed_at', { ascending: false }).limit(150);
+    hx.loading = false; hx.error = error ? error.message : null; if (!error) hx.rows = data;
+    renderHist();
+  }
+
+  function renderHist() {
+    const el = $('#hist'); el.className = 'hx' + (hx.loading ? ' loading' : '');
+    const rows = (hx.rows || []).filter(h => inGroup(hx.group, h.section));
+    const ic = { insert: ICON.plus, update: ICON.hist, delete: svg('<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>') };
+    const verb = { insert: 'Creaste', update: 'Editaste', delete: 'Eliminaste' };
+    el.innerHTML = `
+      <header class="admin-top"><span class="top-label">PLAN CRECIMIENTO</span><h1>Historial</h1><p>Cada cambio queda guardado. Podés deshacerlo o recuperar lo que borraste.</p></header>
+      <div class="seg" role="group" aria-label="Sección">${HX_GROUPS.map(([k, l]) => `<button data-hg="${k}" aria-pressed="${hx.group === k}">${l}</button>`).join('')}</div>
+      ${hx.error ? `<div class="hx-empty"><b>No se pudo cargar el historial</b><br>${esc(hx.error)}</div>` : hx.rows === null ? '' : !rows.length ? `<div class="hx-empty"><b>Todavía no hay cambios</b><br>Desde ahora, cada vez que edites algo va a aparecer acá para poder deshacerlo.</div>` : `
+      <div class="hx-list">${rows.map(h => {
+        const d = h.new_data || h.old_data || {}, S = SECTIONS[h.section], title = (S && S.title(d)) || '(sin nombre)', cur = currentItem(h.item_id);
+        const dl = h.action === 'update' ? diffs(h) : [];
+        let btn = '';
+        if (h.action === 'update') btn = !cur ? '<button class="hx-undo" disabled>El elemento ya no existe</button>' : JSON.stringify(cur.data) === JSON.stringify(h.old_data) && cur.active === h.old_active ? '<button class="hx-undo" disabled>Ya deshecho</button>' : `<button class="hx-undo" data-undo="${h.id}">Deshacer</button>`;
+        if (h.action === 'delete') btn = cur ? '<button class="hx-undo" disabled>Ya restaurado</button>' : `<button class="hx-undo" data-restore="${h.id}">Restaurar</button>`;
+        return `<article class="hx-row"><span class="hx-ic ${h.action === 'delete' ? 'del' : h.action === 'insert' ? 'ins' : ''}">${ic[h.action]}</span>
+          <div><div class="hx-t">${verb[h.action]} <span>«${esc(title)}»</span></div>
+          <div class="hx-m" title="${esc(new Date(h.changed_at).toLocaleString('es-AR'))}">${esc(SHORT[h.section] || h.section)} · ${esc(ago(h.changed_at))}${h.changed_by ? ' · ' + esc(h.changed_by) : ''}</div>
+          ${dl.length ? `<ul class="hx-d">${dl.slice(0, 4).map(x => `<li>${x}</li>`).join('')}${dl.length > 4 ? `<li>y ${dl.length - 4} cambio${dl.length - 4 === 1 ? '' : 's'} más</li>` : ''}</ul>` : ''}</div>${btn}</article>`;
+      }).join('')}</div>`}`;
+  }
+  async function refreshAll() { await Promise.all(Object.keys(SECTIONS).map(load)); buildNav(); await loadHist(); }
+  $('#hist').addEventListener('click', async e => {
+    const g = e.target.closest('[data-hg]'); if (g) { hx.group = g.dataset.hg; return renderHist(); }
+    const u = e.target.closest('[data-undo]'), r = e.target.closest('[data-restore]'), b = u || r; if (!b) return;
+    const h = (hx.rows || []).find(x => x.id === +(u ? u.dataset.undo : r.dataset.restore)); if (!h) return;
+    b.disabled = true;
+    if (u) {
+      const { data, error } = await sb.from('items').update({ data: h.old_data, active: h.old_active }).eq('id', h.item_id).select('id');
+      if (error) { b.disabled = false; return toast('No se pudo deshacer: ' + error.message, true); }
+      if (!data.length) { b.disabled = false; return toast('Ese elemento ya no existe.', true); }
+      await refreshAll(); return toast('Cambio deshecho');
+    }
+    const pos = ((cache[h.section] || []).reduce((m, x) => Math.max(m, x.position), -1)) + 1;
+    const { error } = await sb.from('items').insert({ id: h.item_id, section: h.section, data: h.old_data, active: h.old_active, position: pos });
+    if (error) { b.disabled = false; return toast('No se pudo restaurar: ' + error.message, true); }
+    await refreshAll(); toast('Elemento restaurado');
+  });
+
   // ── Mi plan (suscripción) · DEMOSTRACIÓN: precios de ejemplo y estado simulado ──
   // Cuando se conecte Stripe, "estado" saldrá de la base y los botones abrirán Checkout / el portal.
   const PLAN_CFG = { currency: 'USD', locale: 'es-AR', annualDiscount: 0.15 };
   const PLANS = [
     { id: 'basico', name: 'Básico', tag: 'El panel de contenido y el mantenimiento de tu sitio.', price: 100, features: [
       'Mantenimiento de la página web incluido', 'Editar Catálogo, Para negocios y Eventos', 'Subida de imágenes', 'Vista previa del sitio', '1 usuario administrador', 'Soporte por mail y WhatsApp'] },
-    { id: 'crecimiento', name: 'Crecimiento', tag: 'Para medir resultados y crecer.', price: 200, soon: true, hl: true, features: [
-      'Todo lo del Básico, más:', 'Estadísticas de visitas y clics', 'Publicación programada', 'Promociones con fecha de inicio y fin', 'Historial de cambios con deshacer', 'Hasta 3 usuarios con roles'] },
+    { id: 'crecimiento', name: 'Crecimiento', tag: 'Para medir resultados y crecer.', price: 200, hl: true, features: [
+      'Todo lo del Básico, más:', 'Estadísticas de visitas y clics', 'Publicación programada', 'Historial de cambios con deshacer', { t: 'Promociones con fecha de inicio y fin', soon: true }, { t: 'Hasta 3 usuarios con roles', soon: true }] },
     { id: 'pro', name: 'Pro', tag: 'Para vender y gestionar pedidos.', price: 350, soon: true, features: [
       'Todo lo del Crecimiento, más:', 'Pedidos dentro del panel, con estados', 'Lista de precios por mayorista', 'Pago online en el sitio, con stock', 'Avisos automáticos de pedidos', 'Soporte prioritario e informe mensual'] },
   ];
@@ -1225,10 +1508,10 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
           <p class="pl-tag">${esc(pl.tag)}</p>
           <div class="pl-price"><b>${money(perMonth(pl))}</b><span>por mes</span>${anual ? `<span class="pl-save">−${Math.round(PLAN_CFG.annualDiscount * 100)}%</span>` : ''}</div>
           <p class="pl-sub">${anual ? `Se cobra ${money(perMonth(pl) * 12)} por año` : ''}</p>
-          <ul class="pl-feat">${pl.features.map((f, i) => `<li${i === 0 && pl.id !== 'basico' ? ' class="all"' : ''}>${i === 0 && pl.id !== 'basico' ? '' : ICON.check}<span>${esc(f)}</span></li>`).join('')}</ul>
+          <ul class="pl-feat">${pl.features.map((f, i) => { const t = f.t || f, soon = !!f.soon || pl.soon, head = i === 0 && pl.id !== 'basico'; return `<li${head ? ' class="all"' : ''}>${head ? '' : ICON.check}<span>${esc(t)}${soon && !head && !pl.soon ? ' <em class="pl-soon">Próximamente</em>' : ''}</span></li>`; }).join('')}</ul>
           <button type="button" class="pl-cta" data-choose="${pl.id}" ${isCur ? 'disabled' : ''}>${isCur ? 'Plan actual' : 'Elegir ' + esc(pl.name)}</button></article>`;
       }).join('')}</div>
-      <p class="pl-note">Las funciones de Crecimiento y Pro se irán sumando. Hoy el panel incluye todo lo del plan Básico.</p>
+      <p class="pl-note">Crecimiento ya incluye estadísticas, publicación programada e historial; promociones y usuarios se suman próximamente. Las funciones de Pro se irán sumando.</p>
       <div class="pl-hist"><h3>Historial de pagos</h3><div class="pl-empty">Todavía no hay pagos registrados. Cuando se conecte el cobro, acá vas a ver cada pago y su factura.</div></div>`;
   }
   $('#plan').addEventListener('click', e => {
@@ -1268,9 +1551,9 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   const allItems = () => Object.keys(SECTIONS).flatMap(k => (cache[k] || []).map(it => ({ ...it, _s: k })));
 
   function renderHome() {
-    const all = allItems(), pubs = a => a.filter(x => x.active).length;
+    const all = allItems(), pubs = a => a.filter(isLive).length;
     const cnt = k => (cache[k] || []);
-    const upcoming = cnt('eventos').filter(x => x.active && (x.data.fecha || '') >= todayStr());
+    const upcoming = cnt('eventos').filter(x => isLive(x) && (x.data.fecha || '') >= todayStr());
     const imgs = [...new Set(all.flatMap(x => imgsOf(x.data)))];
     const stat = (ic, n, l, sub, view) => `<button type="button" class="stat" data-go="${view}"><span class="ic">${ic}</span><div><b>${n}</b><span>${l}</span><small>${sub}</small></div></button>`;
     const hid = k => { const n = cnt(k).length - pubs(cnt(k)); return n ? `${n} oculto${n === 1 ? '' : 's'}` : 'todo publicado'; };
@@ -1281,19 +1564,19 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       stat(ICON.img, imgs.length, 'Imágenes cargadas', `en ${all.filter(x => imgsOf(x.data).length).length} elementos`, 'productos');
 
     $('#hc-title').innerHTML = `${ICON.feed}Tu contenido`;
-    const list = all.filter(x => (hf === 'todas' || (hf === 'publicadas') === x.active) && (!hq || tkey(Object.values(x.data).join(' ') + ' ' + SECTIONS[x._s].label).includes(hq)));
+    const list = all.filter(x => (hf === 'todas' || (hf === 'publicadas') === isLive(x)) && (!hq || tkey(Object.values(x.data).join(' ') + ' ' + SECTIONS[x._s].label).includes(hq)));
     const shown = hAll || hq ? list : list.slice(0, 8);
     $('#hgrid').innerHTML = list.length ? shown.map(x => {
       const S = SECTIONS[x._s], u = imgsOf(x.data)[0];
-      return `<button type="button" class="hc${x.active ? '' : ' off'}" data-open="${x._s}:${x.id}">
-        <div class="top"><span class="st">${x.active ? 'Publicado' : 'Oculto'}</span><span>${esc(SHORT[x._s])}</span></div>
+      return `<button type="button" class="hc${isLive(x) ? '' : ' off'}" data-open="${x._s}:${x.id}">
+        <div class="top"><span class="st">${{ visible: 'Publicado', oculto: 'Oculto', programado: 'Programado', vencido: 'Terminó' }[itemState(x)]}</span><span>${esc(SHORT[x._s])}</span></div>
         <div class="im">${S.icon}${u ? `<img src="${esc(imgUrl(u))}" alt="" loading="lazy" ${BAD}>` : ''}</div>
         <div class="tx"><b>${esc(S.title(x.data) || '(sin nombre)')}</b><span>${esc(S.sub(x.data) || '')}</span></div></button>`;
     }).join('') + (list.length > shown.length ? `<button type="button" class="secondary" data-more style="grid-column:1/-1">Ver los ${list.length} elementos</button>` : '') : `<div class="empty" style="grid-column:1/-1">${hq ? 'No hay resultados para esa búsqueda.' : 'No hay contenido en esta vista.'}</div>`;
 
     // Calendario con los eventos publicados
     const { y, m } = cal, start = (new Date(y, m, 1).getDay() + 6) % 7, dim = new Date(y, m + 1, 0).getDate();
-    const evDays = new Set(cnt('eventos').filter(x => x.active).map(x => (x.data.fecha || '').match(/^(\d{4})-(\d{2})-(\d{2})/)).filter(r => r && +r[1] === y && +r[2] - 1 === m).map(r => +r[3]));
+    const evDays = new Set(cnt('eventos').filter(isLive).map(x => (x.data.fecha || '').match(/^(\d{4})-(\d{2})-(\d{2})/)).filter(r => r && +r[1] === y && +r[2] - 1 === m).map(r => +r[3]));
     const isNow = d => y === now.getFullYear() && m === now.getMonth() && d === now.getDate();
     $('#cal-title').innerHTML = `${ICON.cal}Calendario de eventos`;
     $('#cal').innerHTML = `<div class="cal-h"><button type="button" data-cal="-1" aria-label="Mes anterior">‹</button><b>${MES_L[m]} ${y}</b><button type="button" data-cal="1" aria-label="Mes siguiente">›</button></div>
