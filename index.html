@@ -53,8 +53,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--v)}
 /* Shell */
 .admin-shell{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
 .admin-sidebar{background:linear-gradient(180deg,#0a0a0c,#14101a);color:#fff;padding:1.25rem 1rem;display:flex;flex-direction:column;gap:1.5rem;position:sticky;top:0;height:100vh}
-.admin-brand{color:#fff;text-decoration:none;display:grid;justify-items:center;gap:.15rem;padding:.25rem 0 1rem;border-bottom:1px solid rgba(255,255,255,.08)}
-.admin-brand img{width:132px;height:auto;display:block}
+.admin-brand{color:#fff;text-decoration:none;display:grid;justify-items:center;gap:.15rem;padding:.1rem 0 .9rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.admin-brand img{width:84px;height:auto;display:block}
 .admin-brand small{font:600 .62rem var(--f-u);letter-spacing:.22em;opacity:.55}
 #nav{display:grid;gap:.25rem}
 .admin-nav{display:flex;align-items:center;gap:.65rem;background:transparent;border:0;color:#fff;padding:.7rem .75rem;border-radius:12px;text-align:left;opacity:.78;position:relative;transition:background .15s,opacity .15s}
@@ -65,7 +65,12 @@ input:focus,select:focus,textarea:focus{border-color:var(--v)}
 .admin-nav.active svg{color:var(--v)}
 .admin-nav .n{margin-left:auto;font-size:.75rem;background:rgba(255,255,255,.18);padding:.05rem .5rem;border-radius:99px}
 .sidebar-bottom{margin-top:auto;display:grid;gap:.5rem;font-size:.85rem}
-.sidebar-bottom a{color:#fff;text-decoration:none;opacity:.8;display:flex;gap:.4rem;align-items:center}.sidebar-bottom a:hover{opacity:1}
+.site-card{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:1rem;display:grid;gap:.35rem;background:radial-gradient(90% 80% at 100% 100%,rgba(236,31,122,.35),transparent 70%),rgba(255,255,255,.03)}
+.site-card svg{width:22px;height:22px;color:var(--v)}
+.site-card b{font-size:.95rem;line-height:1.25}
+.site-card span{font-size:.78rem;color:#b9b9c2}
+.sidebar-bottom .site-btn{text-decoration:none;margin-top:.4rem;justify-content:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:99px;padding:.5rem .9rem;font-weight:600;font-size:.82rem;opacity:1;color:#fff}
+.sidebar-bottom .site-btn:hover{background:var(--v);border-color:var(--v)}
 main{padding:1.75rem clamp(1rem,3vw,2.5rem);max-width:1100px;width:100%}
 .top-label{font-size:.7rem;letter-spacing:.14em;color:var(--mut);font-weight:600}
 .admin-top h1{font:700 2.1rem var(--f-d);margin:.2rem 0;color:var(--ink);letter-spacing:.01em}
@@ -139,6 +144,7 @@ dialog::backdrop{background:rgba(20,30,25,.5)}
 .toast{position:fixed;bottom:1.25rem;left:50%;transform:translateX(-50%);background:var(--v);color:#fff;padding:.7rem 1.2rem;border-radius:99px;box-shadow:var(--sh);z-index:50}
 .toast.err{background:var(--danger)}
 
+.thumb img[src$="logo.png"],.hc .im img[src$="logo.png"],.mgrid .m img[src$="logo.png"],.minis img[src$="logo.png"],.pv-card .ph img[src$="logo.png"]{object-fit:contain;padding:12%;box-sizing:border-box;background:linear-gradient(135deg,var(--th1),var(--th2))}
 /* Barra superior */
 .topbar{display:flex;gap:.75rem;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
 .gsearch{position:relative;flex:1;max-width:520px}
@@ -154,14 +160,13 @@ dialog::backdrop{background:rgba(20,30,25,.5)}
 
 /* Inicio */
 .home{display:grid;gap:1.1rem}
-.hero{position:relative;overflow:hidden;border-radius:22px;color:#fff;padding:2rem 2rem 1.8rem;min-height:210px;background:radial-gradient(70% 130% at 88% 0%,rgba(236,31,122,.6),transparent 62%),linear-gradient(120deg,#0a0a0c 30%,#2a0d20)}
+.hero{position:relative;overflow:hidden;border-radius:22px;color:#fff;padding:2.2rem 2.2rem 2rem;min-height:200px;background:radial-gradient(34% 80% at 80% 46%,rgba(236,31,122,.34),transparent 100%),linear-gradient(115deg,#0a0a0c 35%,#17050f 100%)}
 .hero .kick{font:600 .85rem var(--f-u);letter-spacing:.12em;color:#ff5fa8;text-transform:uppercase}
 .hero h2{font:700 2.6rem var(--f-d);margin:.2rem 0 .3rem;letter-spacing:.01em}
 .hero p{margin:0 0 1.1rem;color:#d0d0d8;max-width:46ch}
 .hero .hbtns{display:flex;gap:.6rem;flex-wrap:wrap}
 .hero .ghost{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:var(--r);padding:.6rem 1.1rem;font-weight:600;text-decoration:none;display:inline-block}
 .hero .ghost:hover{background:rgba(255,255,255,.18)}
-.hero img{position:absolute;right:7%;top:-34px;height:330px;width:auto;transform:rotate(12deg);filter:drop-shadow(0 20px 40px rgba(236,31,122,.55));pointer-events:none}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
 .stat{background:var(--w);border:1px solid var(--div);border-radius:18px;padding:1rem 1.1rem;display:flex;gap:.9rem;align-items:center;box-shadow:var(--sh);text-align:left;width:100%}
 button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
@@ -262,17 +267,17 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   .admin-shell{grid-template-columns:1fr}
   .admin-sidebar{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;padding:.75rem}
   #nav{display:flex;flex-wrap:wrap;order:3;width:100%}
-  .sidebar-bottom{margin:0 0 0 auto;display:flex;gap:1rem}
+  .sidebar-bottom{margin:0 0 0 auto;display:flex;gap:1rem;align-items:center}.site-card{padding:.4rem .7rem;border-radius:99px}.site-card svg,.site-card b,.site-card span{display:none}.sidebar-bottom .site-btn{margin:0;border:0;background:transparent;padding:0}
   .admin-row{grid-template-columns:96px 1fr}
   .admin-actions{grid-column:1/-1;justify-content:flex-start}
   .thumb{width:96px;height:72px}
   .img-field{grid-template-columns:1fr}.img-field .thumb{width:100%;height:150px}
-  .admin-brand{padding:0;border:0;justify-items:start}.admin-brand img{width:84px}.admin-brand small{display:none}
+  .admin-brand{padding:0;border:0;justify-items:start}.admin-brand img{width:64px}.admin-brand small{display:none}
   .admin-nav.active::before{display:none}
   .pv-ev{grid-template-columns:56px 1fr}.pv-ev .ph{display:none}
   .stats{grid-template-columns:1fr 1fr}.cols{grid-template-columns:1fr}
   .hgrid{grid-template-columns:1fr 1fr}.hc .tx b{font-size:.85rem}.hc .tx span{display:none}.stat{padding:.8rem}.stat b{font-size:1.5rem}.stat .ic{display:none}
-  .hero{padding:1.4rem}.hero h2{font-size:2rem}.hero img{height:230px;right:-10px;top:-20px;opacity:.55}
+  .hero{padding:1.4rem}.hero h2{font-size:2rem}
   .topbar{flex-wrap:wrap}.gsearch{max-width:none;flex-basis:100%;order:3}
   .dialog-fields{grid-template-columns:1fr}
   .admin-tools,.admin-tools input{width:100%}
@@ -302,7 +307,12 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     <a class="admin-brand" data-site href="#" target="_blank" rel="noopener" aria-label="UP SKY · ver sitio"><img src="logo.png" alt="UP SKY Energy Drink"><small>ADMINISTRACIÓN</small></a>
     <nav id="nav" aria-label="Secciones"></nav>
     <div class="sidebar-bottom">
-      <a data-site href="#" target="_blank" rel="noopener">Ver sitio ↗</a>
+      <div class="site-card">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg>
+        <b>Tu sitio, siempre actualizado</b>
+        <span>Cada cambio que guardes se publica en la web.</span>
+        <a class="site-btn" data-site href="#" target="_blank" rel="noopener">Ver sitio web ↗</a>
+      </div>
       <button type="button" id="logout" class="linklike">Cerrar sesión</button>
     </div>
   </aside>
@@ -331,7 +341,6 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
           <button type="button" class="primary" data-open-preview>Vista previa del sitio</button>
           <a class="ghost" data-site href="#" target="_blank" rel="noopener">Ver sitio web ↗</a>
         </div>
-        <img src="bottle.webp" alt="">
       </div>
       <div class="stats" id="stats"></div>
       <div class="cols">
@@ -349,10 +358,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
           <div class="card"><div class="card-h"><h3 id="cal-title"></h3></div><div id="cal"></div></div>
         </div>
       </div>
-      <div class="cols">
-        <div class="card"><div class="card-h"><h3 id="media-title"></h3></div><div class="mgrid" id="mgrid"></div></div>
-        <div class="promo"><h4>Tu sitio, siempre actualizado</h4><p>Cada cambio que guardes se publica al instante.</p><a data-site href="#" target="_blank" rel="noopener">Ver sitio web ↗</a><img src="bottle.webp" alt=""></div>
-      </div>
+      <div class="card"><div class="card-h"><h3 id="media-title"></h3></div><div class="mgrid" id="mgrid"></div></div>
     </section>
 
     <div id="section-view">
@@ -531,7 +537,17 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   }
 
   const BAD = `onerror="this.classList.add('bad')"`;
-  const imgsOf = d => [1, 2, 3, 4].map(n => d['imagen_' + n]).filter(Boolean);
+  // Fotos que el sitio ya usa hoy: se muestran mientras el ítem no tenga una propia (eventos no tiene).
+  const SITE = (CFG.siteUrl || '/').replace(/\/?$/, '/') + 'assets/';
+  const SITE_IMGS = { Pack: ['pack-energizante.webp'], Vaso: ['vaso-negro-foto.webp', 'vaso-rosa-foto.webp'], Remera: ['remera-frente.webp', 'remera-espalda.webp'], Pallet: ['logo.png'] };
+  const siteFallback = d => {
+    const k = SITE_IMGS[d.tipo] ? d.tipo : d.unidades ? (/pallet/i.test(d.nombre || '') ? 'Pallet' : 'Pack') : null;
+    return k ? SITE_IMGS[k].map(f => SITE + f) : [];
+  };
+  const imgsOf = d => {
+    const own = [1, 2, 3, 4].map(n => d['imagen_' + n]).filter(Boolean);
+    return own.length ? own : siteFallback(d);
+  };
   const thumbHtml = (it, S, n) => {
     const d = it.data, imgs = imgsOf(d);
     if (current === 'pasos_negocios') return `<div class="thumb step">${n + 1}</div>`;
