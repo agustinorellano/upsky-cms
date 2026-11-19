@@ -51,8 +51,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--v)}
 .form-error{background:var(--dangerbg);color:var(--danger);padding:.55rem .75rem;border-radius:var(--r);font-size:.9rem;margin:0}
 
 /* Shell */
-.admin-shell{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
-.admin-sidebar{background:linear-gradient(180deg,#0a0a0c,#14101a);color:#fff;padding:1.25rem 1rem;display:flex;flex-direction:column;gap:1.5rem;position:sticky;top:0;height:100vh}
+.admin-shell{display:grid;grid-template-columns:264px 1fr;min-height:100vh}
+.admin-sidebar{background:linear-gradient(180deg,#0a0a0c,#14101a);color:#fff;padding:1.25rem 1rem;display:flex;flex-direction:column;gap:1.5rem;position:sticky;top:12px;height:calc(100vh - 24px);margin:12px 0 12px 12px;border-radius:26px;overflow:hidden;box-shadow:0 12px 40px rgba(10,6,16,.28)}
 .admin-brand{color:#fff;text-decoration:none;display:grid;justify-items:center;gap:.15rem;padding:.1rem 0 1.1rem;border-bottom:1px solid rgba(255,255,255,.08)}
 .brand-t{font:700 2.1rem/1 var(--f-d);letter-spacing:.02em;color:#fff}.brand-t b{color:var(--v);font-weight:700}
 .brand-s{margin-top:.45rem;font:600 .8rem var(--f-u);letter-spacing:.32em;text-transform:uppercase;color:#a4a4ad;padding-left:.32em}
@@ -90,9 +90,11 @@ main{padding:1.75rem clamp(1rem,3vw,2.5rem);max-width:1100px;width:100%}
 /* Lista */
 .admin-list{display:grid;gap:.65rem}
 .admin-row{display:grid;grid-template-columns:132px 1fr auto;gap:1.1rem;align-items:center;background:var(--w);border:1px solid var(--div);border-radius:var(--rl);padding:.7rem;box-shadow:var(--sh);transition:box-shadow .15s,transform .15s}
+.admin-row{cursor:pointer}
 .admin-row:hover{box-shadow:var(--shh);transform:translateY(-1px)}
+.admin-row:focus-visible{outline:2px solid var(--v);outline-offset:2px}
 .admin-row.off .thumb,.admin-row.off .admin-row-body{opacity:.55}
-.thumb{width:132px;height:96px;border-radius:12px;background:linear-gradient(135deg,var(--th1),var(--th2));position:relative;overflow:hidden;display:grid;place-items:center;color:#e8a3c4;flex:none;cursor:zoom-in}
+.thumb{width:132px;height:96px;border-radius:12px;background:linear-gradient(135deg,var(--th1),var(--th2));position:relative;overflow:hidden;display:grid;place-items:center;color:#e8a3c4;flex:none}
 .thumb.noimg{cursor:default}
 .thumb svg{width:34px;height:34px}
 .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff}
@@ -101,7 +103,7 @@ main{padding:1.75rem clamp(1rem,3vw,2.5rem);max-width:1100px;width:100%}
 .thumb .noimg-t{position:absolute;left:0;right:0;bottom:6px;text-align:center;font-size:.64rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#c27a9f}
 .thumb.step{background:linear-gradient(135deg,var(--v),#a3135a);color:#fff;font:700 2.4rem var(--f-d);cursor:default}
 .minis{display:flex;gap:4px;margin-top:.45rem}
-.minis img{width:30px;height:30px;border-radius:7px;object-fit:cover;border:1px solid var(--div);cursor:zoom-in;background:#fff}
+.minis img{width:30px;height:30px;border-radius:7px;object-fit:cover;border:1px solid var(--div);background:#fff}
 .chips{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.4rem}.chip{font-size:.72rem;font-weight:600;background:var(--bg);border:1px solid var(--div);border-radius:99px;padding:.1rem .55rem;color:var(--mut)}.chip.v{background:var(--vs);color:var(--v);border-color:#f7c3db}
 .meta{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--v);font-weight:600}
 .admin-row h2{font:600 1.05rem var(--f-u);margin:.1rem 0}
@@ -385,7 +387,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 
 @media (max-width:820px){
   .admin-shell{grid-template-columns:1fr}
-  .admin-sidebar{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;padding:.75rem}
+  .admin-sidebar{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;padding:.75rem;margin:10px 10px 0;border-radius:22px}
   #nav{display:flex;flex-wrap:wrap;order:3;width:100%}
   .sidebar-bottom{margin:0 0 0 auto;display:flex;gap:1rem;align-items:center}.site-card{padding:.4rem .7rem;border-radius:99px}.site-card svg,.site-card b,.site-card span{display:none}.sidebar-bottom .site-btn{margin:0;border:0;background:transparent;padding:0}
   .admin-row{grid-template-columns:96px 1fr}
@@ -683,7 +685,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     const d = it.data, imgs = imgsOf(d);
     if (current === 'pasos_negocios') return `<div class="thumb step">${n + 1}</div>`;
     if (!imgs.length) return `<div class="thumb noimg">${S.icon}<span class="noimg-t">Sin imagen</span></div>`;
-    return `<div class="thumb" data-zoom="${esc(imgUrl(imgs[0], 1200))}"><img src="${esc(imgUrl(imgs[0]))}" alt="" loading="lazy" ${BAD}>${S.icon}${imgs.length > 1 ? `<span class="cnt">${imgs.length} fotos</span>` : ''}</div>`;
+    return `<div class="thumb"><img src="${esc(imgUrl(imgs[0]))}" alt="" loading="lazy" ${BAD}>${S.icon}${imgs.length > 1 ? `<span class="cnt">${imgs.length} fotos</span>` : ''}</div>`;
   };
 
   let toastTimer;
@@ -782,10 +784,10 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     $('#list').innerHTML = items.length ? items.map(it => {
       const d = it.data;
       const chips = [d.etiqueta && `<span class="chip v">${esc(d.etiqueta)}</span>`, d.destacado === 'SI' && `<span class="chip">★ Destacado</span>`, d.colores && `<span class="chip">${esc(d.colores)}</span>`, d.fecha && `<span class="chip">${esc(fmtDate(d.fecha))}</span>`].filter(Boolean).join('');
-      const minis = imgsOf(d).length > 1 ? `<div class="minis">${imgsOf(d).map(u => `<img src="${esc(imgUrl(u))}" data-zoom="${esc(imgUrl(u, 1200))}" alt="" loading="lazy" ${BAD}>`).join('')}</div>` : '';
+      const minis = imgsOf(d).length > 1 ? `<div class="minis">${imgsOf(d).map(u => `<img src="${esc(imgUrl(u))}" alt="" loading="lazy" ${BAD}>`).join('')}</div>` : '';
       const canMove = filter === 'todos' && !query;
       const idx = all.indexOf(it);
-      return `<article class="admin-row${it.active ? '' : ' off'}">
+      return `<article class="admin-row${it.active ? '' : ' off'}" data-open-row="${it.id}" tabindex="0" role="button" aria-label="Editar ${esc(S.title(d) || 'elemento')}">
         <div>${thumbHtml(it, S, idx)}${minis}</div>
         <div class="admin-row-body"><span class="meta">${esc(S.meta(d) || '')}</span><h2>${esc(S.title(d) || '(sin nombre)')}</h2><p>${esc(S.sub(d) || '')}</p>${chips ? `<div class="chips">${chips}</div>` : ''}</div>
         <div class="admin-actions">
@@ -800,8 +802,11 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   }
 
   $('#list').addEventListener('click', async e => {
-    const z = e.target.closest('[data-zoom]'); if (z) return zoom(z.dataset.zoom);
-    const b = e.target.closest('[data-a]'); if (!b) return;
+    const b = e.target.closest('[data-a]');
+    if (!b) { // clic en cualquier parte de la tarjeta = editar
+      const row = e.target.closest('[data-open-row]'); const it = row && (cache[current] || []).find(x => x.id === row.dataset.openRow);
+      return it ? openForm(it) : undefined;
+    }
     const all = cache[current], it = all.find(x => x.id === b.dataset.id); if (!it) return;
     const a = b.dataset.a;
     if (a === 'edit') return openForm(it);
@@ -812,6 +817,12 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       it.active = !it.active; render(); return toast(it.active ? 'Ahora es visible en la web' : 'Ocultado de la web');
     }
     if (a === 'up' || a === 'down') return move(it, a === 'up' ? -1 : 1);
+  });
+
+  $('#list').addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('[data-open-row]')) {
+      e.preventDefault(); const it = (cache[current] || []).find(x => x.id === e.target.dataset.openRow); if (it) openForm(it);
+    }
   });
 
   async function move(it, dir) {
