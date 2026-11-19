@@ -298,6 +298,14 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 .sx-note{font-size:.78rem;color:var(--mut);text-align:center;margin:0}
 .sx.loading .sx-card,.sx.loading .sx-tile{opacity:.55;transition:opacity .15s}
 
+.sheet .fld select{background:var(--bg);border:1.5px solid transparent;border-radius:14px;padding:.8rem .95rem;font-size:.98rem;font-weight:500;color:var(--txt);width:100%}
+.sheet .fld select:focus{outline:0;background:var(--w);border-color:var(--v);box-shadow:0 0 0 4px rgba(236,31,122,.14)}
+.sv-promo{display:flex;align-items:center;gap:1rem;border-radius:18px;padding:1rem 1.2rem;border:1px solid rgba(236,31,122,.45);background:radial-gradient(60% 140% at 100% 50%,rgba(236,31,122,.3),transparent),#13090f}
+.sv-promo .tag{background:var(--v);color:#fff;font-size:.68rem;font-weight:700;border-radius:99px;padding:.2rem .65rem;letter-spacing:.06em;text-transform:uppercase}
+.sv-promo div{flex:1;display:grid;gap:.1rem}.sv-promo b{font-size:1rem}.sv-promo span{color:#c9c9d1;font-size:.82rem}.sv-promo small{color:#ff8fc2;font-size:.72rem}
+.sv-promo em{font:italic 900 1.6rem "Archivo","Oswald",sans-serif;color:#fff;font-style:italic}
+.sv-old{color:#8a8a94;font-size:.95rem;font-weight:500;margin-right:.3rem}
+
 /* Historial */
 .hx{display:grid;gap:1.1rem}
 .hx-list{display:grid;gap:.7rem}
@@ -748,6 +756,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     cal:   svg('<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/>'),
     feed:  svg('<path d="M4 5h16M4 12h16M4 19h10"/>'),
     card:  svg('<rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 10h19M6.5 15h4"/>'),
+    tag:   svg('<path d="M3 12V4h8l10 10-8 8L3 12z"/><circle cx="8" cy="9" r="1.4"/>'),
     chart: svg('<path d="M4 20V11M10 20V4M16 20v-6M22 20H2"/>'),
     hist:  svg('<path d="M3 12a9 9 0 109-9 9 9 0 00-6.4 2.6L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/>'),
     check: svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>'),
@@ -809,16 +818,34 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
         ...IMGS(1),
       ],
     },
+    promos: {
+      label: 'Promociones', icon: ICON.tag, desc: 'Banner y descuentos con fecha de inicio y fin. Se ven en el Inicio y en el Catálogo, y el carrito cobra el precio de la promo.',
+      title: i => i.nombre, meta: i => (i.descuento ? `−${i.descuento}%` : 'Promoción'),
+      sub: i => [promoTarget(i), i.texto].filter(Boolean).join(' · '),
+      fields: [
+        { key: 'nombre', label: 'Título del banner', required: true, max: 60, full: true, placeholder: 'Semana UP SKY' },
+        { key: 'descuento', label: 'Descuento', type: 'number', required: true, hint: 'De 1% a 90%. Se aplica antes de los descuentos por cantidad.' },
+        { key: 'producto', label: 'Aplica a', type: 'select', native: true, options: [['', 'Todos los productos']], hint: 'Los precios por mayor no entran en promociones.' },
+        { key: 'texto', label: 'Bajada (opcional)', type: 'textarea', full: true, max: 140, placeholder: '20% en todo el catálogo hasta el domingo' },
+        ...IMGS(1),
+      ],
+    },
   };
+  // Nombre del producto al que apunta una promoción (o "Todos los productos")
+  function promoTarget(i) {
+    if (!i.producto) return 'Todos los productos';
+    const p = (cache.productos || []).find(x => x.id === i.producto);
+    return p ? p.data.nombre : 'Producto eliminado';
+  }
 
   // Qué va en "Más opciones", prefijos/sufijos y textos de ayuda del nuevo formulario
-  const ADV = { productos: ['max_por_pedido', 'desc_desde_5', 'desc_desde_10', 'etiqueta', 'colores', 'descripcion', 'detalles'], mayorista: ['nota', 'detalles'], pasos_negocios: [], eventos: ['etiquetas', 'descripcion'] };
-  const AFFIX = { precio: { pre: '$' }, desc_desde_5: { suf: '%' }, desc_desde_10: { suf: '%' }, destacado: { sub: 'Aparece entre los productos de la página de inicio' } };
+  const ADV = { productos: ['max_por_pedido', 'desc_desde_5', 'desc_desde_10', 'etiqueta', 'colores', 'descripcion', 'detalles'], mayorista: ['nota', 'detalles'], pasos_negocios: [], eventos: ['etiquetas', 'descripcion'], promos: [] };
+  const AFFIX = { precio: { pre: '$' }, desc_desde_5: { suf: '%' }, desc_desde_10: { suf: '%' }, destacado: { sub: 'Aparece entre los productos de la página de inicio' }, descuento: { suf: '%', min: 1, max: 90 } };
   SECTIONS.productos.galHint = 'En vasos, la foto 1 es del primer color, la 2 del segundo, etc.';
   Object.entries(SECTIONS).forEach(([k, S]) => {
     S.fields.forEach(f => { if (ADV[k].includes(f.key)) f.adv = true; if (f.type === 'select' || f.key === 'presentacion') f.full = true; Object.assign(f, AFFIX[f.key] || {}); });
     // Publicación programada (plan Crecimiento): fechas opcionales guardadas junto al contenido
-    S.fields.push({ key: 'publicar_desde', label: 'Publicar desde', type: 'datetime', sched: true }, { key: 'ocultar_desde', label: 'Ocultar desde', type: 'datetime', sched: true });
+    S.fields.push({ key: 'publicar_desde', label: k === 'promos' ? 'Empieza el' : 'Publicar desde', type: 'datetime', sched: true }, { key: 'ocultar_desde', label: k === 'promos' ? 'Termina el' : 'Ocultar desde', type: 'datetime', sched: true });
   });
 
   // Estado real de cada elemento (misma regla que aplica la base: ver migrations/002)
@@ -1057,6 +1084,10 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   function fieldHtml(f, v) {
     const val = v ?? f.default ?? '', cls = f.full ? ' full' : '';
     const hint = f.hint ? `<small>${esc(f.hint)}</small>` : '';
+    if (f.type === 'select' && f.native) {
+      const opts = f.options.map(([ov, ol]) => `<option value="${esc(ov)}"${String(val) === String(ov) ? ' selected' : ''}>${esc(ol)}</option>`).join('');
+      return `<label class="fld${cls}">${esc(f.label)}<select name="${f.key}">${opts}</select>${hint}</label>`;
+    }
     if (f.type === 'datetime') return `<label class="fld">${esc(f.label)}<span class="inp"><input name="${f.key}" type="datetime-local" value="${esc(toLocal(val))}"></span></label>`;
     if (f.type === 'switch') {
       return `<label class="sw-row"><span><b>${esc(f.label)}</b>${f.sub ? `<small>${esc(f.sub)}</small>` : ''}</span><input class="sw" type="checkbox" name="${f.key}" value="SI" ${val === 'SI' ? 'checked' : ''}></label>`;
@@ -1067,7 +1098,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       return `<div class="fld${cls}"><span class="fld-l">${esc(f.label)}</span><div class="segs" role="radiogroup" aria-label="${esc(f.label)}">${opts.map(([ov, ol]) => `<label class="seg-o"><input type="radio" name="${f.key}" value="${esc(ov)}" ${String(val) === String(ov) ? 'checked' : ''}><span>${esc(ol)}</span></label>`).join('')}</div>${hint}</div>`;
     }
     const type = f.type === 'number' ? 'number' : f.type === 'date' ? 'date' : 'text';
-    return `<label class="fld${cls}">${esc(f.label)}<span class="inp${f.pre ? ' has-pre' : ''}${f.suf ? ' has-suf' : ''}">${f.pre ? `<i>${f.pre}</i>` : ''}<input name="${f.key}" type="${type}" ${type === 'number' ? 'step="any" min="0" inputmode="decimal"' : ''} value="${esc(val)}"
+    return `<label class="fld${cls}">${esc(f.label)}<span class="inp${f.pre ? ' has-pre' : ''}${f.suf ? ' has-suf' : ''}">${f.pre ? `<i>${f.pre}</i>` : ''}<input name="${f.key}" type="${type}" ${type === 'number' ? `step="any" min="${f.min ?? 0}" ${f.max ? `max="${f.max}"` : ''} inputmode="decimal"` : ''} value="${esc(val)}"
       ${f.required ? 'required' : ''} ${f.max ? `maxlength="${f.max}"` : ''} ${f.placeholder ? `placeholder="${esc(f.placeholder)}"` : ''}>${f.suf ? `<i>${f.suf}</i>` : ''}</span>${hint}</label>`;
   }
 
@@ -1106,6 +1137,8 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   function openForm(it) {
     editing = it;
     const S = SECTIONS[current], d = it ? it.data : {};
+    if (current === 'promos') S.fields.find(f => f.key === 'producto').options = [['', 'Todos los productos'], ...(cache.productos || []).map(x => [x.id, x.data.nombre || '(sin nombre)'])];
+    const isPromo = current === 'promos';
     const imgF = S.fields.filter(f => f.type === 'image'), sw = S.fields.filter(f => f.type === 'switch');
     const basic = S.fields.filter(f => !f.adv && f.type !== 'image' && f.type !== 'switch' && !f.sched), adv = S.fields.filter(f => f.adv), sch = S.fields.filter(f => f.sched);
     const hasSch = sch.some(f => d[f.key]);
@@ -1117,7 +1150,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       (imgF.length ? galleryHtml(S) : '') +
       `<div class="grid2">${basic.map(f => fieldHtml(f, d[f.key])).join('')}</div>` +
       `<div class="list-card">${sw.map(f => fieldHtml(f, d[f.key])).join('')}<label class="sw-row"><span><b>Mostrar en la web</b><small>Si lo apagás, queda guardado pero oculto.</small></span><input class="sw" type="checkbox" name="__active" ${(it ? it.active : true) ? 'checked' : ''}></label></div>` +
-      `<details class="more"${hasSch ? ' open' : ''}><summary>Programar publicación${hasSch ? ' <span class="chip sch">activa</span>' : ''}</summary><div class="grid2">${sch.map(f => fieldHtml(f, d[f.key])).join('')}<small class="full" style="color:var(--mut)">Opcional. Con “Publicar desde” el elemento aparece en el sitio recién en esa fecha; con “Ocultar desde” deja de verse solo. Si lo dejás vacío, se publica ya y sin fecha de fin.</small></div></details>` +
+      `<details class="more"${hasSch || isPromo ? ' open' : ''}><summary>${isPromo ? 'Fechas de la promoción' : 'Programar publicación'}${hasSch && !isPromo ? ' <span class="chip sch">activa</span>' : ''}</summary><div class="grid2">${sch.map(f => fieldHtml(f, d[f.key])).join('')}<small class="full" style="color:var(--mut)">${isPromo ? 'La promo se muestra y baja los precios solo entre estas dos fechas. Si no ponés fecha de fin, sigue hasta que la ocultes.' : 'Opcional. Con “Publicar desde” el elemento aparece en el sitio recién en esa fecha; con “Ocultar desde” deja de verse solo. Si lo dejás vacío, se publica ya y sin fecha de fin.'}</small></div></details>` +
       (adv.length ? `<details class="more"><summary>Más opciones</summary><div class="grid2">${adv.map(f => fieldHtml(f, d[f.key])).join('')}</div></details>` : '');
     if (imgF.length) renderGal();
     $('#form-error').hidden = true;
@@ -1168,6 +1201,9 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       if (v === '') return;
       data[f.key] = f.type === 'number' ? Number(v) : v;
     });
+    if (current === 'promos' && !(Number(data.descuento) >= 1 && Number(data.descuento) <= 90)) {
+      const el = $('#form-error'); el.textContent = 'El descuento tiene que estar entre 1% y 90%.'; el.hidden = false; return;
+    }
     if (data.publicar_desde && data.ocultar_desde && Date.parse(data.ocultar_desde) <= Date.parse(data.publicar_desde)) {
       const el = $('#form-error'); el.textContent = '“Ocultar desde” tiene que ser posterior a “Publicar desde”.'; el.hidden = false; return;
     }
@@ -1201,7 +1237,9 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     return m ? `${+m[3]} ${MESES[+m[2] - 1]} ${m[1]}` : s;
   }
   const PV_PAGES = [['inicio', 'Inicio', 'index.html'], ['catalogo', 'Catálogo', 'catalogo.html'], ['negocios', 'Para negocios', 'negocios.html'], ['eventos', 'Eventos', 'eventos.html']];
-  const PV_FOR = { productos: 'catalogo', mayorista: 'negocios', pasos_negocios: 'negocios', eventos: 'eventos' };
+  const PV_FOR = { productos: 'catalogo', mayorista: 'negocios', pasos_negocios: 'negocios', eventos: 'eventos', promos: 'catalogo' };
+  let pvPromos = [];
+  const promoFor = d => pvPromos.filter(pr => Number(pr.descuento) > 0 && (!pr.producto || pr.producto === d.id)).sort((a, b) => b.descuento - a.descuento)[0] || null;
   const PV_HERO = {
     inicio: ['UP SKY · Energy Drink', ['Más energía', 'para tu día'], 'UP SKY es una bebida energizante pensada para acompañarte en todo momento. Energía, sabor y actitud en una sola botella.', 'Ver catálogo'],
     catalogo: ['UP SKY · Catálogo', ['Elegí tu', 'energía.'], 'Descubrí todos los formatos de UP SKY y encontrá tu próxima dosis de energía.', 'Pedir por WhatsApp'],
@@ -1222,8 +1260,9 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       Number(d.desc_desde_5) ? `<li><b>${Number(d.desc_desde_5)}% OFF</b> desde 5 ${unitOf(d)}</li>` : '',
       Number(d.desc_desde_10) ? `<li><b>${Number(d.desc_desde_10)}% OFF</b> desde 10 ${unitOf(d)}</li>` : '',
       Number(d.max_por_pedido) ? `<li>Máximo ${Number(d.max_por_pedido)} por pedido</li>` : ''].filter(Boolean);
-    return `<article class="sv-card">${mediaHtml(d, d.etiqueta)}<div class="sv-body"><h4>${esc(d.nombre || '')}</h4><div class="sv-pres">${esc([d.presentacion, d.colores].filter(Boolean).join(' · '))}</div>
-      ${tiers.length ? `<ul class="sv-tiers">${tiers.join('')}</ul>` : ''}<div class="sv-price">${price(d)}</div>
+    const pr = wholesale ? null : promoFor(d), base = Number(d.precio), fin = pr ? Math.round(base * (1 - Number(pr.descuento) / 100)) : base;
+    return `<article class="sv-card">${mediaHtml(d, pr ? `−${pr.descuento}%` : d.etiqueta)}<div class="sv-body"><h4>${esc(d.nombre || '')}</h4><div class="sv-pres">${esc([d.presentacion, d.colores].filter(Boolean).join(' · '))}</div>
+      ${tiers.length ? `<ul class="sv-tiers">${tiers.join('')}</ul>` : ''}<div class="sv-price">${pr ? `<s class="sv-old">${price(d)}</s> ${price({ precio: fin })}` : price(d)}</div>
       <div class="sv-buy"><span class="sv-qty"><span>−</span><b>1</b><span>+</span></span><span class="sv-add">Agregar al carrito</span></div></div></article>`;
   }
   function eventNext(items) {
@@ -1243,20 +1282,23 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   }
 
   function pageHtml(page, dev) {
-    const pub = k => (cache[k] || []).filter(isLive).map(x => x.data);
+    const pub = k => (cache[k] || []).filter(isLive).map(x => ({ id: x.id, ...x.data }));
+    pvPromos = pub('promos');
     const [eye, title, lead, cta] = PV_HERO[page];
     const mobile = dev === 'mobile';
     const nav = `<div class="sv-nav"><img src="logo.png" alt="UP SKY">${mobile ? '<div class="sv-burger"><i></i><i></i><i></i></div>' :
       `<div class="sv-links">${[['inicio', 'Inicio'], ['producto', 'Producto'], ['catalogo', 'Catálogo'], ['eventos', 'Eventos'], ['negocios', 'Para negocios']].map(([k, l]) => `<span class="${k === page ? 'on' : ''}">${l}</span>`).join('')}</div><span class="sv-wa">Pedir por WhatsApp</span>`}</div>`;
     const banner = `<div class="sv-banner"><p class="sv-eye">${esc(eye)}</p><h1 class="sv-h1"><span>${esc(title[0])}</span><span class="acc">${esc(title[1])}</span></h1><p class="sv-lead">${esc(lead)}</p><span class="sv-cta">${esc(cta)}</span></div>`;
     let body = '';
+    const promo = pvPromos.slice().sort((a, b) => b.descuento - a.descuento)[0];
+    const strip = promo ? `<div class="sv-sec" style="padding-bottom:0"><div class="sv-promo"><span class="tag">Promo</span><div><b>${esc(promo.nombre || '')}</b>${promo.texto ? `<span>${esc(promo.texto)}</span>` : ''}${promo.ocultar_desde ? `<small>Hasta el ${esc(new Date(promo.ocultar_desde).toLocaleDateString('es-AR', { day: 'numeric', month: 'long' }))}</small>` : ''}</div><em>−${promo.descuento}%</em></div></div>` : '';
     if (page === 'inicio') {
       const feat = pub('productos').filter(d => d.destacado === 'SI').slice(0, 3);
-      body = `<div class="sv-sec"><h3>Nuestros <span class="acc">productos</span></h3><p class="sv-sub">Los destacados que se ven en el inicio.</p>${feat.length ? `<div class="sv-grid">${feat.map(d => productCard(d)).join('')}</div>` : '<div class="sv-empty">No hay productos destacados publicados.</div>'}</div>
+      body = `${strip}<div class="sv-sec"><h3>Nuestros <span class="acc">productos</span></h3><p class="sv-sub">Los destacados que se ven en el inicio.</p>${feat.length ? `<div class="sv-grid">${feat.map(d => productCard(d)).join('')}</div>` : '<div class="sv-empty">No hay productos destacados publicados.</div>'}</div>
         <div class="sv-sec" style="padding-top:0">${nextBanner(eventNext(pub('eventos'))) || ''}</div>`;
     } else if (page === 'catalogo') {
       const it = pub('productos');
-      body = `<div class="sv-sec"><h3>Elegí tu <span class="acc">UP SKY</span></h3><p class="sv-sub">${it.length} producto${it.length === 1 ? '' : 's'} publicado${it.length === 1 ? '' : 's'}</p>${it.length ? `<div class="sv-grid">${it.map(d => productCard(d)).join('')}</div>` : '<div class="sv-empty">No hay productos publicados.</div>'}</div>`;
+      body = `${strip}<div class="sv-sec"><h3>Elegí tu <span class="acc">UP SKY</span></h3><p class="sv-sub">${it.length} producto${it.length === 1 ? '' : 's'} publicado${it.length === 1 ? '' : 's'}</p>${it.length ? `<div class="sv-grid">${it.map(d => productCard(d)).join('')}</div>` : '<div class="sv-empty">No hay productos publicados.</div>'}</div>`;
     } else if (page === 'negocios') {
       const it = pub('mayorista'), st = pub('pasos_negocios');
       body = `<div class="sv-sec"><h3>Elegí tu <span class="acc">volumen</span></h3><p class="sv-sub">Ventas por mayor · precios sin envío</p>${it.length ? `<div class="sv-grid two">${it.map(d => productCard(d, true)).join('')}</div>` : '<div class="sv-empty">No hay precios por mayor publicados.</div>'}</div>
@@ -1402,7 +1444,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 
   // ── Historial de cambios con deshacer (plan Crecimiento) ─────────────────────
   let hx = { rows: null, group: 'todas', loading: false, error: null };
-  const HX_GROUPS = [['todas', 'Todo'], ['productos', 'Catálogo'], ['negocios', 'Para negocios'], ['eventos', 'Eventos']];
+  const HX_GROUPS = [['todas', 'Todo'], ['productos', 'Catálogo'], ['negocios', 'Para negocios'], ['eventos', 'Eventos'], ['promos', 'Promociones']];
   const inGroup = (g, sec) => g === 'todas' || (g === 'negocios' ? sec === 'mayorista' || sec === 'pasos_negocios' : g === sec);
   const rtf = new Intl.RelativeTimeFormat('es', { numeric: 'auto' });
   const ago = iso => { const s = (new Date(iso) - Date.now()) / 1000, a = Math.abs(s); return a < 60 ? 'recién' : a < 3600 ? rtf.format(Math.round(s / 60), 'minute') : a < 86400 ? rtf.format(Math.round(s / 3600), 'hour') : a < 2592000 ? rtf.format(Math.round(s / 86400), 'day') : new Date(iso).toLocaleDateString('es-AR', { day: 'numeric', month: 'short', year: 'numeric' }); };
@@ -1475,7 +1517,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     { id: 'basico', name: 'Básico', tag: 'El panel de contenido y el mantenimiento de tu sitio.', price: 100, features: [
       'Mantenimiento de la página web incluido', 'Editar Catálogo, Para negocios y Eventos', 'Subida de imágenes', 'Vista previa del sitio', '1 usuario administrador', 'Soporte por mail y WhatsApp'] },
     { id: 'crecimiento', name: 'Crecimiento', tag: 'Para medir resultados y crecer.', price: 200, hl: true, features: [
-      'Todo lo del Básico, más:', 'Estadísticas de visitas y clics', 'Publicación programada', 'Historial de cambios con deshacer', { t: 'Promociones con fecha de inicio y fin', soon: true }, { t: 'Hasta 3 usuarios con roles', soon: true }] },
+      'Todo lo del Básico, más:', 'Estadísticas de visitas y clics', 'Publicación programada', 'Historial de cambios con deshacer', 'Promociones con fecha de inicio y fin', { t: 'Hasta 3 usuarios con roles', soon: true }] },
     { id: 'pro', name: 'Pro', tag: 'Para vender y gestionar pedidos.', price: 350, soon: true, features: [
       'Todo lo del Crecimiento, más:', 'Pedidos dentro del panel, con estados', 'Lista de precios por mayorista', 'Pago online en el sitio, con stock', 'Avisos automáticos de pedidos', 'Soporte prioritario e informe mensual'] },
   ];
@@ -1511,7 +1553,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
           <ul class="pl-feat">${pl.features.map((f, i) => { const t = f.t || f, soon = !!f.soon || pl.soon, head = i === 0 && pl.id !== 'basico'; return `<li${head ? ' class="all"' : ''}>${head ? '' : ICON.check}<span>${esc(t)}${soon && !head && !pl.soon ? ' <em class="pl-soon">Próximamente</em>' : ''}</span></li>`; }).join('')}</ul>
           <button type="button" class="pl-cta" data-choose="${pl.id}" ${isCur ? 'disabled' : ''}>${isCur ? 'Plan actual' : 'Elegir ' + esc(pl.name)}</button></article>`;
       }).join('')}</div>
-      <p class="pl-note">Crecimiento ya incluye estadísticas, publicación programada e historial; promociones y usuarios se suman próximamente. Las funciones de Pro se irán sumando.</p>
+      <p class="pl-note">Crecimiento ya incluye estadísticas, publicación programada, historial y promociones; los usuarios con roles se suman próximamente. Las funciones de Pro se irán sumando.</p>
       <div class="pl-hist"><h3>Historial de pagos</h3><div class="pl-empty">Todavía no hay pagos registrados. Cuando se conecte el cobro, acá vas a ver cada pago y su factura.</div></div>`;
   }
   $('#plan').addEventListener('click', e => {
@@ -1535,7 +1577,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   });
 
   // ── Crear contenido (menú) ──────────────────────────────────────────────────
-  const CREATE = [['productos', 'Producto del catálogo', ICON.box], ['mayorista', 'Precio por mayor', ICON.store], ['pasos_negocios', 'Paso de “Cómo funciona”', ICON.steps], ['eventos', 'Evento', ICON.star]];
+  const CREATE = [['productos', 'Producto del catálogo', ICON.box], ['mayorista', 'Precio por mayor', ICON.store], ['pasos_negocios', 'Paso de “Cómo funciona”', ICON.steps], ['eventos', 'Evento', ICON.star], ['promos', 'Promoción', ICON.tag]];
   $('#create-menu').innerHTML = CREATE.map(([k, l, i]) => `<button type="button" data-new="${k}">${i}${esc(l)}</button>`).join('');
   const toggleMenu = open => { $('#create-menu').hidden = !open; $('#create-btn').setAttribute('aria-expanded', open); };
   $('#create-btn').addEventListener('click', e => { e.stopPropagation(); toggleMenu($('#create-menu').hidden); });
@@ -1545,7 +1587,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   // ── Inicio ──────────────────────────────────────────────────────────────────
   const MES_L = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   const now = new Date();
-  const SHORT = { productos: 'Catálogo', mayorista: 'Precios', pasos_negocios: 'Cómo funciona', eventos: 'Eventos' };
+  const SHORT = { productos: 'Catálogo', mayorista: 'Precios', pasos_negocios: 'Cómo funciona', eventos: 'Eventos', promos: 'Promociones' };
   let cal = { y: now.getFullYear(), m: now.getMonth() }, hf = 'todas', hq = '', hAll = false;
   const todayStr = () => new Date().toISOString().slice(0, 10);
   const allItems = () => Object.keys(SECTIONS).flatMap(k => (cache[k] || []).map(it => ({ ...it, _s: k })));
