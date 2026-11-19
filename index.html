@@ -1187,13 +1187,13 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 
   // ── Mi plan (suscripción) · DEMOSTRACIÓN: precios de ejemplo y estado simulado ──
   // Cuando se conecte Stripe, "estado" saldrá de la base y los botones abrirán Checkout / el portal.
-  const PLAN_CFG = { currency: 'ARS', locale: 'es-AR', annualDiscount: 0.15 };
+  const PLAN_CFG = { currency: 'USD', locale: 'es-AR', annualDiscount: 0.15 };
   const PLANS = [
-    { id: 'basico', name: 'Básico', tag: 'Lo esencial para mantener tu sitio al día.', price: 35000, features: [
-      'Editar Catálogo, Para negocios y Eventos', 'Subida de imágenes', 'Vista previa del sitio', '1 usuario administrador', 'Soporte por mail y WhatsApp'] },
-    { id: 'crecimiento', name: 'Crecimiento', tag: 'Para medir resultados y crecer.', price: 70000, soon: true, hl: true, features: [
+    { id: 'basico', name: 'Básico', tag: 'El panel de contenido y el mantenimiento de tu sitio.', price: 100, features: [
+      'Mantenimiento de la página web incluido', 'Editar Catálogo, Para negocios y Eventos', 'Subida de imágenes', 'Vista previa del sitio', '1 usuario administrador', 'Soporte por mail y WhatsApp'] },
+    { id: 'crecimiento', name: 'Crecimiento', tag: 'Para medir resultados y crecer.', price: 200, soon: true, hl: true, features: [
       'Todo lo del Básico, más:', 'Estadísticas de visitas y clics', 'Publicación programada', 'Promociones con fecha de inicio y fin', 'Historial de cambios con deshacer', 'Hasta 3 usuarios con roles'] },
-    { id: 'pro', name: 'Pro', tag: 'Para vender y gestionar pedidos.', price: 120000, soon: true, features: [
+    { id: 'pro', name: 'Pro', tag: 'Para vender y gestionar pedidos.', price: 350, soon: true, features: [
       'Todo lo del Crecimiento, más:', 'Pedidos dentro del panel, con estados', 'Lista de precios por mayorista', 'Pago online en el sitio, con stock', 'Avisos automáticos de pedidos', 'Soporte prioritario e informe mensual'] },
   ];
   let planState = { plan: 'basico', period: 'mes' };
@@ -1207,7 +1207,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     const cur = PLANS.find(x => x.id === planState.plan) || PLANS[0], anual = planState.period === 'anio';
     const total = anual ? perMonth(cur) * 12 : cur.price;
     $('#plan').innerHTML = `
-      <div class="pl-demo">Vista de demostración: los precios son de ejemplo y todavía no se cobra nada. El cobro real con Stripe se conecta en el siguiente paso.</div>
+      <div class="pl-demo">Vista de demostración: el Básico (US$ 100) es el valor definido; los otros dos planes son de ejemplo. Todavía no se cobra nada. El cobro real con Stripe se conecta en el siguiente paso.</div>
       <header class="admin-top"><span class="top-label">SUSCRIPCIÓN</span><h1>Mi plan</h1><p>Elegí el plan de UP SKY, mirá tu próximo cobro y administrá tu suscripción.</p></header>
       <div class="pl-current">
         <div><span class="k">Plan actual</span><h2>${esc(cur.name)} <span class="pl-pill">Activo</span></h2><span style="color:#b9b9c2;font-size:.88rem">${esc(cur.tag)}</span></div>
