@@ -8,7 +8,7 @@
 <script>try{var t=localStorage.getItem('upsky-cms-theme');document.documentElement.dataset.theme=t==='dark'?'dark':'light'}catch(e){}</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Archivo:ital,wdth,wght@1,125,900&display=swap" rel="stylesheet">
 <style>
 :root{
   --v:#ec1f7a; --vh:#d41a6c; --vs:#FDECF4; --bg:#F6F6F8; --w:#fff; --txt:#2A2A2A; --mut:#6b736f;
@@ -289,46 +289,93 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 @keyframes sheet-up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
 
 /* Vista previa del sitio */
-#preview-dialog{width:min(1040px,calc(100% - 1.5rem))}
-.pv-bar{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid var(--div);position:sticky;top:0;background:var(--w);z-index:2;border-radius:var(--rl) var(--rl) 0 0}
-.pv-bar h2{margin:0;font:700 1.3rem var(--f-d)}
-.pv-bar p{margin:0;font-size:.8rem;color:var(--mut)}
-.pv-stage{background:var(--bg);padding:1.25rem;display:grid;justify-items:center;min-height:50vh}
-.pv-site{background:#0a0a0c;color:#fff;width:100%;border-radius:14px;padding:1.5rem;transition:width .2s}
-.pv-site.mobile{width:390px;max-width:100%}
-.pv-site h3{font:700 1.5rem var(--f-d);margin:0 0 .25rem;letter-spacing:.02em}
-.pv-site .lead{color:#b9b9c2;margin:0 0 1.1rem;font-size:.9rem}
-.pv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
-.pv-site.mobile .pv-grid{grid-template-columns:1fr}
-.pv-card{background:#16161b;border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
-.pv-card .ph{aspect-ratio:4/3;position:relative;background:linear-gradient(135deg,#2a1020,#1a1a20);display:grid;place-items:center;color:#6d2a4b}
-.pv-card .ph svg{width:40px;height:40px}
-.pv-card .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.pv-card .ph img.bad{display:none}
-.pv-card .tag{position:absolute;left:10px;top:10px;background:var(--v);color:#fff;font-size:.7rem;font-weight:700;padding:.2rem .6rem;border-radius:99px;z-index:1}
-.pv-card .bd{padding:.9rem 1rem 1.1rem;display:grid;gap:.3rem}
-.pv-card h4{margin:0;font:600 1.05rem var(--f-u)}
-.pv-card .sub{color:#b9b9c2;font-size:.85rem}
-.pv-card .pr{font:700 1.4rem var(--f-d);color:#ff5fa8;margin-top:.2rem}
-.pv-card .dsc{font-size:.78rem;color:#9ee5bd}
-.pv-card .desc{font-size:.82rem;color:#b9b9c2}
-.pv-card .btnp{margin-top:.5rem;background:var(--v);color:#fff;text-align:center;border-radius:99px;padding:.5rem;font-weight:700;font-size:.85rem}
-.pv-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;counter-reset:s}
-.pv-site.mobile .pv-steps{grid-template-columns:1fr}
-.pv-step{background:#16161b;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:1.1rem;display:grid;gap:.35rem}
-.pv-step b{width:34px;height:34px;border-radius:50%;background:var(--v);display:grid;place-items:center;font:700 1rem var(--f-d)}
-.pv-step h4{margin:.3rem 0 0;font:600 1rem var(--f-u)}.pv-step p{margin:0;color:#b9b9c2;font-size:.85rem}
-.pv-ev{display:grid;grid-template-columns:64px 1fr 120px;gap:1rem;align-items:center;background:#16161b;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:.8rem}
-.pv-site.mobile .pv-ev{grid-template-columns:56px 1fr}.pv-site.mobile .pv-ev .ph{display:none}
-.pv-ev + .pv-ev{margin-top:.75rem}
-.pv-date{background:var(--v);border-radius:12px;text-align:center;padding:.4rem 0;line-height:1.05}
-.pv-date b{display:block;font:700 1.6rem var(--f-d)}.pv-date span{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase}
-.pv-ev h4{margin:0;font:600 1.05rem var(--f-u)}.pv-ev .sub{color:#b9b9c2;font-size:.85rem}
-.pv-ev .ph{height:76px;border-radius:10px;position:relative;overflow:hidden;background:linear-gradient(135deg,#2a1020,#1a1a20);display:grid;place-items:center;color:#6d2a4b}
-.pv-ev .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.pv-ev .ph img.bad{display:none}
-.pv-ev .ph svg{width:28px;height:28px}
-.pv-banner{display:inline-block;background:#fff;color:var(--v);font-size:.68rem;font-weight:700;border-radius:99px;padding:.1rem .55rem;margin-left:.4rem;vertical-align:middle}
-.pv-empty{padding:2.5rem;text-align:center;color:#b9b9c2;border:1px dashed rgba(255,255,255,.2);border-radius:14px}
+#preview-dialog{width:min(1220px,calc(100% - 2rem));height:min(94vh,940px);max-height:94vh;border-radius:26px;overflow:hidden}
+#preview-dialog[open]{display:flex;flex-direction:column;animation:pv-in .28s cubic-bezier(.2,.8,.2,1)}
+#preview-dialog::backdrop{background:rgba(12,10,16,.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+@keyframes pv-in{from{transform:scale(.97);opacity:0}to{transform:none;opacity:1}}
+.pv-top{display:flex;flex-wrap:wrap;gap:.8rem 1.2rem;justify-content:space-between;align-items:center;padding:1.1rem 1.4rem;border-bottom:1px solid var(--div);background:var(--w)}
+.pv-title h2{margin:0;font:700 1.35rem var(--f-d);color:var(--ink)}
+.pv-title p{margin:.1rem 0 0;font-size:.8rem;color:var(--mut)}
+.pv-ctrls{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.pv-ctrls .round-x{text-decoration:none;color:var(--txt);font-size:1.1rem}
+.pv-stage{flex:1;min-height:0;overflow:auto;background:var(--bg);padding:1.4rem;display:flex;justify-content:center;align-items:flex-start}
+.sv-browser{width:100%;max-width:1120px;border-radius:14px;overflow:hidden;background:#0a0a0c;box-shadow:0 20px 60px rgba(0,0,0,.28),0 0 0 1px rgba(0,0,0,.12)}
+.sv-chrome{display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;background:#1b1b20}
+.sv-chrome i{width:11px;height:11px;border-radius:50%;background:#ff5f57}.sv-chrome i:nth-child(2){background:#febc2e}.sv-chrome i:nth-child(3){background:#28c840}
+.sv-url{flex:1;margin:0 .6rem;background:#0d0d10;color:#a4a4ad;font-size:.76rem;border-radius:8px;padding:.3rem .7rem;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-phone{width:390px;max-width:100%;border-radius:46px;background:#0a0a0c;border:10px solid #17171b;box-shadow:0 20px 60px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.08);overflow:hidden;position:relative}
+.sv-phone::before{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);width:96px;height:24px;border-radius:99px;background:#17171b;z-index:5}
+.sv-view{background:#0a0a0c;color:#fff;font-family:var(--f-u);max-height:calc(94vh - 250px);overflow:auto;text-align:left}
+.sv-phone .sv-view{height:min(690px,calc(94vh - 240px));max-height:none;padding-top:22px}
+.sv-live{position:relative;background:#0a0a0c;overflow:hidden}
+.sv-live iframe{border:0;display:block;background:#0a0a0c;transform-origin:0 0}
+.sv-nav{display:flex;align-items:center;gap:1rem;padding:.8rem 1.4rem;background:rgba(10,10,12,.9);position:sticky;top:0;z-index:4;backdrop-filter:blur(8px)}
+.sv-nav img{height:36px;width:auto}
+.sv-links{display:flex;gap:1.2rem;margin:0 auto;font-size:.8rem;font-weight:600;color:#c9c9d1}
+.sv-links .on{color:#fff;box-shadow:0 2px 0 var(--v)}
+.sv-wa{background:var(--v);color:#fff;font-size:.74rem;font-weight:700;border-radius:99px;padding:.45rem .9rem;white-space:nowrap}
+.sv-burger{margin-left:auto;display:grid;gap:4px}.sv-burger i{width:20px;height:2px;background:#fff;border-radius:2px}
+.sv-banner{padding:3rem 2rem 3.2rem;background:radial-gradient(32% 38% at 80% 46%,rgba(236,31,122,.34),transparent 100%),linear-gradient(115deg,#0a0a0c 35%,#17050f 100%)}
+.sv-eye{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--v);margin:0 0 .8rem}
+.sv-h1{margin:0 0 .8rem;font:italic 900 clamp(2rem,5vw,3.6rem)/.98 "Archivo","Oswald",sans-serif;font-stretch:125%;text-transform:uppercase;letter-spacing:-.01em}
+.sv-h1 span{display:block}.sv-h1 .acc{color:var(--v)}
+.sv-lead{margin:0 0 1.2rem;color:#c9c9d1;max-width:46ch;font-size:.95rem}
+.sv-cta{display:inline-block;background:var(--v);color:#fff;font-weight:700;border-radius:99px;padding:.65rem 1.3rem;font-size:.85rem}
+.sv-sec{padding:1.8rem 2rem}
+.sv-sec h3{margin:0 0 .3rem;font:italic 900 1.5rem "Archivo","Oswald",sans-serif;font-stretch:125%;text-transform:uppercase}
+.sv-sec h3 .acc{color:var(--v)}
+.sv-sub{margin:0 0 1.1rem;color:#a4a4ad;font-size:.85rem}
+.sv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+.sv-grid.two{grid-template-columns:repeat(2,1fr)}
+.sv-card{background:#111114;border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.sv-media{position:relative;aspect-ratio:1/1;background:radial-gradient(circle at 50% 40%,rgba(236,31,122,.35),transparent 72%),#0f0f12;display:grid;place-items:center}
+.sv-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sv-media img.bad{display:none}
+.sv-media img[src$="logo.png"]{object-fit:contain;padding:22%;box-sizing:border-box}
+.sv-media .ph-i{width:42px;height:42px;color:#6d2a4b}
+.sv-badge{position:absolute;left:12px;top:12px;z-index:2;background:var(--v);color:#fff;font-size:.7rem;font-weight:700;border-radius:99px;padding:.2rem .65rem}
+.sv-body{padding:1rem 1.1rem 1.2rem;display:grid;gap:.35rem}
+.sv-body h4{margin:0;font:700 1.05rem var(--f-u)}
+.sv-pres{color:#a4a4ad;font-size:.82rem}
+.sv-tiers{margin:.2rem 0 0;padding:0;list-style:none;display:grid;gap:.15rem;font-size:.78rem;color:#c9c9d1}
+.sv-tiers b{color:var(--v)}
+.sv-price{font:700 1.55rem var(--f-d);margin-top:.3rem}
+.sv-buy{display:flex;gap:.5rem;align-items:center;margin-top:.5rem}
+.sv-qty{display:flex;align-items:center;gap:.7rem;border:1px solid rgba(255,255,255,.18);border-radius:99px;padding:.3rem .8rem;font-size:.85rem}
+.sv-add{flex:1;background:var(--v);border-radius:99px;text-align:center;padding:.55rem;font-weight:700;font-size:.82rem}
+.sv-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;padding:0;margin:0;list-style:none}
+.sv-steps li{background:#111114;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:1rem;display:grid;gap:.3rem}
+.sv-steps .n{font:italic 900 1.6rem "Archivo",sans-serif;color:transparent;-webkit-text-stroke:1.5px var(--v)}
+.sv-steps b{font-size:.95rem}.sv-steps p{margin:0;font-size:.8rem;color:#a4a4ad}
+.sv-sheet{background:#fff;color:#14141a;border-radius:28px 28px 0 0;margin-top:-26px;position:relative;padding:1.6rem 2rem 2.2rem}
+.sv-next{background:#0a0a0c;color:#fff;border-radius:22px;padding:1.4rem 1.6rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:center;background:radial-gradient(40% 90% at 90% 50%,rgba(236,31,122,.35),transparent),#0a0a0c}
+.sv-next .k{font-size:.66rem;letter-spacing:.16em;color:var(--v);font-weight:700}
+.sv-next h4{margin:.2rem 0;font:italic 900 1.7rem "Archivo",sans-serif;font-stretch:125%;text-transform:uppercase}
+.sv-next p{margin:0 0 .8rem;color:#c9c9d1;font-size:.85rem}
+.sv-count{display:flex;gap:.5rem}.sv-count div{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:.5rem .8rem;text-align:center;min-width:58px}
+.sv-count b{display:block;font:700 1.5rem var(--f-d)}.sv-count span{font-size:.6rem;letter-spacing:.1em;color:#a4a4ad}
+.sv-chips{display:flex;gap:.45rem;flex-wrap:wrap;margin:1.1rem 0}
+.sv-chips span{background:#f2f2f5;border-radius:99px;padding:.35rem .85rem;font-size:.78rem;font-weight:600}
+.sv-chips .on{background:#0a0a0c;color:#fff}
+.sv-evs{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.sv-ev .sv-media{aspect-ratio:4/3;border-radius:16px;overflow:hidden}
+.sv-ev .m{display:flex;gap:.5rem;align-items:center;margin:.6rem 0 .2rem;font-size:.72rem;color:#6b6b75}
+.sv-ev .t{background:var(--v);color:#fff;font-weight:700;border-radius:99px;padding:.1rem .55rem;font-size:.66rem;text-transform:uppercase}
+.sv-ev h4{margin:0;font:700 1rem var(--f-u)}.sv-ev .pl{font-size:.7rem;color:var(--v);font-weight:700;text-transform:uppercase;margin-top:.2rem}
+.sv-agenda{margin-top:1.8rem}.sv-agenda h3{color:#14141a}
+.sv-row{display:grid;grid-template-columns:56px 1fr auto;gap:1rem;align-items:center;padding:.8rem 0;border-bottom:1px solid #ececf0}
+.sv-date{background:#0a0a0c;color:#fff;border-radius:12px;text-align:center;padding:.35rem 0;line-height:1.05}
+.sv-date b{display:block;font:700 1.3rem var(--f-d)}.sv-date span{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--v)}
+.sv-row h4{margin:0;font-size:.95rem}.sv-row p{margin:0;font-size:.78rem;color:#6b6b75}
+.sv-ghost{border:1px solid #14141a;border-radius:99px;padding:.35rem .9rem;font-size:.75rem;font-weight:700}
+.sv-empty{padding:2.2rem;text-align:center;color:#a4a4ad;border:1px dashed rgba(255,255,255,.2);border-radius:16px}
+.sv-sheet .sv-empty{color:#6b6b75;border-color:#d9d9df}
+.sv-foot{padding:1.2rem 2rem;text-align:center;color:#6d6d78;font-size:.75rem;border-top:1px solid rgba(255,255,255,.06)}
+.sv-phone .sv-grid,.sv-phone .sv-grid.two,.sv-phone .sv-evs{grid-template-columns:1fr}
+.sv-phone .sv-steps{grid-template-columns:1fr}
+.sv-phone .sv-banner,.sv-phone .sv-sec{padding-left:1.2rem;padding-right:1.2rem}.sv-phone .sv-sheet{padding:1.4rem 1.2rem 2rem}
+.sv-phone .sv-nav{padding:.6rem 1rem}
+.sv-live-note{margin:.7rem auto 0;max-width:1120px;font-size:.76rem;color:var(--mut);text-align:center}
 .seg{display:inline-flex;background:var(--bg);border:1px solid var(--div);border-radius:var(--r);padding:3px;flex-wrap:wrap}
 .seg button{border:0;background:transparent;padding:.35rem .8rem;border-radius:8px;font-weight:500;font-size:.85rem}
 .seg button[aria-pressed=true]{background:var(--v);color:#fff}
@@ -493,18 +540,23 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 
 <!-- Vista previa del contenido publicado -->
 <dialog id="preview-dialog">
-  <div class="pv-bar">
-    <div><h2>Vista previa del sitio</h2><p>Así se ve lo que está publicado (solo elementos “Visibles”).</p></div>
-    <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center">
-      <div class="seg" id="pv-sections" role="group" aria-label="Sección"></div>
+  <div class="pv-top">
+    <div class="pv-title"><h2>Vista previa del sitio</h2><p id="pv-note"></p></div>
+    <div class="pv-ctrls">
+      <div class="seg" id="pv-pages" role="group" aria-label="Página"></div>
       <div class="seg" id="pv-device" role="group" aria-label="Dispositivo">
         <button data-dev="desktop" aria-pressed="true">Escritorio</button>
         <button data-dev="mobile" aria-pressed="false">Móvil</button>
       </div>
-      <button type="button" class="icon-button" id="close-preview" aria-label="Cerrar">×</button>
+      <div class="seg" id="pv-mode" role="group" aria-label="Modo">
+        <button data-mode="sim" aria-pressed="true">Vista previa</button>
+        <button data-mode="live" aria-pressed="false">Sitio en vivo</button>
+      </div>
+      <a class="round-x" id="pv-open" href="#" target="_blank" rel="noopener" title="Abrir el sitio en una pestaña nueva" aria-label="Abrir el sitio">↗</a>
+      <button type="button" class="round-x" id="close-preview" aria-label="Cerrar">×</button>
     </div>
   </div>
-  <div class="pv-stage"><div class="pv-site" id="pv-site"></div></div>
+  <div class="pv-stage" id="pv-stage"></div>
 </dialog>
 
 <dialog id="lightbox"><img alt="Vista ampliada"><button type="button" aria-label="Cerrar">×</button></dialog>
@@ -928,58 +980,115 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   }
   $('#lightbox').addEventListener('click', () => $('#lightbox').close());
 
-  // ── Vista previa del sitio (solo lo publicado) ──────────────────────────────
+  // ── Vista previa del sitio ──────────────────────────────────────────────────
   const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
   function fmtDate(s) {
     const m = String(s || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
     return m ? `${+m[3]} ${MESES[+m[2] - 1]} ${m[1]}` : s;
   }
-  const phHtml = (d, cls = '') => {
-    const u = imgsOf(d)[0];
-    return `<div class="ph ${cls}">${ICON.img}${u ? `<img src="${esc(imgUrl(u, 800))}" alt="" loading="lazy" ${BAD}>` : ''}</div>`;
+  const PV_PAGES = [['inicio', 'Inicio', 'index.html'], ['catalogo', 'Catálogo', 'catalogo.html'], ['negocios', 'Para negocios', 'negocios.html'], ['eventos', 'Eventos', 'eventos.html']];
+  const PV_FOR = { productos: 'catalogo', mayorista: 'negocios', pasos_negocios: 'negocios', eventos: 'eventos' };
+  const PV_HERO = {
+    inicio: ['UP SKY · Energy Drink', ['Más energía', 'para tu día'], 'UP SKY es una bebida energizante pensada para acompañarte en todo momento. Energía, sabor y actitud en una sola botella.', 'Ver catálogo'],
+    catalogo: ['UP SKY · Catálogo', ['Elegí tu', 'energía.'], 'Descubrí todos los formatos de UP SKY y encontrá tu próxima dosis de energía.', 'Pedir por WhatsApp'],
+    negocios: ['UP SKY · Para negocios', ['Vendé', 'UP SKY.'], 'Packs por mayor desde 30 unidades y pallets de 192 packs. Elegí, agregá al carrito y pedí por WhatsApp.', 'Ver precios y comprar'],
+    eventos: ['UP SKY · Eventos', ['Sumate al', 'movimiento.'], 'Activaciones, degustaciones y presencia de UP SKY. Enterate primero de las próximas fechas.', 'Ver agenda'],
   };
-  let pvSection = 'productos';
+  let pv = { page: 'catalogo', dev: 'desktop', mode: 'sim' };
+  const siteBase = () => (CFG.siteUrl || '/').replace(/\/?$/, '/');
+  const pageFile = () => PV_PAGES.find(x => x[0] === pv.page)[2];
 
-  function previewHtml(sec) {
-    const items = (cache[sec] || []).filter(x => x.active).map(x => x.data);
-    const head = { productos: ['Catálogo', 'Elegí tu UP SKY'], mayorista: ['Para negocios', 'Precios por mayor'], pasos_negocios: ['Para negocios', 'Comprar es simple'], eventos: ['Eventos', 'Agenda'] }[sec];
-    let body;
-    if (!items.length) body = '<div class="pv-empty">No hay nada publicado en esta sección.<br>Los elementos ocultos no aparecen en el sitio.</div>';
-    else if (sec === 'productos' || sec === 'mayorista') {
-      body = `<div class="pv-grid">${items.map(d => {
-        const dsc = [d.desc_desde_5 && `${d.desc_desde_5}% desde 5 u.`, d.desc_desde_10 && `${d.desc_desde_10}% desde 10 u.`].filter(Boolean).join(' · ');
-        return `<article class="pv-card"><div style="position:relative">${d.etiqueta ? `<span class="tag">${esc(d.etiqueta)}</span>` : ''}${phHtml(d)}</div>
-          <div class="bd"><h4>${esc(d.nombre || '')}</h4><div class="sub">${esc([d.presentacion, d.colores].filter(Boolean).join(' · '))}</div>
-          <div class="pr">${price(d)}</div>${dsc ? `<div class="dsc">${esc(dsc)}</div>` : ''}${d.nota ? `<div class="sub">${esc(d.nota)}</div>` : ''}${d.descripcion ? `<div class="desc">${esc(d.descripcion)}</div>` : ''}
-          <div class="btnp">Agregar al carrito</div></div></article>`;
-      }).join('')}</div>`;
-    } else if (sec === 'pasos_negocios') {
-      body = `<div class="pv-steps">${items.map((d, i) => `<div class="pv-step"><b>${i + 1}</b><h4>${esc(d.titulo || '')}</h4><p>${esc(d.texto || '')}</p></div>`).join('')}</div>`;
+  const mediaHtml = (d, badge) => {
+    const u = imgsOf(d)[0];
+    return `<div class="sv-media">${badge ? `<span class="sv-badge">${esc(badge)}</span>` : ''}<span class="ph-i">${ICON.img}</span>${u ? `<img src="${esc(imgUrl(u, 800))}" alt="" loading="lazy" ${BAD}>` : ''}</div>`;
+  };
+  const unitOf = d => ({ Pack: 'packs', Vaso: 'vasos', Remera: 'remeras' }[d.tipo] || 'unidades');
+  function productCard(d, wholesale) {
+    const tiers = wholesale ? (d.nota ? [`<li>${esc(d.nota)}</li>`] : ['<li>Precio sin envío</li>']) : [
+      Number(d.desc_desde_5) ? `<li><b>${Number(d.desc_desde_5)}% OFF</b> desde 5 ${unitOf(d)}</li>` : '',
+      Number(d.desc_desde_10) ? `<li><b>${Number(d.desc_desde_10)}% OFF</b> desde 10 ${unitOf(d)}</li>` : '',
+      Number(d.max_por_pedido) ? `<li>Máximo ${Number(d.max_por_pedido)} por pedido</li>` : ''].filter(Boolean);
+    return `<article class="sv-card">${mediaHtml(d, d.etiqueta)}<div class="sv-body"><h4>${esc(d.nombre || '')}</h4><div class="sv-pres">${esc([d.presentacion, d.colores].filter(Boolean).join(' · '))}</div>
+      ${tiers.length ? `<ul class="sv-tiers">${tiers.join('')}</ul>` : ''}<div class="sv-price">${price(d)}</div>
+      <div class="sv-buy"><span class="sv-qty"><span>−</span><b>1</b><span>+</span></span><span class="sv-add">Agregar al carrito</span></div></div></article>`;
+  }
+  function eventNext(items) {
+    const today = new Date().toISOString().slice(0, 10);
+    return items.filter(d => (d.fecha || '') >= today).sort((a, b) => a.fecha.localeCompare(b.fecha))[0];
+  }
+  function nextBanner(e) {
+    if (!e) return '';
+    const t = new Date(`${e.fecha}T${e.hora || '00:00'}:00`) - Date.now(), D = Math.max(0, Math.floor(t / 864e5)), H = Math.max(0, Math.floor(t / 36e5) % 24), M = Math.max(0, Math.floor(t / 6e4) % 60);
+    return `<div class="sv-next"><div><div class="k">PRÓXIMO EVENTO</div><h4>${esc(e.nombre)}</h4><p>${esc([fmtDate(e.fecha), e.hora && e.hora + ' h', e.lugar].filter(Boolean).join(' · '))}</p><span class="sv-cta">Ver evento</span></div>
+      <div class="sv-count"><div><b>${D}</b><span>DÍAS</span></div><div><b>${H}</b><span>HORAS</span></div><div><b>${M}</b><span>MIN</span></div></div></div>`;
+  }
+  function eventCard(d) {
+    const m = String(d.fecha || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
+    return `<article class="sv-ev"><div class="sv-media">${`<span class="ph-i">${ICON.img}</span>`}${imgsOf(d)[0] ? `<img src="${esc(imgUrl(imgsOf(d)[0], 800))}" alt="" ${BAD}>` : `<img src="logo.png" alt="">`}</div>
+      <div class="m"><span class="t">${esc(d.categoria || 'Evento')}</span><span>${m ? `${+m[3]} ${MESES[+m[2] - 1]}` : 'Fecha a confirmar'}${d.hora ? ' · ' + esc(d.hora) + ' h' : ''}</span></div><h4>${esc(d.nombre || '')}</h4><div class="pl">${esc(d.lugar || 'A confirmar')}</div></article>`;
+  }
+
+  function pageHtml(page, dev) {
+    const pub = k => (cache[k] || []).filter(x => x.active).map(x => x.data);
+    const [eye, title, lead, cta] = PV_HERO[page];
+    const mobile = dev === 'mobile';
+    const nav = `<div class="sv-nav"><img src="logo.png" alt="UP SKY">${mobile ? '<div class="sv-burger"><i></i><i></i><i></i></div>' :
+      `<div class="sv-links">${[['inicio', 'Inicio'], ['producto', 'Producto'], ['catalogo', 'Catálogo'], ['eventos', 'Eventos'], ['negocios', 'Para negocios']].map(([k, l]) => `<span class="${k === page ? 'on' : ''}">${l}</span>`).join('')}</div><span class="sv-wa">Pedir por WhatsApp</span>`}</div>`;
+    const banner = `<div class="sv-banner"><p class="sv-eye">${esc(eye)}</p><h1 class="sv-h1"><span>${esc(title[0])}</span><span class="acc">${esc(title[1])}</span></h1><p class="sv-lead">${esc(lead)}</p><span class="sv-cta">${esc(cta)}</span></div>`;
+    let body = '';
+    if (page === 'inicio') {
+      const feat = pub('productos').filter(d => d.destacado === 'SI').slice(0, 3);
+      body = `<div class="sv-sec"><h3>Nuestros <span class="acc">productos</span></h3><p class="sv-sub">Los destacados que se ven en el inicio.</p>${feat.length ? `<div class="sv-grid">${feat.map(d => productCard(d)).join('')}</div>` : '<div class="sv-empty">No hay productos destacados publicados.</div>'}</div>
+        <div class="sv-sec" style="padding-top:0">${nextBanner(eventNext(pub('eventos'))) || ''}</div>`;
+    } else if (page === 'catalogo') {
+      const it = pub('productos');
+      body = `<div class="sv-sec"><h3>Elegí tu <span class="acc">UP SKY</span></h3><p class="sv-sub">${it.length} producto${it.length === 1 ? '' : 's'} publicado${it.length === 1 ? '' : 's'}</p>${it.length ? `<div class="sv-grid">${it.map(d => productCard(d)).join('')}</div>` : '<div class="sv-empty">No hay productos publicados.</div>'}</div>`;
+    } else if (page === 'negocios') {
+      const it = pub('mayorista'), st = pub('pasos_negocios');
+      body = `<div class="sv-sec"><h3>Elegí tu <span class="acc">volumen</span></h3><p class="sv-sub">Ventas por mayor · precios sin envío</p>${it.length ? `<div class="sv-grid two">${it.map(d => productCard(d, true)).join('')}</div>` : '<div class="sv-empty">No hay precios por mayor publicados.</div>'}</div>
+        <div class="sv-sec"><h3>Comprar es <span class="acc">simple.</span></h3><p class="sv-sub">Cómo funciona</p>${st.length ? `<ol class="sv-steps">${st.map((d, i) => `<li><span class="n">${String(i + 1).padStart(2, '0')}</span><b>${esc(d.titulo || '')}</b><p>${esc(d.texto || '')}</p></li>`).join('')}</ol>` : '<div class="sv-empty">No hay pasos publicados.</div>'}</div>`;
     } else {
-      const today = new Date().toISOString().slice(0, 10);
-      const next = items.filter(d => d.fecha >= today).sort((a, b) => a.fecha.localeCompare(b.fecha))[0];
-      body = items.map(d => {
-        const m = String(d.fecha || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
-        return `<div class="pv-ev"><div class="pv-date"><b>${m ? +m[3] : '·'}</b><span>${m ? MESES[+m[2] - 1] : ''}</span></div>
-          <div><h4>${esc(d.nombre || '')}${d === next ? '<span class="pv-banner">Banner</span>' : ''}</h4><div class="sub">${esc([d.categoria, d.lugar, d.hora].filter(Boolean).join(' · '))}</div>
-          ${d.etiquetas ? `<div class="chips">${d.etiquetas.split(',').map(t => `<span class="chip v">${esc(t.trim())}</span>`).join('')}</div>` : ''}</div>${phHtml(d)}</div>`;
-      }).join('');
+      const it = pub('eventos').sort((a, b) => (a.fecha || '9999').localeCompare(b.fecha || '9999')), cats = [...new Set(it.map(d => d.categoria).filter(Boolean))];
+      body = `<div class="sv-sheet">${it.length ? `${nextBanner(eventNext(it))}<div class="sv-chips"><span class="on">Todos</span>${cats.map(c => `<span>${esc(c)}</span>`).join('')}</div>
+        <div class="sv-evs">${it.map(eventCard).join('')}</div>
+        <div class="sv-agenda"><h3>Próximas <span class="acc">fechas</span></h3>${it.map(d => { const m = String(d.fecha || '').match(/^(\d{4})-(\d{2})-(\d{2})/); return `<div class="sv-row"><div class="sv-date"><b>${m ? +m[3] : '·'}</b><span>${m ? MESES[+m[2] - 1] : ''}</span></div><div><h4>${esc(d.nombre || '')}</h4><p>${esc([d.hora && d.hora + ' h', d.lugar].filter(Boolean).join(' · '))}</p></div><span class="sv-ghost">Agendar</span></div>`; }).join('')}</div>` : '<div class="sv-empty">No hay eventos publicados.</div>'}</div>`;
     }
-    return `<h3>${esc(head[1])}</h3><p class="lead">${esc(head[0])} · ${items.length} publicado${items.length === 1 ? '' : 's'}</p>${body}`;
+    return `${nav}${banner}${body}<div class="sv-foot">© 2026 UP SKY Energy Drink</div>`;
+  }
+
+  function fitLive() {
+    const box = $('#pv-live'); if (!box) return;
+    const f = box.querySelector('iframe'), H = Math.min(window.innerHeight * 0.94 - 260, 660);
+    if (pv.dev === 'mobile') { f.style.width = '100%'; f.style.height = '100%'; f.style.transform = 'none'; return; }
+    const W = 1280, k = Math.min(1, box.clientWidth / W);
+    box.style.height = H + 'px'; f.style.width = W + 'px'; f.style.height = (H / k) + 'px'; f.style.transform = `scale(${k})`;
   }
 
   function renderPreview() {
-    $('#pv-sections').innerHTML = Object.entries(SECTIONS).map(([k, s]) => `<button data-pv="${k}" aria-pressed="${k === pvSection}">${esc(s.label.replace('Para negocios · ', 'Neg. · '))}</button>`).join('');
-    $('#pv-site').innerHTML = previewHtml(pvSection);
+    $('#pv-pages').innerHTML = PV_PAGES.map(([k, l]) => `<button data-pg="${k}" aria-pressed="${k === pv.page}">${l}</button>`).join('');
+    document.querySelectorAll('[data-dev]').forEach(x => x.setAttribute('aria-pressed', x.dataset.dev === pv.dev));
+    document.querySelectorAll('[data-mode]').forEach(x => x.setAttribute('aria-pressed', x.dataset.mode === pv.mode));
+    const url = siteBase() + pageFile();
+    $('#pv-open').href = url;
+    $('#pv-note').textContent = pv.mode === 'sim' ? 'Lo publicado hoy; lo oculto no aparece.' : 'El sitio real, como lo ve el público.';
+    const host = url.replace(/^https?:\/\//, '');
+    const view = pv.mode === 'sim'
+      ? `<div class="sv-view">${pageHtml(pv.page, pv.dev)}</div>`
+      : `<div class="sv-live" id="pv-live" ${pv.dev === 'mobile' ? 'style="height:min(690px,calc(94vh - 240px))"' : ''}><iframe src="${esc(url)}" title="Sitio en vivo" loading="lazy"></iframe></div>`;
+    $('#pv-stage').innerHTML = pv.dev === 'mobile'
+      ? `<div><div class="sv-phone">${view}</div></div>`
+      : `<div style="width:100%;max-width:1120px"><div class="sv-browser"><div class="sv-chrome"><i></i><i></i><i></i><span class="sv-url">${esc(host)}</span></div>${view}</div>${pv.mode === 'live' ? '<p class="sv-live-note">Si ves contenido anterior, el sitio todavía no tiene la última versión publicada.</p>' : ''}</div>`;
+    if (pv.mode === 'live') requestAnimationFrame(fitLive);
   }
-  document.querySelectorAll('[data-open-preview]').forEach(b => b.addEventListener('click', () => { pvSection = SECTIONS[current] ? current : 'productos'; renderPreview(); $('#preview-dialog').showModal(); }));
+  window.addEventListener('resize', () => { if ($('#preview-dialog').open && pv.mode === 'live') fitLive(); });
+  document.querySelectorAll('[data-open-preview]').forEach(b => b.addEventListener('click', () => {
+    pv.page = PV_FOR[current] || 'inicio'; renderPreview(); $('#preview-dialog').showModal();
+  }));
   $('#close-preview').addEventListener('click', () => $('#preview-dialog').close());
-  $('#pv-sections').addEventListener('click', e => { const b = e.target.closest('[data-pv]'); if (!b) return; pvSection = b.dataset.pv; renderPreview(); });
-  $('#pv-device').addEventListener('click', e => {
-    const b = e.target.closest('[data-dev]'); if (!b) return;
-    document.querySelectorAll('[data-dev]').forEach(x => x.setAttribute('aria-pressed', x === b));
-    $('#pv-site').classList.toggle('mobile', b.dataset.dev === 'mobile');
-  });
+  $('#preview-dialog').addEventListener('click', e => { if (e.target === $('#preview-dialog')) $('#preview-dialog').close(); });
+  $('#pv-pages').addEventListener('click', e => { const b = e.target.closest('[data-pg]'); if (!b) return; pv.page = b.dataset.pg; renderPreview(); });
+  $('#pv-device').addEventListener('click', e => { const b = e.target.closest('[data-dev]'); if (!b) return; pv.dev = b.dataset.dev; renderPreview(); });
+  $('#pv-mode').addEventListener('click', e => { const b = e.target.closest('[data-mode]'); if (!b) return; pv.mode = b.dataset.mode; renderPreview(); });
 
   // ── Tema claro / oscuro (claro por defecto; solo afecta al panel) ───────────
   function applyTheme(t) {
