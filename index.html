@@ -978,8 +978,10 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const tkey = s => String(s ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
+  const siteAbs = u => (/^assets\//.test(u || '') ? (CFG.siteUrl || '/').replace(/\/?$/, '/') + u : u);
   function imgUrl(u, w = 480) {
     if (!u) return '';
+    u = siteAbs(u);
     const m = u.match(/\/file\/d\/([\w-]+)/) || u.match(/[?&]id=([\w-]+)/) || u.match(/\/d\/([\w-]+)/);
     return m ? `https://drive.google.com/thumbnail?id=${m[1]}&sz=w${w}` : u;
   }
@@ -1243,7 +1245,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   function renderVid() {
     const fe = $('#form-error'); if (fe) fe.hidden = true;
     const h = vid.busy ? `<div class="vid-box"><span>Subiendo video…</span></div>`
-      : vid.video ? `<div class="vid-box"><video src="${esc(vid.video)}" ${vid.portada ? `poster="${esc(vid.portada)}"` : ''} muted loop playsinline controls preload="metadata"></video></div><div class="vid-act"><label class="secondary btn-like">Cambiar video<input type="file" id="vid-in" accept="video/mp4,video/webm,video/quicktime" hidden></label><button type="button" class="secondary" id="vid-rm">Quitar</button></div>`
+      : vid.video ? `<div class="vid-box"><video src="${esc(siteAbs(vid.video))}" ${vid.portada ? `poster="${esc(siteAbs(vid.portada))}"` : ''} muted loop playsinline controls preload="metadata"></video></div><div class="vid-act"><label class="secondary btn-like">Cambiar video<input type="file" id="vid-in" accept="video/mp4,video/webm,video/quicktime" hidden></label><button type="button" class="secondary" id="vid-rm">Quitar</button></div>`
       : `<label class="vid-up" id="vid-drop">${PLUS}<span>Subir video</span><small>MP4, WebM o MOV · vertical · hasta 30 MB</small><input type="file" id="vid-in" accept="video/mp4,video/webm,video/quicktime" hidden></label>`;
     $('#vid').innerHTML = h + `<input type="hidden" name="video" value="${esc(vid.video)}"><input type="hidden" name="portada" value="${esc(vid.portada)}">`;
   }
@@ -1519,7 +1521,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       const feat = pub('productos').filter(d => d.destacado === 'SI').slice(0, 3);
       body = `${strip}<div class="sv-sec"><h3>Nuestros <span class="acc">productos</span></h3><p class="sv-sub">Los destacados que se ven en el inicio.</p>${feat.length ? `<div class="sv-grid">${feat.map(d => productCard(d)).join('')}</div>` : '<div class="sv-empty">No hay productos destacados publicados.</div>'}</div>
         <div class="sv-sec" style="padding-top:0">${nextBanner(eventNext(pub('eventos'))) || ''}</div>
-        ${pub('comunidad').length ? `<div class="sv-sec" style="padding-top:0"><h3>Sumate a nuestra <span class="acc">comunidad</span></h3><div class="sv-vids">${pub('comunidad').slice(0, 8).map(d => `<div class="sv-vid" style="${d.portada ? `background-image:url('${esc(d.portada)}')` : ''}"><span>${esc(d.usuario || '@upskyenergydrink')}</span></div>`).join('')}</div></div>` : ''}`;
+        ${pub('comunidad').length ? `<div class="sv-sec" style="padding-top:0"><h3>Sumate a nuestra <span class="acc">comunidad</span></h3><div class="sv-vids">${pub('comunidad').slice(0, 8).map(d => `<div class="sv-vid" style="${d.portada ? `background-image:url('${esc(siteAbs(d.portada))}')` : ''}"><span>${esc(d.usuario || '@upskyenergydrink')}</span></div>`).join('')}</div></div>` : ''}`;
     } else if (page === 'catalogo') {
       const it = pub('productos');
       body = `${strip}<div class="sv-sec"><h3>Elegí tu <span class="acc">UP SKY</span></h3><p class="sv-sub">${it.length} producto${it.length === 1 ? '' : 's'} publicado${it.length === 1 ? '' : 's'}</p>${it.length ? `<div class="sv-grid">${it.map(d => productCard(d)).join('')}</div>` : '<div class="sv-empty">No hay productos publicados.</div>'}</div>`;
