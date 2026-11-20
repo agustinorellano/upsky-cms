@@ -920,6 +920,16 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
         { key: 'usuario', label: 'Usuario que se muestra', max: 40, placeholder: '@upskyenergydrink', hint: 'Aparece sobre el video. Si lo dejás vacío se usa @upskyenergydrink.' },
       ],
     },
+    sitio: {
+      label: 'Fotos y videos del sitio', icon: ICON.img, fixed: true,
+      desc: 'Las fotos y el video fijos de la web (portadas, banners y secciones). Cada lugar ya trae lo que se ve hoy: tocá uno para cambiarlo por otro.',
+      title: i => i.nombre, meta: i => i.donde, sub: i => i.video ? 'Video + fotos' : '',
+      fields: [
+        { key: 'video', type: 'video', label: 'Video' },
+        { key: 'portada', type: 'hidden', label: 'Portada' },
+        ...IMGS(1),
+      ],
+    },
     promos: {
       label: 'Promociones', icon: ICON.tag, desc: 'Banner y descuentos con fecha de inicio y fin. Se ven en el Inicio y en el Catálogo, y el carrito cobra el precio de la promo.',
       title: i => i.nombre, meta: i => (i.descuento ? `−${i.descuento}%` : 'Promoción'),
@@ -941,12 +951,14 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   }
 
   // Qué va en "Más opciones", prefijos/sufijos y textos de ayuda del nuevo formulario
-  const ADV = { productos: ['max_por_pedido', 'desc_desde_5', 'desc_desde_10', 'etiqueta', 'colores', 'descripcion', 'detalles'], mayorista: ['nota', 'detalles'], pasos_negocios: [], eventos: ['etiquetas', 'descripcion'], comunidad: [], promos: [] };
+  const ADV = { productos: ['max_por_pedido', 'desc_desde_5', 'desc_desde_10', 'etiqueta', 'colores', 'descripcion', 'detalles'], mayorista: ['nota', 'detalles'], pasos_negocios: [], eventos: ['etiquetas', 'descripcion'], comunidad: [], sitio: [], promos: [] };
   const AFFIX = { precio: { pre: '$' }, desc_desde_5: { suf: '%' }, desc_desde_10: { suf: '%' }, destacado: { sub: 'Aparece entre los productos de la página de inicio' }, descuento: { suf: '%', min: 1, max: 90 } };
+  SECTIONS.sitio.galHint = 'Foto que se muestra en ese lugar de la web. Si es el video del producto, es la foto para celulares.';
   SECTIONS.productos.galHint = 'En vasos, la foto 1 es del primer color, la 2 del segundo, etc.';
   Object.entries(SECTIONS).forEach(([k, S]) => {
     S.fields.forEach(f => { if (ADV[k].includes(f.key)) f.adv = true; if (f.type === 'select' || f.key === 'presentacion') f.full = true; Object.assign(f, AFFIX[f.key] || {}); });
     // Publicación programada (plan Crecimiento): fechas opcionales guardadas junto al contenido
+    if (S.fixed) return;
     S.fields.push({ key: 'publicar_desde', label: k === 'promos' ? 'Empieza el' : 'Publicar desde', type: 'datetime', sched: true }, { key: 'ocultar_desde', label: k === 'promos' ? 'Termina el' : 'Ocultar desde', type: 'datetime', sched: true });
   });
 
@@ -1156,7 +1168,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     const S = SECTIONS[current];
     $('#view-title').textContent = S.label;
     $('#view-desc').textContent = S.desc;
-    $('#new-item').textContent = '+ Agregar';
+    $('#new-item').textContent = '+ Agregar'; $('#new-item').hidden = !!S.fixed;
     const all = cache[current] || [];
     const items = all.filter(it =>
       (filter === 'todos' || (filter === 'visibles') === isLive(it)) &&
@@ -1169,7 +1181,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       const d = it.data;
       const chips = [schedChips(it), d.etiqueta && `<span class="chip v">${esc(d.etiqueta)}</span>`, d.destacado === 'SI' && `<span class="chip">★ Destacado</span>`, d.colores && `<span class="chip">${esc(d.colores)}</span>`, d.fecha && `<span class="chip">${esc(fmtDate(d.fecha))}</span>`].filter(Boolean).join('');
       const minis = imgsOf(d).length > 1 ? `<div class="minis">${imgsOf(d).map(u => `<img src="${esc(imgUrl(u))}" alt="" loading="lazy" ${BAD}>`).join('')}</div>` : '';
-      const canMove = filter === 'todos' && !query;
+      const canMove = filter === 'todos' && !query && !S.fixed;
       const idx = all.indexOf(it);
       return `<article class="admin-row${['oculto', 'vencido'].includes(itemState(it)) ? ' off' : ''}" data-open-row="${it.id}" tabindex="0" role="button" aria-label="Editar ${esc(S.title(d) || 'elemento')}">
         <div>${thumbHtml(it, S, idx)}${minis}</div>
@@ -1178,9 +1190,9 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
           <span class="status st-${itemState(it)}">${STATE_L[itemState(it)]}</span>
           ${canMove ? `<button class="mv" data-a="up" data-id="${it.id}" aria-label="Subir" ${idx === 0 ? 'disabled' : ''}>↑</button>
           <button class="mv" data-a="down" data-id="${it.id}" aria-label="Bajar" ${idx === all.length - 1 ? 'disabled' : ''}>↓</button>` : ''}
-          <button data-a="toggle" data-id="${it.id}">${it.active ? 'Ocultar' : 'Mostrar'}</button>
+          ${S.fixed ? '' : `<button data-a="toggle" data-id="${it.id}">${it.active ? 'Ocultar' : 'Mostrar'}</button>`}
           <button data-a="edit" data-id="${it.id}">Editar</button>
-          <button class="remove" data-a="delete" data-id="${it.id}">Eliminar</button>
+          ${S.fixed ? '' : `<button class="remove" data-a="delete" data-id="${it.id}">Eliminar</button>`}
         </div></article>`;
     }).join('') : `<div class="empty">${all.length ? 'No hay resultados con ese filtro.' : 'Todavía no hay nada acá. Usá “+ Agregar” para crear el primero.'}</div>`;
   }
@@ -1356,20 +1368,21 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     const isPromo = current === 'promos';
     const imgF = S.fields.filter(f => f.type === 'image'), sw = S.fields.filter(f => f.type === 'switch');
     const basic = S.fields.filter(f => !f.adv && f.type !== 'image' && f.type !== 'switch' && f.type !== 'video' && f.type !== 'hidden' && !f.sched), adv = S.fields.filter(f => f.adv), sch = S.fields.filter(f => f.sched);
-    const hasSch = sch.some(f => d[f.key]);
+    const hasSch = sch.some(f => d[f.key]), hasVid = current === 'comunidad' || d.slot === 'producto_video';
     vid = { video: d.video || '', portada: d.portada || '', busy: false };
     gal = { max: imgF.length, urls: imgF.map(f => d[f.key]).filter(Boolean), fallback: it ? siteFallback(d) : [], busy: 0 };
     $('#dialog-kicker').textContent = `${it ? 'Editar' : 'Nuevo'} · ${S.label.replace('Para negocios · ', 'Negocios · ')}`;
     $('#dialog-title').textContent = (it && S.title(d)) || 'Sin nombre';
+    if (S.fixed) $('#save-btn').textContent = 'Guardar cambios';
     $('#save-btn').textContent = it ? 'Guardar cambios' : 'Publicar';
     $('#fields').innerHTML =
-      (imgF.length ? galleryHtml(S) : '') + (current === 'comunidad' ? '<section class="vid" id="vid"></section>' : '') +
+      (imgF.length ? galleryHtml(S) : '') + (hasVid ? '<section class="vid" id="vid"></section>' : '') +
       `<div class="grid2">${basic.map(f => fieldHtml(f, d[f.key])).join('')}</div>` +
-      `<div class="list-card">${sw.map(f => fieldHtml(f, d[f.key])).join('')}<label class="sw-row"><span><b>Mostrar en la web</b><small>Si lo apagás, queda guardado pero oculto.</small></span><input class="sw" type="checkbox" name="__active" ${(it ? it.active : true) ? 'checked' : ''}></label></div>` +
-      `<details class="more"${hasSch || isPromo ? ' open' : ''}><summary>${isPromo ? 'Fechas de la promoción' : 'Programar publicación'}${hasSch && !isPromo ? ' <span class="chip sch">activa</span>' : ''}</summary><div class="grid2">${sch.map(f => fieldHtml(f, d[f.key])).join('')}<small class="full" style="color:var(--mut)">${isPromo ? 'La promo se muestra y baja los precios solo entre estas dos fechas. Si no ponés fecha de fin, sigue hasta que la ocultes.' : 'Opcional. Con “Publicar desde” el elemento aparece en el sitio recién en esa fecha; con “Ocultar desde” deja de verse solo. Si lo dejás vacío, se publica ya y sin fecha de fin.'}</small></div></details>` +
+      `<div class="list-card"${S.fixed ? ' hidden' : ''}>${sw.map(f => fieldHtml(f, d[f.key])).join('')}<label class="sw-row"><span><b>Mostrar en la web</b><small>Si lo apagás, queda guardado pero oculto.</small></span><input class="sw" type="checkbox" name="__active" ${(it ? it.active : true) ? 'checked' : ''}></label></div>` +
+      (S.fixed ? '' : `<details class="more"${hasSch || isPromo ? ' open' : ''}><summary>${isPromo ? 'Fechas de la promoción' : 'Programar publicación'}${hasSch && !isPromo ? ' <span class="chip sch">activa</span>' : ''}</summary><div class="grid2">${sch.map(f => fieldHtml(f, d[f.key])).join('')}<small class="full" style="color:var(--mut)">${isPromo ? 'La promo se muestra y baja los precios solo entre estas dos fechas. Si no ponés fecha de fin, sigue hasta que la ocultes.' : 'Opcional. Con “Publicar desde” el elemento aparece en el sitio recién en esa fecha; con “Ocultar desde” deja de verse solo. Si lo dejás vacío, se publica ya y sin fecha de fin.'}</small></div></details>`) +
       (adv.length ? `<details class="more"><summary>Más opciones</summary><div class="grid2">${adv.map(f => fieldHtml(f, d[f.key])).join('')}</div></details>` : '');
     if (imgF.length) renderGal();
-    if (current === 'comunidad') renderVid();
+    if (hasVid) renderVid();
     $('#form-error').hidden = true;
     $('#item-dialog').showModal();
     $('#fields').scrollTop = 0;
@@ -1424,14 +1437,15 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     if (current === 'promos' && !(Number(data.descuento) >= 1 && Number(data.descuento) <= 90)) {
       const el = $('#form-error'); el.textContent = 'El descuento tiene que estar entre 1% y 90%.'; el.hidden = false; return;
     }
-    if (current === 'comunidad') {
+    if (current === 'comunidad' || (S.fixed && editing && editing.data.slot === 'producto_video')) {
       if (vid.busy) { const el = $('#form-error'); el.textContent = 'Esperá a que termine de subir el video.'; el.hidden = false; return; }
       if (!data.video) { const el = $('#form-error'); el.textContent = 'Subí un video para publicar.'; el.hidden = false; return; }
     }
     if (data.publicar_desde && data.ocultar_desde && Date.parse(data.ocultar_desde) <= Date.parse(data.publicar_desde)) {
       const el = $('#form-error'); el.textContent = '“Ocultar desde” tiene que ser posterior a “Publicar desde”.'; el.hidden = false; return;
     }
-    const active = fd.get('__active') === 'on';
+    if (S.fixed && editing) { data.slot = editing.data.slot; data.nombre = editing.data.nombre; data.donde = editing.data.donde; }
+    const active = S.fixed ? true : fd.get('__active') === 'on';
     const btn = $('#save-btn'); btn.disabled = true;
     let error;
     if (editing) {
@@ -1443,7 +1457,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     btn.disabled = false;
     if (error) { const el = $('#form-error'); el.textContent = 'No se pudo guardar: ' + error.message; el.hidden = false; return; }
     $('#item-dialog').close();
-    if (current === 'comunidad' && editing && editing.data.video && editing.data.video !== data.video) dropVideoFiles(editing.data);
+    if ((current === 'comunidad' || current === 'sitio') && editing && editing.data.video && editing.data.video !== data.video) dropVideoFiles(editing.data);
     await load(current); buildNav(); render();
     toast('Guardado · ya se ve en la web');
   });
@@ -1462,7 +1476,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     return m ? `${+m[3]} ${MESES[+m[2] - 1]} ${m[1]}` : s;
   }
   const PV_PAGES = [['inicio', 'Inicio', 'index.html'], ['catalogo', 'Catálogo', 'catalogo.html'], ['negocios', 'Para negocios', 'negocios.html'], ['eventos', 'Eventos', 'eventos.html']];
-  const PV_FOR = { productos: 'catalogo', mayorista: 'negocios', pasos_negocios: 'negocios', eventos: 'eventos', comunidad: 'inicio', promos: 'catalogo' };
+  const PV_FOR = { productos: 'catalogo', mayorista: 'negocios', pasos_negocios: 'negocios', eventos: 'eventos', comunidad: 'inicio', sitio: 'inicio', promos: 'catalogo' };
   let pvPromos = [];
   const promoFor = d => pvPromos.filter(pr => Number(pr.descuento) > 0 && (!pr.producto || pr.producto === d.id)).sort((a, b) => b.descuento - a.descuento)[0] || null;
   const PV_HERO = {
@@ -1670,7 +1684,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 
   // ── Historial de cambios con deshacer (plan Crecimiento) ─────────────────────
   let hx = { rows: null, group: 'todas', loading: false, error: null };
-  const HX_GROUPS = [['todas', 'Todo'], ['productos', 'Catálogo'], ['negocios', 'Para negocios'], ['eventos', 'Eventos'], ['comunidad', 'Comunidad'], ['promos', 'Promociones']];
+  const HX_GROUPS = [['todas', 'Todo'], ['productos', 'Catálogo'], ['negocios', 'Para negocios'], ['eventos', 'Eventos'], ['comunidad', 'Comunidad'], ['sitio', 'Fotos del sitio'], ['promos', 'Promociones']];
   const inGroup = (g, sec) => g === 'todas' || (g === 'negocios' ? sec === 'mayorista' || sec === 'pasos_negocios' : g === sec);
   const rtf = new Intl.RelativeTimeFormat('es', { numeric: 'auto' });
   const ago = iso => { const s = (new Date(iso) - Date.now()) / 1000, a = Math.abs(s); return a < 60 ? 'recién' : a < 3600 ? rtf.format(Math.round(s / 60), 'minute') : a < 86400 ? rtf.format(Math.round(s / 3600), 'hour') : a < 2592000 ? rtf.format(Math.round(s / 86400), 'day') : new Date(iso).toLocaleDateString('es-AR', { day: 'numeric', month: 'short', year: 'numeric' }); };
@@ -1925,7 +1939,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   // ── Inicio ──────────────────────────────────────────────────────────────────
   const MES_L = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   const now = new Date();
-  const SHORT = { productos: 'Catálogo', mayorista: 'Precios', pasos_negocios: 'Cómo funciona', eventos: 'Eventos', comunidad: 'Comunidad', promos: 'Promociones' };
+  const SHORT = { productos: 'Catálogo', mayorista: 'Precios', pasos_negocios: 'Cómo funciona', eventos: 'Eventos', comunidad: 'Comunidad', sitio: 'Fotos del sitio', promos: 'Promociones' };
   let cal = { y: now.getFullYear(), m: now.getMonth() }, hf = 'todas', hq = '', hAll = false;
   const todayStr = () => new Date().toISOString().slice(0, 10);
   const allItems = () => Object.keys(SECTIONS).flatMap(k => (cache[k] || []).map(it => ({ ...it, _s: k })));
