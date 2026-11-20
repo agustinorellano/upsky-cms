@@ -453,6 +453,19 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 .slot:hover .x,.slot .x:focus-visible{opacity:1}
 @media (hover:none){.slot .x{opacity:1}}
 .slot.ghost img{opacity:.85}
+.vid{display:grid;gap:.6rem}
+.btn-like{cursor:pointer;display:inline-block}
+.vid-box{position:relative;aspect-ratio:9/16;max-height:340px;margin:0 auto;width:min(100%,191px);border-radius:20px;overflow:hidden;background:linear-gradient(135deg,var(--th1),var(--th2));display:grid;place-items:center}
+.vid-box video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+.vid-up{cursor:pointer;text-align:center;font-weight:600;font-size:.86rem;padding:1rem;gap:.4rem;display:grid;justify-items:center;border:2px dashed var(--line,#d9d9de);border-radius:20px;aspect-ratio:9/16;max-height:340px;width:min(100%,191px);margin:0 auto;place-content:center}
+.vid-up small{font-weight:400;opacity:.7}
+.vid-up.drop{background:var(--th1)}
+.vid-act{display:flex;gap:.5rem;justify-content:center}
+.thumb .play{position:absolute;right:8px;bottom:8px;width:24px;height:24px;border-radius:50%;background:rgba(10,10,12,.72);color:#fff;display:grid;place-items:center}
+.thumb .play svg{width:12px;height:12px}
+.sv-vids{display:flex;gap:.6rem;overflow:hidden}
+.sv-vid{flex:0 0 96px;aspect-ratio:9/16;border-radius:14px;background:#111 center/cover;position:relative;overflow:hidden}
+.sv-vid span{position:absolute;left:6px;bottom:6px;color:#fff;font-size:.62rem;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.6)}
 .slot.add{border:1.5px dashed #e3a8c6;background:var(--vs);color:var(--v);cursor:pointer;gap:.15rem;align-content:center;font-size:.82rem;font-weight:600;text-align:center}
 .slot.add svg{width:26px;height:26px}.slot.add:hover{background:var(--th2)}
 .slot.busy{cursor:progress;color:var(--mut);font-size:.82rem;font-weight:600}
@@ -834,6 +847,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     feed:  svg('<path d="M4 5h16M4 12h16M4 19h10"/>'),
     card:  svg('<rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 10h19M6.5 15h4"/>'),
     users: svg('<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><path d="M16 4.6a3.5 3.5 0 010 6.8M18 14.5a6.5 6.5 0 013.5 5.5"/>'),
+    play:  svg('<path d="M8 5.5v13l10-6.5z"/>'),
     tag:   svg('<path d="M3 12V4h8l10 10-8 8L3 12z"/><circle cx="8" cy="9" r="1.4"/>'),
     chart: svg('<path d="M4 20V11M10 20V4M16 20v-6M22 20H2"/>'),
     hist:  svg('<path d="M3 12a9 9 0 109-9 9 9 0 00-6.4 2.6L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/>'),
@@ -896,6 +910,16 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
         ...IMGS(1),
       ],
     },
+    comunidad: {
+      label: 'Comunidad', icon: ICON.play, desc: 'Videos de la comunidad que se ven en el carrusel del Inicio. Subí un video, ocultalo cuando quieras bajarlo de la web o eliminalo.',
+      title: i => i.titulo, meta: () => 'Video', sub: i => i.usuario,
+      fields: [
+        { key: 'video', type: 'video', label: 'Video' },
+        { key: 'portada', type: 'hidden', label: 'Portada' },
+        { key: 'titulo', label: 'Descripción del video', required: true, max: 90, full: true, placeholder: 'Modelo tomando UP SKY de noche' },
+        { key: 'usuario', label: 'Usuario que se muestra', max: 40, placeholder: '@upskyenergydrink', hint: 'Aparece sobre el video. Si lo dejás vacío se usa @upskyenergydrink.' },
+      ],
+    },
     promos: {
       label: 'Promociones', icon: ICON.tag, desc: 'Banner y descuentos con fecha de inicio y fin. Se ven en el Inicio y en el Catálogo, y el carrito cobra el precio de la promo.',
       title: i => i.nombre, meta: i => (i.descuento ? `−${i.descuento}%` : 'Promoción'),
@@ -917,7 +941,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   }
 
   // Qué va en "Más opciones", prefijos/sufijos y textos de ayuda del nuevo formulario
-  const ADV = { productos: ['max_por_pedido', 'desc_desde_5', 'desc_desde_10', 'etiqueta', 'colores', 'descripcion', 'detalles'], mayorista: ['nota', 'detalles'], pasos_negocios: [], eventos: ['etiquetas', 'descripcion'], promos: [] };
+  const ADV = { productos: ['max_por_pedido', 'desc_desde_5', 'desc_desde_10', 'etiqueta', 'colores', 'descripcion', 'detalles'], mayorista: ['nota', 'detalles'], pasos_negocios: [], eventos: ['etiquetas', 'descripcion'], comunidad: [], promos: [] };
   const AFFIX = { precio: { pre: '$' }, desc_desde_5: { suf: '%' }, desc_desde_10: { suf: '%' }, destacado: { sub: 'Aparece entre los productos de la página de inicio' }, descuento: { suf: '%', min: 1, max: 90 } };
   SECTIONS.productos.galHint = 'En vasos, la foto 1 es del primer color, la 2 del segundo, etc.';
   Object.entries(SECTIONS).forEach(([k, S]) => {
@@ -969,14 +993,14 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     return k ? SITE_IMGS[k].map(f => SITE + f) : [];
   };
   const imgsOf = d => {
-    const own = [1, 2, 3, 4].map(n => d['imagen_' + n]).filter(Boolean);
+    const own = [1, 2, 3, 4].map(n => d['imagen_' + n]).concat(d.portada).filter(Boolean);
     return own.length ? own : siteFallback(d);
   };
   const thumbHtml = (it, S, n) => {
     const d = it.data, imgs = imgsOf(d);
     if (current === 'pasos_negocios') return `<div class="thumb step">${n + 1}</div>`;
     if (!imgs.length) return `<div class="thumb noimg">${S.icon}<span class="noimg-t">Sin imagen</span></div>`;
-    return `<div class="thumb"><img src="${esc(imgUrl(imgs[0]))}" alt="" loading="lazy" ${BAD}>${S.icon}${imgs.length > 1 ? `<span class="cnt">${imgs.length} fotos</span>` : ''}</div>`;
+    return `<div class="thumb"><img src="${esc(imgUrl(imgs[0]))}" alt="" loading="lazy" ${BAD}>${S.icon}${imgs.length > 1 ? `<span class="cnt">${imgs.length} fotos</span>` : ''}${d.video ? `<span class="play">${ICON.play}</span>` : ''}</div>`;
   };
 
   let toastTimer;
@@ -1200,6 +1224,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     const { error } = await sb.from('items').delete().eq('id', deleting.id);
     $('#delete-dialog').close();
     if (error) return toast(error.message, true);
+    if (current === 'comunidad') dropVideoFiles(deleting.data);
     cache[current] = cache[current].filter(x => x.id !== deleting.id); counts[current]--; deleting = null;
     buildNav(); render(); toast('Eliminado');
   });
@@ -1212,6 +1237,61 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 
   // ── Formulario (panel lateral) ──────────────────────────────────────────────
   let gal = { max: 0, urls: [], fallback: [], busy: 0 };
+  let vid = { video: '', portada: '', busy: false };
+  const VID_MAX = 30 * 1024 * 1024, VID_OK = ['video/mp4', 'video/webm', 'video/quicktime'];
+  const VBUCKET = CFG.videoBucket || 'upsky-videos', IBUCKET = CFG.bucket || 'upsky-images';
+  function renderVid() {
+    const fe = $('#form-error'); if (fe) fe.hidden = true;
+    const h = vid.busy ? `<div class="vid-box"><span>Subiendo video…</span></div>`
+      : vid.video ? `<div class="vid-box"><video src="${esc(vid.video)}" ${vid.portada ? `poster="${esc(vid.portada)}"` : ''} muted loop playsinline controls preload="metadata"></video></div><div class="vid-act"><label class="secondary btn-like">Cambiar video<input type="file" id="vid-in" accept="video/mp4,video/webm,video/quicktime" hidden></label><button type="button" class="secondary" id="vid-rm">Quitar</button></div>`
+      : `<label class="vid-up" id="vid-drop">${PLUS}<span>Subir video</span><small>MP4, WebM o MOV · vertical · hasta 30 MB</small><input type="file" id="vid-in" accept="video/mp4,video/webm,video/quicktime" hidden></label>`;
+    $('#vid').innerHTML = h + `<input type="hidden" name="video" value="${esc(vid.video)}"><input type="hidden" name="portada" value="${esc(vid.portada)}">`;
+  }
+  // Foto de portada: primer cuadro del video (si el navegador puede leerlo)
+  function videoPoster(file) {
+    return new Promise(res => {
+      const url = URL.createObjectURL(file), v = document.createElement('video');
+      const done = b => { URL.revokeObjectURL(url); res(b); };
+      v.muted = true; v.playsInline = true; v.preload = 'auto';
+      v.onloadeddata = () => { v.currentTime = Math.min(0.5, (v.duration || 1) / 2); };
+      v.onseeked = () => {
+        try {
+          const k = Math.min(1, 720 / Math.max(v.videoWidth, v.videoHeight)), c = document.createElement('canvas');
+          c.width = Math.round(v.videoWidth * k); c.height = Math.round(v.videoHeight * k);
+          c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
+          c.toBlob(b => done(b), 'image/jpeg', 0.8);
+        } catch (e) { done(null); }
+      };
+      v.onerror = () => done(null);
+      setTimeout(() => done(null), 8000);
+      v.src = url;
+    });
+  }
+  const storagePath = (u, bucket) => { const m = String(u || '').match(new RegExp('/storage/v1/object/public/' + bucket + '/(.+)$')); return m ? decodeURIComponent(m[1]) : null; };
+  async function uploadVideo(file) {
+    if (!file) return;
+    if (!VID_OK.includes(file.type)) return toast('Formato no admitido. Usá MP4, WebM o MOV.', true);
+    if (file.size > VID_MAX) return toast('El video pesa ' + (file.size / 1048576).toFixed(1) + ' MB. El máximo es 30 MB.', true);
+    vid.busy = true; renderVid();
+    try {
+      const id = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+      const ext = file.type === 'video/webm' ? 'webm' : file.type === 'video/quicktime' ? 'mov' : 'mp4';
+      const { error } = await sb.storage.from(VBUCKET).upload(`comunidad/${id}.${ext}`, file, { contentType: file.type, cacheControl: '31536000' });
+      if (error) throw error;
+      vid.video = sb.storage.from(VBUCKET).getPublicUrl(`comunidad/${id}.${ext}`).data.publicUrl;
+      const pb = await videoPoster(file);
+      if (pb) {
+        const r = await sb.storage.from(IBUCKET).upload(`comunidad/${id}.jpg`, pb, { contentType: 'image/jpeg', cacheControl: '31536000' });
+        vid.portada = r.error ? '' : sb.storage.from(IBUCKET).getPublicUrl(`comunidad/${id}.jpg`).data.publicUrl;
+      } else vid.portada = '';
+    } catch (err) { toast('No se pudo subir el video: ' + (err.message || err), true); }
+    vid.busy = false; renderVid();
+  }
+  // Borra los archivos de un video del almacenamiento (al eliminarlo o al reemplazarlo)
+  async function dropVideoFiles(d) {
+    const v = storagePath(d.video, VBUCKET), p = storagePath(d.portada, IBUCKET);
+    try { if (v) await sb.storage.from(VBUCKET).remove([v]); if (p) await sb.storage.from(IBUCKET).remove([p]); } catch (e) {}
+  }
   const PLUS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
 
   function fieldHtml(f, v) {
@@ -1273,19 +1353,21 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     if (current === 'promos') S.fields.find(f => f.key === 'producto').options = [['', 'Todos los productos'], ...(cache.productos || []).map(x => [x.id, x.data.nombre || '(sin nombre)'])];
     const isPromo = current === 'promos';
     const imgF = S.fields.filter(f => f.type === 'image'), sw = S.fields.filter(f => f.type === 'switch');
-    const basic = S.fields.filter(f => !f.adv && f.type !== 'image' && f.type !== 'switch' && !f.sched), adv = S.fields.filter(f => f.adv), sch = S.fields.filter(f => f.sched);
+    const basic = S.fields.filter(f => !f.adv && f.type !== 'image' && f.type !== 'switch' && f.type !== 'video' && f.type !== 'hidden' && !f.sched), adv = S.fields.filter(f => f.adv), sch = S.fields.filter(f => f.sched);
     const hasSch = sch.some(f => d[f.key]);
+    vid = { video: d.video || '', portada: d.portada || '', busy: false };
     gal = { max: imgF.length, urls: imgF.map(f => d[f.key]).filter(Boolean), fallback: it ? siteFallback(d) : [], busy: 0 };
     $('#dialog-kicker').textContent = `${it ? 'Editar' : 'Nuevo'} · ${S.label.replace('Para negocios · ', 'Negocios · ')}`;
     $('#dialog-title').textContent = (it && S.title(d)) || 'Sin nombre';
     $('#save-btn').textContent = it ? 'Guardar cambios' : 'Publicar';
     $('#fields').innerHTML =
-      (imgF.length ? galleryHtml(S) : '') +
+      (imgF.length ? galleryHtml(S) : '') + (current === 'comunidad' ? '<section class="vid" id="vid"></section>' : '') +
       `<div class="grid2">${basic.map(f => fieldHtml(f, d[f.key])).join('')}</div>` +
       `<div class="list-card">${sw.map(f => fieldHtml(f, d[f.key])).join('')}<label class="sw-row"><span><b>Mostrar en la web</b><small>Si lo apagás, queda guardado pero oculto.</small></span><input class="sw" type="checkbox" name="__active" ${(it ? it.active : true) ? 'checked' : ''}></label></div>` +
       `<details class="more"${hasSch || isPromo ? ' open' : ''}><summary>${isPromo ? 'Fechas de la promoción' : 'Programar publicación'}${hasSch && !isPromo ? ' <span class="chip sch">activa</span>' : ''}</summary><div class="grid2">${sch.map(f => fieldHtml(f, d[f.key])).join('')}<small class="full" style="color:var(--mut)">${isPromo ? 'La promo se muestra y baja los precios solo entre estas dos fechas. Si no ponés fecha de fin, sigue hasta que la ocultes.' : 'Opcional. Con “Publicar desde” el elemento aparece en el sitio recién en esa fecha; con “Ocultar desde” deja de verse solo. Si lo dejás vacío, se publica ya y sin fecha de fin.'}</small></div></details>` +
       (adv.length ? `<details class="more"><summary>Más opciones</summary><div class="grid2">${adv.map(f => fieldHtml(f, d[f.key])).join('')}</div></details>` : '');
     if (imgF.length) renderGal();
+    if (current === 'comunidad') renderVid();
     $('#form-error').hidden = true;
     $('#item-dialog').showModal();
     $('#fields').scrollTop = 0;
@@ -1297,6 +1379,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     if (e.target.tagName === 'TEXTAREA') { e.target.style.height = 'auto'; e.target.style.height = e.target.scrollHeight + 'px'; }
   });
   $('#fields').addEventListener('click', e => {
+    if (e.target.closest('#vid-rm')) { vid.video = ''; vid.portada = ''; return renderVid(); }
     const rm = e.target.closest('[data-rm]'); if (rm) { e.stopPropagation(); gal.urls.splice(+rm.dataset.rm, 1); return renderGal(); }
     const z = e.target.closest('[data-zoom]'); if (z && z.dataset.zoom) return zoom(z.dataset.zoom);
     if (e.target.closest('#gal-link')) { $('#gal-url').hidden = !$('#gal-url').hidden; return $('#gal-url-in').focus(); }
@@ -1305,7 +1388,9 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       if (v && gal.urls.length < gal.max) { gal.urls.push(v); $('#gal-url-in').value = ''; $('#gal-url').hidden = true; renderGal(); }
     }
   });
-  $('#fields').addEventListener('change', e => { if (e.target.matches('.slot.add input')) { uploadFiles(e.target.files); e.target.value = ''; } });
+  $('#fields').addEventListener('change', e => { if (e.target.id === 'vid-in') { uploadVideo(e.target.files[0]); e.target.value = ''; return; } if (e.target.matches('.slot.add input')) { uploadFiles(e.target.files); e.target.value = ''; } });
+  $('#fields').addEventListener('dragover', e => { if (e.target.closest('#vid-drop')) { e.preventDefault(); } });
+  $('#fields').addEventListener('drop', e => { if (e.target.closest('#vid-drop')) { e.preventDefault(); uploadVideo(e.dataTransfer.files[0]); } });
   $('#fields').addEventListener('dragover', e => { if (e.target.closest('#gal')) { e.preventDefault(); $('#gal').classList.add('drop'); } });
   $('#fields').addEventListener('dragleave', e => { if (e.target.closest('#gal')) $('#gal').classList.remove('drop'); });
   $('#fields').addEventListener('drop', e => { if (!e.target.closest('#gal')) return; e.preventDefault(); $('#gal').classList.remove('drop'); uploadFiles([...e.dataTransfer.files].filter(f => f.type.startsWith('image/'))); });
@@ -1337,6 +1422,10 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     if (current === 'promos' && !(Number(data.descuento) >= 1 && Number(data.descuento) <= 90)) {
       const el = $('#form-error'); el.textContent = 'El descuento tiene que estar entre 1% y 90%.'; el.hidden = false; return;
     }
+    if (current === 'comunidad') {
+      if (vid.busy) { const el = $('#form-error'); el.textContent = 'Esperá a que termine de subir el video.'; el.hidden = false; return; }
+      if (!data.video) { const el = $('#form-error'); el.textContent = 'Subí un video para publicar.'; el.hidden = false; return; }
+    }
     if (data.publicar_desde && data.ocultar_desde && Date.parse(data.ocultar_desde) <= Date.parse(data.publicar_desde)) {
       const el = $('#form-error'); el.textContent = '“Ocultar desde” tiene que ser posterior a “Publicar desde”.'; el.hidden = false; return;
     }
@@ -1352,6 +1441,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     btn.disabled = false;
     if (error) { const el = $('#form-error'); el.textContent = 'No se pudo guardar: ' + error.message; el.hidden = false; return; }
     $('#item-dialog').close();
+    if (current === 'comunidad' && editing && editing.data.video && editing.data.video !== data.video) dropVideoFiles(editing.data);
     await load(current); buildNav(); render();
     toast('Guardado · ya se ve en la web');
   });
@@ -1370,7 +1460,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     return m ? `${+m[3]} ${MESES[+m[2] - 1]} ${m[1]}` : s;
   }
   const PV_PAGES = [['inicio', 'Inicio', 'index.html'], ['catalogo', 'Catálogo', 'catalogo.html'], ['negocios', 'Para negocios', 'negocios.html'], ['eventos', 'Eventos', 'eventos.html']];
-  const PV_FOR = { productos: 'catalogo', mayorista: 'negocios', pasos_negocios: 'negocios', eventos: 'eventos', promos: 'catalogo' };
+  const PV_FOR = { productos: 'catalogo', mayorista: 'negocios', pasos_negocios: 'negocios', eventos: 'eventos', comunidad: 'inicio', promos: 'catalogo' };
   let pvPromos = [];
   const promoFor = d => pvPromos.filter(pr => Number(pr.descuento) > 0 && (!pr.producto || pr.producto === d.id)).sort((a, b) => b.descuento - a.descuento)[0] || null;
   const PV_HERO = {
@@ -1428,7 +1518,8 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     if (page === 'inicio') {
       const feat = pub('productos').filter(d => d.destacado === 'SI').slice(0, 3);
       body = `${strip}<div class="sv-sec"><h3>Nuestros <span class="acc">productos</span></h3><p class="sv-sub">Los destacados que se ven en el inicio.</p>${feat.length ? `<div class="sv-grid">${feat.map(d => productCard(d)).join('')}</div>` : '<div class="sv-empty">No hay productos destacados publicados.</div>'}</div>
-        <div class="sv-sec" style="padding-top:0">${nextBanner(eventNext(pub('eventos'))) || ''}</div>`;
+        <div class="sv-sec" style="padding-top:0">${nextBanner(eventNext(pub('eventos'))) || ''}</div>
+        ${pub('comunidad').length ? `<div class="sv-sec" style="padding-top:0"><h3>Sumate a nuestra <span class="acc">comunidad</span></h3><div class="sv-vids">${pub('comunidad').slice(0, 8).map(d => `<div class="sv-vid" style="${d.portada ? `background-image:url('${esc(d.portada)}')` : ''}"><span>${esc(d.usuario || '@upskyenergydrink')}</span></div>`).join('')}</div></div>` : ''}`;
     } else if (page === 'catalogo') {
       const it = pub('productos');
       body = `${strip}<div class="sv-sec"><h3>Elegí tu <span class="acc">UP SKY</span></h3><p class="sv-sub">${it.length} producto${it.length === 1 ? '' : 's'} publicado${it.length === 1 ? '' : 's'}</p>${it.length ? `<div class="sv-grid">${it.map(d => productCard(d)).join('')}</div>` : '<div class="sv-empty">No hay productos publicados.</div>'}</div>`;
@@ -1577,7 +1668,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 
   // ── Historial de cambios con deshacer (plan Crecimiento) ─────────────────────
   let hx = { rows: null, group: 'todas', loading: false, error: null };
-  const HX_GROUPS = [['todas', 'Todo'], ['productos', 'Catálogo'], ['negocios', 'Para negocios'], ['eventos', 'Eventos'], ['promos', 'Promociones']];
+  const HX_GROUPS = [['todas', 'Todo'], ['productos', 'Catálogo'], ['negocios', 'Para negocios'], ['eventos', 'Eventos'], ['comunidad', 'Comunidad'], ['promos', 'Promociones']];
   const inGroup = (g, sec) => g === 'todas' || (g === 'negocios' ? sec === 'mayorista' || sec === 'pasos_negocios' : g === sec);
   const rtf = new Intl.RelativeTimeFormat('es', { numeric: 'auto' });
   const ago = iso => { const s = (new Date(iso) - Date.now()) / 1000, a = Math.abs(s); return a < 60 ? 'recién' : a < 3600 ? rtf.format(Math.round(s / 60), 'minute') : a < 86400 ? rtf.format(Math.round(s / 3600), 'hour') : a < 2592000 ? rtf.format(Math.round(s / 86400), 'day') : new Date(iso).toLocaleDateString('es-AR', { day: 'numeric', month: 'short', year: 'numeric' }); };
@@ -1822,7 +1913,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   });
 
   // ── Crear contenido (menú) ──────────────────────────────────────────────────
-  const CREATE = [['productos', 'Producto del catálogo', ICON.box], ['mayorista', 'Precio por mayor', ICON.store], ['pasos_negocios', 'Paso de “Cómo funciona”', ICON.steps], ['eventos', 'Evento', ICON.star], ['promos', 'Promoción', ICON.tag]];
+  const CREATE = [['productos', 'Producto del catálogo', ICON.box], ['mayorista', 'Precio por mayor', ICON.store], ['pasos_negocios', 'Paso de “Cómo funciona”', ICON.steps], ['eventos', 'Evento', ICON.star], ['comunidad', 'Video de la comunidad', ICON.play], ['promos', 'Promoción', ICON.tag]];
   $('#create-menu').innerHTML = CREATE.map(([k, l, i]) => `<button type="button" data-new="${k}">${i}${esc(l)}</button>`).join('');
   const toggleMenu = open => { $('#create-menu').hidden = !open; $('#create-btn').setAttribute('aria-expanded', open); };
   $('#create-btn').addEventListener('click', e => { e.stopPropagation(); toggleMenu($('#create-menu').hidden); });
@@ -1832,7 +1923,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   // ── Inicio ──────────────────────────────────────────────────────────────────
   const MES_L = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   const now = new Date();
-  const SHORT = { productos: 'Catálogo', mayorista: 'Precios', pasos_negocios: 'Cómo funciona', eventos: 'Eventos', promos: 'Promociones' };
+  const SHORT = { productos: 'Catálogo', mayorista: 'Precios', pasos_negocios: 'Cómo funciona', eventos: 'Eventos', comunidad: 'Comunidad', promos: 'Promociones' };
   let cal = { y: now.getFullYear(), m: now.getMonth() }, hf = 'todas', hq = '', hAll = false;
   const todayStr = () => new Date().toISOString().slice(0, 10);
   const allItems = () => Object.keys(SECTIONS).flatMap(k => (cache[k] || []).map(it => ({ ...it, _s: k })));

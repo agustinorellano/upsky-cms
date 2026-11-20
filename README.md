@@ -46,3 +46,7 @@ Hasta **3 personas** pueden entrar al panel (el acceso de soporte de la agencia 
 - Las cuentas las crea la función `supabase/functions/team` (se despliega con `supabase functions deploy team`; la clave de servicio la pone la plataforma, no hay que cargarla). Solo la usa un administrador.
 - El límite de 3, el acceso de soporte y "siempre queda un administrador" los impone también la base de datos (trigger `team_guard`).
 - El login ahora pide **email y contraseña**. "¿Olvidaste tu contraseña?" envía un enlace; si el correo de Supabase no llega, un administrador puede generar una nueva desde *Equipo*.
+
+## Comunidad (videos)
+
+Sección **Comunidad** del panel: se sube un video (MP4, WebM o MOV, vertical, hasta 30 MB) y aparece en el carrusel del Inicio. Para **bajarlo** de la web se apaga "Mostrar en la web" (queda guardado) o se elimina (se borra también el archivo). La portada se genera sola con el primer cuadro. Requiere `migrations/007_comunidad.sql` (ya aplicada) y que los CSP de ambos sitios permitan `media-src https://*.supabase.co`.
