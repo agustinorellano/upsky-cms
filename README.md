@@ -50,3 +50,11 @@ Hasta **3 personas** pueden entrar al panel (el acceso de soporte de la agencia 
 ## Comunidad (videos)
 
 Sección **Comunidad** del panel: se sube un video (MP4, WebM o MOV, vertical, hasta 30 MB) y aparece en el carrusel del Inicio. Para **bajarlo** de la web se apaga "Mostrar en la web" (queda guardado) o se elimina (se borra también el archivo). La portada se genera sola con el primer cuadro. Requiere `migrations/007_comunidad.sql` (ya aplicada) y que los CSP de ambos sitios permitan `media-src https://*.supabase.co`.
+
+## Notificaciones push
+
+La campana de la barra superior activa las notificaciones en el dispositivo de cada persona del equipo (celular o computadora). Avisos: clics a WhatsApp, productos en el carrito (máximo uno cada 15 minutos por tipo) y agenda (evento de mañana, promoción que termina en 24 h, publicación programada que salió; se revisa cada hora). Cada persona elige cuáles recibir.
+
+- `migrations/009_notificaciones_push.sql` (ya aplicada): tablas `push_subscriptions`, `push_config` (privada) y `push_log`, el aviso desde `analytics_events` y la tarea horaria `push-agenda`.
+- `supabase/functions/push`: se despliega con `--no-verify-jwt` (valida ella misma la sesión del equipo o el secreto interno). Genera sola las claves VAPID la primera vez y las guarda en `push_config`; no hay que cargar ningún secreto a mano.
+- `sw.js` y `manifest.webmanifest`: service worker y manifiesto del panel. En iPhone hay que agregar el panel a la pantalla de inicio para recibir avisos.

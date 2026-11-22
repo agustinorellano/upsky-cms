@@ -10,6 +10,8 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0a0a0c">
 <script>try{var t=localStorage.getItem('upsky-cms-theme');document.documentElement.dataset.theme=t==='dark'?'dark':'light'}catch(e){}</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -196,6 +198,18 @@ dialog::backdrop{background:rgba(20,30,25,.5)}
 .icon-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--div);background:var(--w);display:grid;place-items:center;box-shadow:var(--sh)}
 .icon-btn svg{width:19px;height:19px}.icon-btn:hover{background:var(--vs);color:var(--v)}
 .menu-wrap{position:relative}
+.push-dot{position:absolute;top:8px;right:9px;width:9px;height:9px;border-radius:50%;background:var(--v);border:2px solid var(--w)}
+#push-btn{position:relative}
+.menu.push-menu{width:min(340px,92vw);padding:1rem;gap:.6rem}
+.push-menu h4{margin:0;font:700 1.05rem var(--f-d)}
+.push-menu p{margin:0;color:var(--mut);font-size:.82rem;line-height:1.4}
+.push-menu .st{display:flex;align-items:center;gap:.5rem;font-weight:600;font-size:.85rem}
+.push-menu .st i{width:9px;height:9px;border-radius:50%;background:var(--div)}.push-menu .st.on i{background:#16a34a}.push-menu .st.bad i{background:#dc2626}
+.push-menu .pk{display:grid;border-top:1px solid var(--div);margin-top:.2rem}
+.push-menu .pk .sw-row{padding:.6rem 0}
+.push-menu .row{display:flex;gap:.5rem;flex-wrap:wrap}
+.menu.push-menu .row button{justify-content:center;border:1px solid var(--div);background:var(--w);padding:.5rem .9rem;font-weight:600;font-size:.84rem}
+.menu.push-menu .row button.primary{background:var(--v);color:#fff;border-color:transparent}
 .menu{position:absolute;right:0;top:calc(100% + 6px);background:var(--w);border:1px solid var(--div);border-radius:14px;box-shadow:var(--shh);padding:.35rem;min-width:240px;z-index:20;display:grid}
 .menu button{background:transparent;border:0;text-align:left;padding:.6rem .8rem;border-radius:10px;display:flex;gap:.6rem;align-items:center}
 .menu button:hover{background:var(--vs)}.menu svg{width:18px;height:18px;color:var(--v)}
@@ -691,6 +705,10 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       </label>
       <div class="top-actions">
         <button type="button" class="icon-btn" id="theme-toggle" aria-label="Cambiar entre vista clara y oscura" title="Cambiar vista clara / oscura"></button>
+        <div class="menu-wrap" id="push-wrap">
+          <button type="button" class="icon-btn" id="push-btn" aria-haspopup="true" aria-expanded="false" aria-label="Notificaciones" title="Notificaciones"><span class="push-dot" id="push-dot" hidden></span></button>
+          <div class="menu push-menu" id="push-menu" hidden></div>
+        </div>
         <div class="menu-wrap">
           <button type="button" class="primary" id="create-btn" aria-haspopup="true" aria-expanded="false">+ Crear contenido ▾</button>
           <div class="menu" id="create-menu" hidden></div>
@@ -860,6 +878,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     card:  svg('<rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 10h19M6.5 15h4"/>'),
     users: svg('<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><path d="M16 4.6a3.5 3.5 0 010 6.8M18 14.5a6.5 6.5 0 013.5 5.5"/>'),
     play:  svg('<path d="M8 5.5v13l10-6.5z"/>'),
+    bell:  svg('<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>'),
     tag:   svg('<path d="M3 12V4h8l10 10-8 8L3 12z"/><circle cx="8" cy="9" r="1.4"/>'),
     chart: svg('<path d="M4 20V11M10 20V4M16 20v-6M22 20H2"/>'),
     hist:  svg('<path d="M3 12a9 9 0 109-9 9 9 0 00-6.4 2.6L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/>'),
@@ -1089,6 +1108,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     buildNav();
     await Promise.all(Object.keys(SECTIONS).map(load));
     buildNav(); render();
+    pushInit();
   }
 
   $('#login-form').addEventListener('submit', async e => {
@@ -1955,6 +1975,91 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   let cal = { y: now.getFullYear(), m: now.getMonth() }, hf = 'todas', hq = '', hAll = false;
   const todayStr = () => new Date().toISOString().slice(0, 10);
   const allItems = () => Object.keys(SECTIONS).flatMap(k => (cache[k] || []).map(it => ({ ...it, _s: k })));
+
+  // ── Notificaciones push (cada persona las activa en su dispositivo) ──────────
+  const PUSH_KINDS = [['whatsapp', 'Clics a WhatsApp', 'Alguien quiere comprar'], ['cart', 'Productos en el carrito', 'Agregaron algo al carrito'], ['agenda', 'Agenda', 'Evento de mañana, promo por terminar, publicación programada']];
+  const push = { reg: null, sub: null, prefs: { whatsapp: true, cart: true, agenda: true }, busy: false, msg: '' };
+  const pushOk = () => 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const standalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  const b64u = b => { const p = '='.repeat((4 - b.length % 4) % 4), r = (b + p).replace(/-/g, '+').replace(/_/g, '/'), raw = atob(r); return Uint8Array.from([...raw].map(c => c.charCodeAt(0))); };
+  const toB64u = buf => btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  $('#push-btn').innerHTML = ICON.bell + $('#push-btn').innerHTML;
+
+  async function pushInit() {
+    if (!pushOk()) return pushPaint();
+    try {
+      push.reg = await navigator.serviceWorker.register('sw.js');
+      push.sub = await push.reg.pushManager.getSubscription();
+      if (push.sub && me) {
+        const { data } = await sb.from('push_subscriptions').select('prefs').eq('endpoint', push.sub.endpoint).maybeSingle();
+        if (data) push.prefs = { ...push.prefs, ...data.prefs }; else { await pushSave(); }
+      }
+    } catch (e) { push.msg = 'No se pudo preparar las notificaciones en este navegador.'; }
+    pushPaint();
+  }
+  async function pushSave() {
+    const j = push.sub.toJSON();
+    const { error } = await sb.from('push_subscriptions').upsert({ endpoint: j.endpoint, email: me.email.toLowerCase(), p256dh: j.keys.p256dh, auth: j.keys.auth, prefs: push.prefs }, { onConflict: 'endpoint' });
+    if (error) throw error;
+  }
+  async function pushOn() {
+    push.busy = true; push.msg = ''; pushPaint();
+    try {
+      if (Notification.permission === 'denied') throw new Error('Las notificaciones están bloqueadas para este sitio. Habilitalas desde los ajustes del navegador.');
+      const perm = await Notification.requestPermission();
+      if (perm !== 'granted') throw new Error('No diste permiso para mostrar notificaciones.');
+      const { data, error } = await sb.functions.invoke('push', { body: { action: 'key' } });
+      if (error || !data || !data.key) throw new Error('No se pudo obtener la clave de notificaciones.');
+      push.reg = push.reg || await navigator.serviceWorker.ready;
+      push.sub = await push.reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64u(data.key) });
+      await pushSave();
+      push.msg = '¡Listo! Las notificaciones quedaron activas en este dispositivo.';
+    } catch (e) { push.msg = e.message || String(e); }
+    push.busy = false; pushPaint();
+  }
+  async function pushOff() {
+    push.busy = true; pushPaint();
+    try {
+      if (push.sub) { const ep = push.sub.endpoint; await sb.from('push_subscriptions').delete().eq('endpoint', ep); await push.sub.unsubscribe(); push.sub = null; }
+      push.msg = 'Notificaciones desactivadas en este dispositivo.';
+    } catch (e) { push.msg = e.message || String(e); }
+    push.busy = false; pushPaint();
+  }
+  async function pushTest() {
+    push.busy = true; push.msg = ''; pushPaint();
+    try {
+      const { data, error } = await sb.functions.invoke('push', { body: { action: 'test' } });
+      if (error) { let m = error.message; try { m = (await error.context.json()).error || m; } catch (e2) {} throw new Error(m); }
+      push.msg = data && data.sent ? 'Te enviamos una notificación de prueba.' : 'No se pudo enviar la prueba.';
+    } catch (e) { push.msg = e.message || String(e); }
+    push.busy = false; pushPaint();
+  }
+  function pushPaint() {
+    const on = !!push.sub, denied = pushOk() && Notification.permission === 'denied';
+    $('#push-dot').hidden = on || !pushOk() || denied;
+    const host = $('#push-menu'); if (!host) return;
+    let body;
+    if (!pushOk()) body = `<div class="st bad"><i></i>Este navegador no admite notificaciones</div><p>${isIOS ? 'En iPhone, abrí el panel desde Safari, tocá Compartir → “Agregar a inicio” y abrilo desde ese ícono.' : 'Probá con Chrome, Edge o Firefox actualizados.'}</p>`;
+    else if (isIOS && !standalone() && !on) body = `<div class="st"><i></i>Falta un paso en iPhone</div><p>Tocá Compartir → “Agregar a inicio” y abrí el panel desde ese ícono. Después activá las notificaciones desde acá.</p>`;
+    else body = `<div class="st ${on ? 'on' : denied ? 'bad' : ''}"><i></i>${on ? 'Activadas en este dispositivo' : denied ? 'Bloqueadas por el navegador' : 'Desactivadas en este dispositivo'}</div>
+      <p>${on ? 'Elegí qué avisos querés recibir.' : 'Recibí avisos en el celular o la computadora aunque el panel esté cerrado.'}</p>
+      ${on ? `<div class="pk">${PUSH_KINDS.map(([k, l, sub]) => `<label class="sw-row"><span><b>${l}</b><small>${sub}</small></span><input class="sw" type="checkbox" data-pk="${k}" ${push.prefs[k] !== false ? 'checked' : ''}></label>`).join('')}</div>` : ''}
+      <div class="row">${on ? `<button type="button" data-pa="test" ${push.busy ? 'disabled' : ''}>Enviar prueba</button><button type="button" data-pa="off" ${push.busy ? 'disabled' : ''}>Desactivar</button>` : `<button type="button" class="primary" data-pa="on" ${push.busy ? 'disabled' : ''}>${push.busy ? 'Activando…' : 'Activar notificaciones'}</button>`}</div>`;
+    host.innerHTML = `<h4>Notificaciones</h4>${body}${push.msg ? `<p role="status" style="color:var(--ink)">${esc(push.msg)}</p>` : ''}`;
+  }
+  $('#push-btn').addEventListener('click', e => { e.stopPropagation(); const m = $('#push-menu'); m.hidden = !m.hidden; $('#push-btn').setAttribute('aria-expanded', String(!m.hidden)); if (!m.hidden) pushPaint(); });
+  $('#push-menu').addEventListener('click', e => {
+    e.stopPropagation();
+    const a = e.target.closest('[data-pa]'); if (!a) return;
+    ({ on: pushOn, off: pushOff, test: pushTest })[a.dataset.pa]();
+  });
+  $('#push-menu').addEventListener('change', async e => {
+    const k = e.target.dataset.pk; if (!k || !push.sub) return;
+    push.prefs[k] = e.target.checked;
+    try { await pushSave(); push.msg = ''; } catch (err) { push.msg = 'No se pudo guardar: ' + (err.message || err); e.target.checked = !e.target.checked; push.prefs[k] = e.target.checked; }
+  });
+  document.addEventListener('click', () => { const m = $('#push-menu'); if (m && !m.hidden) { m.hidden = true; $('#push-btn').setAttribute('aria-expanded', 'false'); } });
 
   // ── Fecha y clima (Open-Meteo, sin clave). Ubicación: la del navegador si ya dio permiso; si no, la configurada ──
   const WX_PLACE = Object.assign({ name: 'Buenos Aires', lat: -34.6037, lon: -58.3816 }, CFG.weather || {});
