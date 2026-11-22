@@ -198,9 +198,30 @@ dialog::backdrop{background:rgba(20,30,25,.5)}
 .icon-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--div);background:var(--w);display:grid;place-items:center;box-shadow:var(--sh)}
 .icon-btn svg{width:19px;height:19px}.icon-btn:hover{background:var(--vs);color:var(--v)}
 .menu-wrap{position:relative}
-.push-dot{position:absolute;top:8px;right:9px;width:9px;height:9px;border-radius:50%;background:var(--v);border:2px solid var(--w)}
+.nb{position:absolute;top:-3px;right:-3px;min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:#e11d48;color:#fff;font:700 .66rem/18px var(--f-u);text-align:center;box-sizing:border-box}
 #push-btn{position:relative}
-.menu.push-menu{width:min(340px,92vw);padding:1rem;gap:.6rem}
+.menu.push-menu{width:min(390px,92vw);padding:0;gap:0;overflow:hidden;border-radius:18px}
+.push-menu .nh{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--div)}
+.push-menu .nh b{font-size:.92rem}
+.push-menu .nh span{display:flex;gap:.15rem}
+.push-menu .nh button,.push-menu .nx button{width:30px;height:30px;padding:0;justify-content:center;border-radius:9px;color:var(--mut);background:transparent;border:0}
+.push-menu .nh button:hover,.push-menu .nx button:hover{background:var(--vs);color:var(--ink)}
+.push-menu .nh svg,.push-menu .nx svg{width:16px;height:16px;color:currentColor}
+.push-menu .nh .back{width:auto;padding:0 .6rem;font-weight:600;font-size:.82rem;gap:.2rem}
+.push-menu .nl{max-height:min(380px,60vh);overflow-y:auto}
+.push-menu .ne{text-align:center;padding:2rem 1rem;color:var(--mut);font-size:.9rem}
+.push-menu .ni{position:relative;border-bottom:1px solid var(--div)}.push-menu .ni:last-child{border-bottom:0}
+.push-menu .nr{width:100%;display:flex;align-items:flex-start;gap:.75rem;padding:.8rem 4.4rem .8rem 1rem;background:transparent;border:0;border-radius:0;text-align:left}
+.push-menu .nr:hover{background:var(--vs)}
+.push-menu .nt{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--bg,rgba(236,31,122,.12));color:var(--fg,var(--v))}
+.push-menu .nt svg{width:17px;height:17px;color:currentColor}
+.push-menu .nr b{display:block;font-size:.85rem;font-weight:600;line-height:1.3}
+.push-menu .nr small{display:block;margin-top:.15rem;font-size:.76rem;color:var(--mut);line-height:1.35;font-weight:400}
+.push-menu .nx{position:absolute;right:.5rem;top:.6rem;display:flex;gap:.1rem}
+.push-menu .sn{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;padding:0 1rem .8rem;font-size:.76rem;color:var(--mut)}
+.push-menu .sn button{padding:.25rem .65rem;border-radius:8px;background:var(--vs);border:0;font-weight:600;font-size:.76rem;color:var(--ink)}
+.push-menu .ns{display:grid;gap:.6rem;padding:1rem}
+@media (max-width:600px){.menu.push-menu{position:fixed;left:1rem;right:1rem;top:4.6rem;width:auto}}
 .push-menu h4{margin:0;font:700 1.05rem var(--f-d)}
 .push-menu p{margin:0;color:var(--mut);font-size:.82rem;line-height:1.4}
 .push-menu .st{display:flex;align-items:center;gap:.5rem;font-weight:600;font-size:.85rem}
@@ -706,7 +727,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       <div class="top-actions">
         <button type="button" class="icon-btn" id="theme-toggle" aria-label="Cambiar entre vista clara y oscura" title="Cambiar vista clara / oscura"></button>
         <div class="menu-wrap" id="push-wrap">
-          <button type="button" class="icon-btn" id="push-btn" aria-haspopup="true" aria-expanded="false" aria-label="Notificaciones" title="Notificaciones"><span class="push-dot" id="push-dot" hidden></span></button>
+          <button type="button" class="icon-btn" id="push-btn" aria-haspopup="true" aria-expanded="false" aria-label="Notificaciones" title="Notificaciones"><span class="nb" id="nb" hidden></span></button>
           <div class="menu push-menu" id="push-menu" hidden></div>
         </div>
         <div class="menu-wrap">
@@ -878,6 +899,11 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     card:  svg('<rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 10h19M6.5 15h4"/>'),
     users: svg('<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><path d="M16 4.6a3.5 3.5 0 010 6.8M18 14.5a6.5 6.5 0 013.5 5.5"/>'),
     play:  svg('<path d="M8 5.5v13l10-6.5z"/>'),
+    chat:  svg('<path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 9 9 0 0 1-3.6-.7L3 20l1-5a8.3 8.3 0 0 1-1-4.5A8.4 8.4 0 0 1 11.9 3a8.5 8.5 0 0 1 9.1 8.5z"/>'),
+    cart:  svg('<circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 7H6"/>'),
+    xmark: svg('<path d="M6 6l12 12M18 6L6 18"/>'),
+    snooze: svg('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
+    gear:  svg('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>'),
     bell:  svg('<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>'),
     tag:   svg('<path d="M3 12V4h8l10 10-8 8L3 12z"/><circle cx="8" cy="9" r="1.4"/>'),
     chart: svg('<path d="M4 20V11M10 20V4M16 20v-6M22 20H2"/>'),
@@ -1109,6 +1135,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     await Promise.all(Object.keys(SECTIONS).map(load));
     buildNav(); render();
     pushInit();
+    notifLoad();
   }
 
   $('#login-form').addEventListener('submit', async e => {
@@ -2035,10 +2062,55 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     } catch (e) { push.msg = e.message || String(e); }
     push.busy = false; pushPaint();
   }
-  function pushPaint() {
+  // ── Lista de avisos dentro del panel (como la campanita del CRM): se calculan a partir de los datos reales ──
+  const NKEY = 'upsky-cms-notif-v1';
+  const SNOOZE = [['1h', '1 hora', 36e5], ['tomorrow', 'Mañana', 864e5], ['3d', 'En 3 días', 3 * 864e5]];
+  const nprefs = () => { try { return JSON.parse(localStorage.getItem(NKEY)) || { dismissed: {}, snoozed: {} }; } catch (e) { return { dismissed: {}, snoozed: {} }; } };
+  const nsave = st => { try { localStorage.setItem(NKEY, JSON.stringify(st)); } catch (e) {} };
+  const nhidden = id => { const st = nprefs(); return !!st.dismissed[id] || (st.snoozed[id] || 0) > Date.now(); };
+  const notif = { events: [], view: 'list', snoozeFor: null };
+  const ld = d => { const q = n => String(n).padStart(2, '0'); return `${d.getFullYear()}-${q(d.getMonth() + 1)}-${q(d.getDate())}`; };
+  const TONE = { green: ['rgba(22,163,74,.12)', '#16a34a'], pink: ['rgba(236,31,122,.12)', 'var(--v)'], amber: ['rgba(217,119,6,.14)', '#d97706'], violet: ['rgba(124,58,237,.12)', '#7c3aed'], blue: ['rgba(37,99,235,.12)', '#2563eb'] };
+
+  async function notifLoad() {
+    if (!sb || !me) return;
+    try {
+      const since = new Date(Date.now() - 864e5).toISOString();
+      const { data } = await sb.from('analytics_events').select('type, target, created_at').in('type', ['whatsapp', 'cart']).gte('created_at', since).order('created_at', { ascending: false }).limit(500);
+      notif.events = data || [];
+    } catch (e) { notif.events = []; }
+    pushPaint();
+  }
+
+  function notifItems() {
+    const out = [], now = Date.now(), today = ld(new Date()), tomorrow = ld(new Date(now + 864e5));
+    const plural = (n, s, p) => `${n} ${n === 1 ? s : p}`;
+    const wa = notif.events.filter(e => e.type === 'whatsapp'), ca = notif.events.filter(e => e.type === 'cart');
+    const hora = iso => new Date(iso).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+    if (wa.length) out.push({ id: `wa-${today}-${wa.length}`, icon: ICON.chat, tone: 'green', title: `${plural(wa.length, 'clic', 'clics')} a WhatsApp en las últimas 24 h`, sub: `Alguien quiere comprar · el último a las ${hora(wa[0].created_at)}`, link: 'stats' });
+    if (ca.length) {
+      const by = {}; ca.forEach(e => { if (e.target) by[e.target] = (by[e.target] || 0) + 1; });
+      const top = Object.entries(by).sort((x, y) => y[1] - x[1])[0];
+      out.push({ id: `cart-${today}-${ca.length}`, icon: ICON.cart, tone: 'pink', title: `${plural(ca.length, 'producto agregado', 'productos agregados')} al carrito en las últimas 24 h`, sub: top ? `El más agregado: ${top[0]}` : 'Mirá el detalle en Estadísticas', link: 'stats' });
+    }
+    (cache.eventos || []).filter(isLive).forEach(it => {
+      const d = it.data;
+      if (d.fecha === today || d.fecha === tomorrow) out.push({ id: `ev-${it.id}-${d.fecha}`, icon: ICON.star, tone: 'blue', title: `${d.fecha === today ? 'Hoy' : 'Mañana'}: ${d.nombre || 'Evento'}`, sub: [d.hora && d.hora + ' h', d.lugar].filter(Boolean).join(' · ') || 'Evento de la agenda', link: 'eventos' });
+    });
+    (cache.promos || []).filter(isLive).forEach(it => {
+      const fin = Date.parse(it.data.ocultar_desde || '');
+      if (fin > now && fin - now <= 864e5) out.push({ id: `promo-${it.id}-${it.data.ocultar_desde}`, icon: ICON.tag, tone: 'amber', title: `La promo “${it.data.nombre || ''}” termina pronto`, sub: `Termina ${new Date(fin).toLocaleString('es-AR', { weekday: 'long', hour: '2-digit', minute: '2-digit' })}`, link: 'promos' });
+    });
+    allItems().filter(isLive).forEach(it => {
+      const ini = Date.parse(it.data.publicar_desde || '');
+      if (ini <= now && now - ini <= 864e5 && ini > 0) out.push({ id: `pub-${it.id}-${it.data.publicar_desde}`, icon: ICON.check, tone: 'green', title: `Se publicó: ${SECTIONS[it._s].title(it.data) || 'contenido programado'}`, sub: `Ya se ve en la web · ${SECTIONS[it._s].label}`, link: it._s });
+    });
+    if (pushOk() && !push.sub && Notification.permission !== 'denied') out.push({ id: 'push-on', icon: ICON.bell, tone: 'violet', title: 'Activá las notificaciones', sub: 'Recibí avisos en el celular o la computadora, aunque el panel esté cerrado', link: '#push' });
+    return out.filter(i => !nhidden(i.id));
+  }
+
+  function pushSettingsHtml() {
     const on = !!push.sub, denied = pushOk() && Notification.permission === 'denied';
-    $('#push-dot').hidden = on || !pushOk() || denied;
-    const host = $('#push-menu'); if (!host) return;
     let body;
     if (!pushOk()) body = `<div class="st bad"><i></i>Este navegador no admite notificaciones</div><p>${isIOS ? 'En iPhone, abrí el panel desde Safari, tocá Compartir → “Agregar a inicio” y abrilo desde ese ícono.' : 'Probá con Chrome, Edge o Firefox actualizados.'}</p>`;
     else if (isIOS && !standalone() && !on) body = `<div class="st"><i></i>Falta un paso en iPhone</div><p>Tocá Compartir → “Agregar a inicio” y abrí el panel desde ese ícono. Después activá las notificaciones desde acá.</p>`;
@@ -2046,20 +2118,55 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       <p>${on ? 'Elegí qué avisos querés recibir.' : 'Recibí avisos en el celular o la computadora aunque el panel esté cerrado.'}</p>
       ${on ? `<div class="pk">${PUSH_KINDS.map(([k, l, sub]) => `<label class="sw-row"><span><b>${l}</b><small>${sub}</small></span><input class="sw" type="checkbox" data-pk="${k}" ${push.prefs[k] !== false ? 'checked' : ''}></label>`).join('')}</div>` : ''}
       <div class="row">${on ? `<button type="button" data-pa="test" ${push.busy ? 'disabled' : ''}>Enviar prueba</button><button type="button" data-pa="off" ${push.busy ? 'disabled' : ''}>Desactivar</button>` : `<button type="button" class="primary" data-pa="on" ${push.busy ? 'disabled' : ''}>${push.busy ? 'Activando…' : 'Activar notificaciones'}</button>`}</div>`;
-    host.innerHTML = `<h4>Notificaciones</h4>${body}${push.msg ? `<p role="status" style="color:var(--ink)">${esc(push.msg)}</p>` : ''}`;
+    return `<div class="ns">${body}${push.msg ? `<p role="status" style="color:var(--ink)">${esc(push.msg)}</p>` : ''}</div>`;
   }
-  $('#push-btn').addEventListener('click', e => { e.stopPropagation(); const m = $('#push-menu'); m.hidden = !m.hidden; $('#push-btn').setAttribute('aria-expanded', String(!m.hidden)); if (!m.hidden) pushPaint(); });
+
+  function pushPaint() {
+    const items = notifItems(), nbEl = $('#nb');
+    if (nbEl) { nbEl.hidden = !items.length; nbEl.textContent = items.length > 9 ? '9+' : String(items.length); }
+    $('#push-btn').setAttribute('aria-label', items.length ? `Notificaciones (${items.length} sin leer)` : 'Notificaciones');
+    const host = $('#push-menu'); if (!host || host.hidden) return;
+    if (notif.view === 'settings') {
+      host.innerHTML = `<div class="nh"><button type="button" class="back" data-na="back">‹ Volver</button><b>Ajustes de avisos</b><span><button type="button" data-na="close" aria-label="Cerrar">${ICON.xmark}</button></span></div>${pushSettingsHtml()}`;
+      return;
+    }
+    host.innerHTML = `<div class="nh"><b>Notificaciones</b><span><button type="button" data-na="settings" title="Ajustes de avisos push" aria-label="Ajustes de avisos push">${ICON.gear}</button><button type="button" data-na="close" aria-label="Cerrar">${ICON.xmark}</button></span></div>
+      <div class="nl">${items.length ? items.map(it => {
+        const [bg, fg] = TONE[it.tone] || TONE.pink;
+        return `<div class="ni"><button type="button" class="nr" data-na="go" data-nid="${esc(it.id)}"><span class="nt" style="--bg:${bg};--fg:${fg}">${it.icon}</span><span><b>${esc(it.title)}</b><small>${esc(it.sub || '')}</small></span></button>
+          <div class="nx"><button type="button" data-na="snz" data-nid="${esc(it.id)}" title="Recordármelo más tarde" aria-label="Recordármelo más tarde">${ICON.snooze}</button><button type="button" data-na="dis" data-nid="${esc(it.id)}" title="Descartar" aria-label="Descartar">${ICON.xmark}</button></div>
+          ${notif.snoozeFor === it.id ? `<div class="sn"><span>Recordar en:</span>${SNOOZE.map(([k, l]) => `<button type="button" data-na="snzset" data-nid="${esc(it.id)}" data-k="${k}">${l}</button>`).join('')}</div>` : ''}</div>`;
+      }).join('') : '<p class="ne">Estás al día 🎉</p>'}</div>`;
+  }
+  const nclose = () => { const m = $('#push-menu'); if (m && !m.hidden) { m.hidden = true; notif.snoozeFor = null; $('#push-btn').setAttribute('aria-expanded', 'false'); } };
+  $('#push-btn').addEventListener('click', e => {
+    e.stopPropagation(); const m = $('#push-menu');
+    if (!m.hidden) return nclose();
+    m.hidden = false; notif.view = 'list'; notif.snoozeFor = null; $('#push-btn').setAttribute('aria-expanded', 'true'); pushPaint(); notifLoad();
+  });
   $('#push-menu').addEventListener('click', e => {
     e.stopPropagation();
-    const a = e.target.closest('[data-pa]'); if (!a) return;
-    ({ on: pushOn, off: pushOff, test: pushTest })[a.dataset.pa]();
+    const pa = e.target.closest('[data-pa]'); if (pa) return ({ on: pushOn, off: pushOff, test: pushTest })[pa.dataset.pa]();
+    const na = e.target.closest('[data-na]'); if (!na) return;
+    const id = na.dataset.nid, act = na.dataset.na, item = id && notifItems().find(x => x.id === id);
+    if (act === 'close') return nclose();
+    if (act === 'settings') { notif.view = 'settings'; return pushPaint(); }
+    if (act === 'back') { notif.view = 'list'; return pushPaint(); }
+    if (act === 'snz') { notif.snoozeFor = notif.snoozeFor === id ? null : id; return pushPaint(); }
+    if (act === 'dis') { const st = nprefs(); st.dismissed[id] = true; nsave(st); notif.snoozeFor = null; return pushPaint(); }
+    if (act === 'snzset') { const st = nprefs(), o = SNOOZE.find(x => x[0] === na.dataset.k); st.snoozed[id] = Date.now() + (o ? o[2] : 36e5); nsave(st); notif.snoozeFor = null; return pushPaint(); }
+    if (act === 'go' && item) {
+      if (item.link === '#push') { notif.view = 'settings'; return pushPaint(); }
+      nclose(); setView(item.link);
+    }
   });
   $('#push-menu').addEventListener('change', async e => {
     const k = e.target.dataset.pk; if (!k || !push.sub) return;
     push.prefs[k] = e.target.checked;
     try { await pushSave(); push.msg = ''; } catch (err) { push.msg = 'No se pudo guardar: ' + (err.message || err); e.target.checked = !e.target.checked; push.prefs[k] = e.target.checked; }
   });
-  document.addEventListener('click', () => { const m = $('#push-menu'); if (m && !m.hidden) { m.hidden = true; $('#push-btn').setAttribute('aria-expanded', 'false'); } });
+  document.addEventListener('click', nclose);
+  setInterval(() => { if (me) notifLoad(); }, 3 * 60e3);
 
   // ── Fecha y clima (Open-Meteo, sin clave). Ubicación: la del navegador si ya dio permiso; si no, la configurada ──
   const WX_PLACE = Object.assign({ name: 'Buenos Aires', lat: -34.6037, lon: -58.3816 }, CFG.weather || {});
