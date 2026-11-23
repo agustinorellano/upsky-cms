@@ -59,4 +59,8 @@ Se repitió la misma revisión automática sobre las 26 pantallas del panel. **D
 - `target-size`: avisa de un botón del menú tapado parcialmente cuando está abierto el menú de usuario; es un efecto del menú flotante, no un control demasiado chico.
 
 Cambios aplicados: magenta de marca `#d11266` (5,26:1 sobre blanco, y 4,63:1 sobre el rosado claro) y una variante clara `#ff6aa9` para texto en la vista oscura; nombres para las miniaturas y el botón de usuario; filas de lista sin rol de botón; títulos en orden (1 → 2 → 3); `main` en el ingreso; enlace "Saltar al contenido"; diálogos con nombre; movimiento reducido; objetivos táctiles de 44 px en celular.
-Quedan pendientes el sitio público (S1 a S8) y la prueba con un lector de pantalla real.
+**Sitio público (S1 a S8): corregido** en la rama `claude/upsky-visual-prototype-9vdi3t` del repo del sitio. Re-auditoría de 8 páginas en escritorio y celular: cero violaciones salvo un elemento (un botón "Me gusta" de una tarjeta lateral del carrusel de Comunidad que, al estar achicada por el efecto de escala, mide 17 px en vez de 24 px; es una decisión de diseño, de severidad baja).
+
+Qué se hizo: magenta de texto `#d11266` (y `#ff5fa8` sobre fondos oscuros), grises más claros sobre negro, zona principal `<main>` en todas las páginas, carrito y menú móvil no enfocables cuando están cerrados, nombres accesibles sin duplicar el texto visible, títulos en orden y regiones desplazables enfocables.
+
+Sigue pendiente la prueba con un lector de pantalla real (NVDA / VoiceOver), que no se puede automatizar.
