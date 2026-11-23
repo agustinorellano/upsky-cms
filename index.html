@@ -306,6 +306,27 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 .more summary .chip{margin-left:.5rem;font-size:.7rem}
 
 /* Estadísticas */
+.hp{display:grid;gap:1.2rem;max-width:880px}
+.hp-steps{list-style:none;margin:.4rem 0 0;padding:0;display:grid;gap:.5rem}
+.hp-steps li{display:flex;align-items:center;gap:.8rem;padding:.7rem .9rem;border-radius:14px;background:var(--bg);border:1px solid transparent}
+.hp-steps li.done{opacity:.72}
+.hp-chk{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--div);display:grid;place-items:center;color:#fff;background:var(--w)}
+.hp-steps li.done .hp-chk{background:#16a34a;border-color:#16a34a}.hp-chk svg{width:14px;height:14px;display:none}.hp-steps li.done .hp-chk svg{display:block}
+.hp-steps b{display:block;font-size:.92rem}.hp-steps small{display:block;color:var(--mut);font-size:.8rem;margin-top:.1rem}
+.hp-steps li>div{flex:1;min-width:0}
+.hp-steps button{flex:none;padding:.35rem .85rem;border-radius:99px;border:1px solid var(--div);background:var(--w);font-weight:600;font-size:.8rem}.hp-steps button:hover{background:var(--vs)}
+.hp-bar{height:8px;border-radius:99px;background:rgba(236,31,122,.16);overflow:hidden;margin:.6rem 0 .2rem}.hp-bar i{display:block;height:100%;background:var(--v);border-radius:99px;transition:width .3s}
+.hp-how details{border-top:1px solid var(--div)}.hp-how details:first-child{border-top:0}
+.hp-how summary{cursor:pointer;padding:.85rem .2rem;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:1rem;align-items:center}
+.hp-how summary::-webkit-details-marker{display:none}.hp-how summary::after{content:'+';font-size:1.3rem;color:var(--mut);line-height:1}.hp-how details[open] summary::after{content:'–'}
+.hp-how .bd{padding:0 .2rem 1rem;color:var(--txt);font-size:.9rem;line-height:1.5}
+.hp-how ol{margin:.2rem 0 .6rem;padding-left:1.2rem;display:grid;gap:.3rem}.hp-how p{margin:.3rem 0}
+.hp-how .tip{background:var(--vs);border-radius:10px;padding:.5rem .75rem;font-size:.84rem;margin-top:.5rem}
+.hp-how .go{margin-top:.3rem;padding:.35rem .9rem;border-radius:99px;border:1px solid var(--div);background:var(--w);font-weight:600;font-size:.8rem}.hp-how .go:hover{background:var(--vs)}
+.gs{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;background:var(--w);border:1px solid var(--div);border-radius:18px;padding:.9rem 1.1rem;box-shadow:var(--sh)}
+.gs>div{flex:1;min-width:200px}.gs b{display:block}.gs small{color:var(--mut)}
+.gs .hp-bar{max-width:260px}
+.gs button.x{flex:none;border:0;background:none;color:var(--mut);font-size:1.2rem;padding:.2rem .5rem}
 .cp{display:grid;gap:1.2rem}
 .cp-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
 .cp-card{background:var(--w);border:1px solid var(--div);border-top:4px solid var(--c);border-radius:18px;padding:1rem 1.1rem;box-shadow:var(--sh);display:grid;gap:.6rem;align-content:start}
@@ -780,6 +801,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
           <a class="ghost" data-site href="#" target="_blank" rel="noopener">Ver sitio web ↗</a>
         </div>
       </div>
+      <div id="guide-strip"></div>
       <div class="stats" id="stats"></div>
       <div class="cols">
         <div class="card">
@@ -803,6 +825,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     <section id="teamview" class="tm" hidden></section>
     <section id="sxview" class="sx" hidden></section>
     <section id="compview" class="cp" hidden></section>
+    <section id="helpview" class="hp" hidden></section>
     <section id="hist" class="hx" hidden></section>
 
     <div id="section-view">
@@ -956,6 +979,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     snooze: svg('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
     gear:  svg('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>'),
     scale: svg('<path d="M12 3v18M5 21h14M5 7h14"/><path d="M5 7l-3 7a3 3 0 0 0 6 0L5 7zM19 7l-3 7a3 3 0 0 0 6 0l-3-7z"/>'),
+    help:  svg('<circle cx="12" cy="12" r="9"/><path d="M9.5 9.6a2.6 2.6 0 1 1 3.6 2.4c-.7.4-1.1.9-1.1 1.7M12 17h.01"/>'),
     bell:  svg('<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>'),
     tag:   svg('<path d="M3 12V4h8l10 10-8 8L3 12z"/><circle cx="8" cy="9" r="1.4"/>'),
     chart: svg('<path d="M4 20V11M10 20V4M16 20v-6M22 20H2"/>'),
@@ -1247,6 +1271,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       `<button class="admin-nav nav-sep${current === 'stats' ? ' active' : ''}" data-view="stats" ${current === 'stats' ? 'aria-current="page"' : ''}>${ICON.chart}<span>Estadísticas</span></button>` +
       `<button class="admin-nav${current === 'comp' ? ' active' : ''}" data-view="comp" ${current === 'comp' ? 'aria-current="page"' : ''}>${ICON.scale}<span>Competencia</span></button>` +
       `<button class="admin-nav${current === 'hist' ? ' active' : ''}" data-view="hist" ${current === 'hist' ? 'aria-current="page"' : ''}>${ICON.hist}<span>Historial</span></button>` +
+      `<button class="admin-nav${current === 'help' ? ' active' : ''}" data-view="help" ${current === 'help' ? 'aria-current="page"' : ''}>${ICON.help}<span>Ayuda</span></button>` +
       (isAdmin() ? `<button class="admin-nav${current === 'team' ? ' active' : ''}" data-view="team" ${current === 'team' ? 'aria-current="page"' : ''}>${ICON.users}<span>Equipo</span></button>` +
         `<button class="admin-nav${current === 'plan' ? ' active' : ''}" data-view="plan" ${current === 'plan' ? 'aria-current="page"' : ''}>${ICON.card}<span>Mi plan</span></button>` : '');
   }
@@ -1258,6 +1283,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   function setView(k) {
     if ((k === 'plan' || k === 'team') && !isAdmin()) k = 'inicio'; // el Editor no gestiona equipo ni plan
     current = k; filter = 'todos'; query = ''; $('#search').value = '';
+    if (k === 'stats') guideSeen('stats');
     document.querySelectorAll('[data-filter]').forEach(x => x.setAttribute('aria-pressed', x.dataset.filter === 'todos'));
     buildNav(); render(); window.scrollTo({ top: 0 });
   }
@@ -1270,13 +1296,14 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   $('#search').addEventListener('input', e => { query = tkey(e.target.value); render(); });
 
   function render() {
-    const VIEWS = { inicio: '#home', plan: '#plan', stats: '#sxview', comp: '#compview', hist: '#hist', team: '#teamview' };
+    const VIEWS = { inicio: '#home', plan: '#plan', stats: '#sxview', comp: '#compview', help: '#helpview', hist: '#hist', team: '#teamview' };
     Object.values(VIEWS).forEach(sel => { $(sel).hidden = sel !== VIEWS[current]; });
     $('#section-view').hidden = !!VIEWS[current];
     if (current === 'inicio') return renderHome();
     if (current === 'plan') return renderPlan();
     if (current === 'stats') return loadStats();
     if (current === 'comp') return renderComp();
+    if (current === 'help') return renderHelp();
     if (current === 'hist') return loadHist();
     if (current === 'team') return loadTeam();
     const S = SECTIONS[current];
@@ -1679,6 +1706,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       : `<div style="width:100%;max-width:1120px"><div class="sv-browser"><div class="sv-chrome"><i></i><i></i><i></i><span class="sv-url">${esc(host)}</span></div>${view}</div></div>`;
   }
   document.querySelectorAll('[data-open-preview]').forEach(b => b.addEventListener('click', () => {
+    guideSeen('preview');
     pv.page = PV_FOR[current] || 'inicio'; renderPreview(); $('#preview-dialog').showModal();
   }));
   $('#close-preview').addEventListener('click', () => $('#preview-dialog').close());
@@ -2057,6 +2085,84 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   let cal = { y: now.getFullYear(), m: now.getMonth() }, hf = 'todas', hq = '', hAll = false;
   const todayStr = () => new Date().toISOString().slice(0, 10);
   const allItems = () => Object.keys(SECTIONS).flatMap(k => (cache[k] || []).map(it => ({ ...it, _s: k })));
+
+  // ── Ayuda: primeros pasos (se completan solos según lo que ya hiciste) y cómo hacer cada cosa ──
+  const GKEY = 'upsky-cms-guide-v1';
+  const gget = () => { try { return JSON.parse(localStorage.getItem(GKEY)) || {}; } catch (e) { return {}; } };
+  const gset = o => { try { localStorage.setItem(GKEY, JSON.stringify({ ...gget(), ...o })); } catch (e) {} };
+  function guideSeen(k) { const g = gget(); if (!(g.seen || {})[k]) gset({ seen: { ...(g.seen || {}), [k]: true } }); }
+  let helpTeam = null; // cantidad de personas del equipo (solo la ve el administrador)
+  const live = k => (cache[k] || []).filter(isLive);
+  function guideSteps() {
+    const seen = gget().seen || {}, prods = live('productos'), evs = live('eventos');
+    const steps = [
+      { id: 'prod', t: 'Completá tus productos', d: 'Que todos tengan precio y descripción.', done: prods.length > 0 && prods.every(x => Number(x.data.precio) > 0 && (x.data.descripcion || '').trim()), go: 'productos', b: 'Ir al Catálogo' },
+      { id: 'ev', t: 'Sumá una foto a cada evento', d: 'Los eventos sin imagen muestran el logo.', done: evs.length > 0 && evs.every(x => x.data.imagen_1), go: 'eventos', b: 'Ir a Eventos' },
+      { id: 'prev', t: 'Mirá cómo queda tu sitio', d: 'Abrí la vista previa antes de publicar algo grande.', done: !!seen.preview, go: '#preview', b: 'Abrir vista previa' },
+      { id: 'promo', t: 'Creá tu primera promoción', d: 'Banner y descuento en los precios, con fecha de inicio y fin.', done: (cache.promos || []).length > 0, go: 'promos', b: 'Ir a Promociones' },
+      { id: 'push', t: 'Activá las notificaciones', d: 'Recibí avisos en el celular o la computadora.', done: !!push.sub, go: '#push', b: 'Activar' },
+      { id: 'comp', t: 'Cargá un competidor', d: 'Pegá sus links y compará los números con los tuyos.', done: comp.list.some(c => !c.is_own), go: 'comp', b: 'Ir a Competencia' },
+      { id: 'stats', t: 'Mirá tus estadísticas', d: 'Visitas, clics a WhatsApp y productos más agregados al carrito.', done: !!seen.stats, go: 'stats', b: 'Ver estadísticas' },
+    ];
+    if (isAdmin() && helpTeam != null) steps.push({ id: 'team', t: 'Sumá a quien te ayude a cargar contenido', d: 'Hasta 3 personas, como Editor o Administrador.', done: helpTeam >= 2, go: 'team', b: 'Ir a Equipo' });
+    return steps;
+  }
+  async function guideLoadTeam() {
+    if (!isAdmin() || helpTeam != null) return;
+    try { const { data } = await sb.from('team_members').select('email, is_support'); helpTeam = (data || []).filter(x => !x.is_support).length; } catch (e) { helpTeam = null; }
+    if (current === 'help') renderHelp(); else if (current === 'inicio') guideStrip();
+  }
+  function guideStrip() {
+    const host = $('#guide-strip'); if (!host) return;
+    const st = guideSteps(), n = st.filter(x => x.done).length;
+    if (gget().dismissed || n === st.length) { host.innerHTML = ''; return; }
+    host.innerHTML = `<div class="gs"><div><b>Primeros pasos: ${n} de ${st.length}</b><small>Te mostramos qué falta para dejar tu sitio listo.</small><div class="hp-bar" aria-hidden="true"><i style="width:${Math.round(n / st.length * 100)}%"></i></div></div><button type="button" class="primary" data-go-help>Ver la guía</button><button type="button" class="x" data-guide-x aria-label="Ocultar este aviso" title="Ocultar este aviso">×</button></div>`;
+  }
+  const HOWTO = [
+    ['Cambiar un precio o un texto', '<ol><li>Entrá a la sección (por ejemplo, <b>Catálogo</b>).</li><li>Tocá el producto que querés cambiar.</li><li>Modificá el dato y tocá <b>Guardar cambios</b>.</li></ol><p>El cambio queda publicado al instante: recargá tu sitio y lo ves.</p>', 'productos', 'Ir al Catálogo'],
+    ['Agregar un producto, evento o promoción', '<ol><li>Tocá <b>+ Crear contenido</b>, arriba a la derecha.</li><li>Elegí qué querés crear.</li><li>Completá los datos, subí una foto y tocá <b>Publicar</b>.</li></ol>', null],
+    ['Ocultar algo sin borrarlo', '<p>En la lista de cada sección, tocá <b>Ocultar</b>: deja de verse en la web pero queda guardado. Cuando quieras que vuelva, tocá <b>Mostrar</b>.</p><p class="tip">Si querés borrarlo para siempre, usá <b>Eliminar</b>. Eso no se puede deshacer desde la lista, aunque el Historial guarda el registro.</p>', null],
+    ['Programar una publicación', '<ol><li>Abrí el elemento (o creá uno nuevo).</li><li>Abrí <b>Programar publicación</b>.</li><li>Elegí desde cuándo se muestra y, si querés, cuándo se oculta solo.</li></ol><p>Sirve para dejar listo algo que se publica solo en la fecha elegida.</p>', null],
+    ['Deshacer un cambio', '<ol><li>Entrá a <b>Historial</b>.</li><li>Buscá el cambio (podés filtrar por sección).</li><li>Tocá <b>Deshacer</b> o <b>Restaurar</b>.</li></ol><p class="tip">Todo lo que se cambia queda registrado, así que podés probar sin miedo.</p>', 'hist', 'Ir al Historial'],
+    ['Crear una promoción con descuento', '<ol><li><b>+ Crear contenido</b> → <b>Promoción</b>.</li><li>Poné un título, el porcentaje (de 1 a 90%) y a qué producto aplica.</li><li>Elegí cuándo empieza y cuándo termina.</li></ol><p>Mientras esté activa se muestra el banner y los precios con descuento, y el carrito cobra el precio de la promo.</p>', 'promos', 'Ir a Promociones'],
+    ['Subir un video a Comunidad', '<ol><li>Entrá a <b>Comunidad</b> → <b>+ Agregar</b>.</li><li>Subí el video (MP4, WebM o MOV, vertical, hasta 30 MB).</li><li>Escribí una descripción y tocá <b>Publicar</b>.</li></ol><p>Para bajarlo de la web, tocá <b>Ocultar</b> (queda guardado) o <b>Eliminar</b> (se borra el video).</p>', 'comunidad', 'Ir a Comunidad'],
+    ['Cambiar las fotos y el video fijos del sitio', '<ol><li>Entrá a <b>Fotos y videos del sitio</b>.</li><li>Tocá el lugar que querés cambiar (portada del Inicio, banner de Para negocios, video del Producto…).</li><li>Subí la nueva foto y tocá <b>Guardar cambios</b>.</li></ol>', 'sitio', 'Ir a Fotos del sitio'],
+    ['Entender las estadísticas', '<p>En <b>Estadísticas</b> ves cuánta gente visitó el sitio, cuántos tocaron el botón de WhatsApp y qué productos se agregan más al carrito. Podés elegir los últimos 7, 30 o 90 días.</p><p class="tip">Se miden sin cookies ni datos personales.</p>', 'stats', 'Ver estadísticas'],
+    ['Recibir avisos en el celular', '<ol><li>Tocá la <b>campana</b>, arriba a la derecha.</li><li>Tocá el engranaje y luego <b>Activar notificaciones</b>.</li><li>Aceptá el permiso del navegador.</li></ol><p>Podés elegir qué avisos querés: clics a WhatsApp, productos en el carrito y agenda.</p><p class="tip">En iPhone: abrí el panel en Safari, tocá Compartir → “Agregar a inicio” y abrilo desde ese ícono.</p>', '#push', 'Activar ahora'],
+    ['Comparar con la competencia', '<ol><li>Entrá a <b>Competencia</b> → <b>Agregar competidor</b> (hasta 5).</li><li>Pegá sus links de redes y web.</li><li>Cada tanto tocá <b>Cargar números</b> con sus seguidores, publicaciones y precios.</li></ol><p>El panel arma la tabla, el gráfico de evolución y unas frases con las conclusiones.</p>', 'comp', 'Ir a Competencia'],
+  ];
+  const HOWTO_ADMIN = ['Sumar a alguien del equipo', '<ol><li>Entrá a <b>Equipo</b> → <b>Invitar</b>.</li><li>Escribí su email, elegí el rol y una contraseña inicial.</li><li>Compartile el acceso por WhatsApp: al entrar por primera vez va a elegir la suya.</li></ol><p><b>Administrador:</b> todo, incluido el equipo y el plan. <b>Editor:</b> contenido, imágenes, estadísticas e historial.</p>', 'team', 'Ir a Equipo'];
+  const FAQ = [
+    ['¿Cuánto tarda en verse un cambio?', 'Se publica al guardar. Si no lo ves enseguida, recargá la página del sitio.'],
+    ['¿Puedo romper el sitio?', 'No. El panel solo cambia el contenido (textos, precios, fotos y videos), y todo queda en el Historial para deshacerlo.'],
+    ['Subí una foto y no se ve', 'Recargá el sitio. Si sigue igual, probá con otra imagen en JPG, PNG o WebP; las muy pesadas se reducen solas.'],
+    ['El video no se sube', 'Tiene que ser MP4, WebM o MOV y pesar hasta 30 MB. Si es más pesado, comprimilo antes de subirlo.'],
+    ['Olvidé mi contraseña', 'En la pantalla de ingreso tocá “¿Olvidaste tu contraseña?”. Si no te llega el mail, pedile a un administrador del equipo que te genere una nueva.'],
+  ];
+  function renderHelp() {
+    guideLoadTeam();
+    const st = guideSteps(), n = st.filter(x => x.done).length, support = CFG.support || {};
+    const how = isAdmin() ? [...HOWTO, HOWTO_ADMIN] : HOWTO;
+    const goBtn = (go, b, cls) => go ? `<button type="button" class="${cls}" data-hg="${esc(go)}">${esc(b)}</button>` : '';
+    const contact = support.whatsapp || support.email ? `<div class="sx-card"><h3>¿Necesitás ayuda?</h3><p class="sub">Escribinos y te damos una mano.</p><div style="display:flex;gap:.5rem;flex-wrap:wrap">${support.whatsapp ? `<a class="primary" style="text-decoration:none;display:inline-block" href="https://wa.me/${esc(String(support.whatsapp).replace(/\D/g, ''))}" target="_blank" rel="noopener noreferrer">Escribir por WhatsApp</a>` : ''}${support.email ? `<a class="secondary" style="text-decoration:none;display:inline-block;padding:.6rem 1.1rem;border:1px solid var(--div);border-radius:var(--r);font-weight:600" href="mailto:${esc(support.email)}">${esc(support.email)}</a>` : ''}</div></div>` : '';
+    $('#helpview').innerHTML = `
+      <div><span class="top-label">PANEL DE ADMINISTRACIÓN</span><h1 style="font:700 2.1rem var(--f-d);margin:.2rem 0">Ayuda</h1><p style="margin:0;color:var(--mut)">Los primeros pasos para dejar tu sitio listo y cómo hacer cada cosa.</p></div>
+      <div class="sx-card"><h3>Primeros pasos</h3><p class="sub">${n === st.length ? '¡Listo! Completaste todos los pasos. 🎉' : `Llevás ${n} de ${st.length}. Se tildan solos a medida que avanzás.`}</p><div class="hp-bar" aria-hidden="true"><i style="width:${Math.round(n / st.length * 100)}%"></i></div>
+        <ul class="hp-steps">${st.map(x => `<li class="${x.done ? 'done' : ''}"><span class="hp-chk" aria-hidden="true">${ICON.check}</span><div><b>${esc(x.t)}</b><small>${esc(x.d)}</small></div>${x.done ? '<small>Hecho</small>' : goBtn(x.go, x.b, '')}</li>`).join('')}</ul></div>
+      <div class="sx-card hp-how"><h3>Cómo hacer cada cosa</h3><p class="sub">Tocá un tema para ver los pasos.</p>${how.map(([t, body, go, b]) => `<details><summary>${esc(t)}</summary><div class="bd">${body}${goBtn(go, b, 'go')}</div></details>`).join('')}</div>
+      <div class="sx-card hp-how"><h3>Preguntas frecuentes</h3>${FAQ.map(([q, a]) => `<details><summary>${esc(q)}</summary><div class="bd"><p>${esc(a)}</p></div></details>`).join('')}</div>
+      ${contact}`;
+  }
+  function guideGo(go) {
+    if (go === '#preview') { setView('inicio'); return $('#home [data-open-preview]').click(); }
+    if (go === '#push') { const m = $('#push-menu'); if (m.hidden) $('#push-btn').click(); notif.view = 'settings'; return pushPaint(); }
+    setView(go);
+  }
+  $('#helpview').addEventListener('click', e => { const b = e.target.closest('[data-hg]'); if (b) guideGo(b.dataset.hg); });
+  $('#guide-strip').addEventListener('click', e => {
+    if (e.target.closest('[data-go-help]')) return setView('help');
+    if (e.target.closest('[data-guide-x]')) { gset({ dismissed: true }); guideStrip(); }
+  });
 
   // ── Competencia: competidores, números con historial y comparativa (sin IA) ──
   const METRICS = [
@@ -2486,7 +2592,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   setInterval(() => { if (current === 'inicio') wxPaint(); }, 60e3);
 
   function renderHome() {
-    wxPaint(); wxLoad();
+    wxPaint(); wxLoad(); guideStrip(); guideLoadTeam();
     const all = allItems(), pubs = a => a.filter(isLive).length;
     const cnt = k => (cache[k] || []);
     const upcoming = cnt('eventos').filter(x => isLive(x) && (x.data.fecha || '') >= todayStr());
