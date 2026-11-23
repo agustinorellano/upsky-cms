@@ -7,5 +7,6 @@ window.UPSKY_SUPABASE = {
   adminEmail: 'agustinorellanogomez@gmail.com',         // el panel solo pide la contraseña de este usuario
   bucket:     'upsky-images',
   siteUrl:    'https://upsky-energydrink.vercel.app/',    // la URL final de la web
+  brand:      { name: 'UP SKY', logo: '' },                // marca del cliente que se muestra arriba del menú (logo: URL de una imagen; vacío = solo el nombre)
   support:    { whatsapp: '', email: '' },                // contacto que se muestra en "Ayuda" (dejar vacío para ocultarlo)
 };

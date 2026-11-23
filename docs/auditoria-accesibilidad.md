@@ -52,3 +52,11 @@
 2. **P1, P4, P5, S2, S3:** son los que bloquean a quien usa lector de pantalla o teclado.
 3. **P7 a P11 y S6:** estructura y navegación.
 4. **Prueba con un lector de pantalla real** y revisión final.
+
+## Estado tras las correcciones del panel (23 de noviembre de 2026)
+Se repitió la misma revisión automática sobre las 26 pantallas del panel. **De 10 tipos de problema se pasó a 2**, y ambos son menores:
+- `region`: el enlace "Saltar al contenido" quedó dentro del menú lateral (zona de navegación).
+- `target-size`: avisa de un botón del menú tapado parcialmente cuando está abierto el menú de usuario; es un efecto del menú flotante, no un control demasiado chico.
+
+Cambios aplicados: magenta de marca `#d11266` (5,26:1 sobre blanco, y 4,63:1 sobre el rosado claro) y una variante clara `#ff6aa9` para texto en la vista oscura; nombres para las miniaturas y el botón de usuario; filas de lista sin rol de botón; títulos en orden (1 → 2 → 3); `main` en el ingreso; enlace "Saltar al contenido"; diálogos con nombre; movimiento reducido; objetivos táctiles de 44 px en celular.
+Quedan pendientes el sitio público (S1 a S8) y la prueba con un lector de pantalla real.
