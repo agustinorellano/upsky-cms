@@ -351,6 +351,24 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 .cp-ins li.good i{background:#16a34a}.cp-ins li.bad i{background:#dc2626}.cp-ins li.info i{background:var(--v)}
 .cp-legend{display:flex;gap:.9rem;flex-wrap:wrap;font-size:.8rem;color:var(--mut);margin:.2rem 0 .6rem}.cp-legend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:.4rem;vertical-align:middle}
 .cp-chart svg{display:block;width:100%;height:auto;overflow:visible}.cp-chart text{fill:var(--mut);font:500 11px var(--f-u)}
+.cp-rep h4{margin:0 0 .3rem;font:600 .78rem var(--f-u);letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.cp-rep p{margin:0 0 .8rem;font-size:.92rem;line-height:1.5}
+.cp-rep ul{margin:0 0 .8rem;padding-left:1.1rem;display:grid;gap:.3rem;font-size:.9rem;line-height:1.45}
+.cp-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.cp-trio>div{background:var(--bg);border-radius:14px;padding:.9rem 1rem}
+.cp-rc{border:1px solid var(--div);border-left:4px solid var(--c);border-radius:14px;padding:1rem 1.1rem;margin-top:.8rem}
+.cp-rc>b{font-size:1rem}.cp-rc .chips{display:flex;gap:.35rem;flex-wrap:wrap;margin:.2rem 0 .7rem}
+.cp-src{display:flex;gap:.35rem;flex-wrap:wrap}.cp-src a{font-size:.74rem;color:var(--mut);word-break:break-all}
+.cp-run{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap}
+.cp-run .sp{width:20px;height:20px;border-radius:50%;border:3px solid var(--div);border-top-color:var(--v);animation:cpspin 1s linear infinite;flex:none}
+@keyframes cpspin{to{transform:rotate(360deg)}}
+.cp-note{font-size:.8rem;color:var(--mut)}
+.md-list{display:grid;gap:.5rem}
+.md-item{display:flex;gap:.7rem;align-items:flex-start;border:1px solid var(--div);border-radius:12px;padding:.6rem .7rem}
+.md-item img{width:54px;height:54px;border-radius:8px;object-fit:cover;flex:none;background:var(--bg)}
+.md-item div{flex:1;min-width:0;font-size:.84rem}.md-item small{display:block;color:var(--mut)}
+.md-item button{flex:none;border:0;background:none;color:var(--mut);font-size:1.1rem;width:30px;height:30px;border-radius:50%}.md-item button:hover{background:var(--bg)}
+@media (max-width:820px){.cp-trio{grid-template-columns:1fr}}
 .cp-empty{padding:1.6rem 1rem;text-align:center;color:var(--mut);font-size:.9rem}
 .lk{display:grid;grid-template-columns:128px 1fr 34px;gap:.4rem;align-items:center;margin-bottom:.4rem}
 .lk select{padding:.55rem .5rem}
@@ -494,7 +512,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 .pl-empty{padding:1.6rem;text-align:center;color:var(--mut);border:1px dashed var(--div);border-radius:14px;font-size:.9rem}
 
 /* Panel lateral de edición */
-#item-dialog,#comp-dialog,#num-dialog{margin:0 0 0 auto;width:min(580px,100%);height:100vh;max-height:100vh;border-radius:28px 0 0 28px;overflow:hidden;box-shadow:-30px 0 80px rgba(0,0,0,.28)}
+#item-dialog,#comp-dialog,#mat-dialog{margin:0 0 0 auto;width:min(580px,100%);height:100vh;max-height:100vh;border-radius:28px 0 0 28px;overflow:hidden;box-shadow:-30px 0 80px rgba(0,0,0,.28)}
 #item-dialog[open]{display:flex;animation:sheet-in .32s cubic-bezier(.2,.8,.2,1)}
 #item-dialog::backdrop{background:rgba(12,10,16,.38);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 @keyframes sheet-in{from{transform:translateX(48px);opacity:0}to{transform:none;opacity:1}}
@@ -572,7 +590,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 .linkbtn{background:none;border:0;padding:0;color:var(--v);font-weight:600;font-size:.82rem}.linkbtn:hover{text-decoration:underline}
 .gal-url{display:flex;gap:.5rem;margin-top:.5rem}.gal-url input{flex:1}
 @media (max-width:820px){
-  #item-dialog,#comp-dialog,#num-dialog{margin:auto 0 0;width:100%;height:94vh;max-height:94vh;border-radius:26px 26px 0 0}
+  #item-dialog,#comp-dialog,#mat-dialog{margin:auto 0 0;width:100%;height:94vh;max-height:94vh;border-radius:26px 26px 0 0}
   #item-dialog[open]{animation-name:sheet-up}
   .sheet-head,.sheet-body,.sheet-foot{padding-left:1.2rem;padding-right:1.2rem}.sheet #form-error{margin:0 1.2rem .6rem}
   .grid2{grid-template-columns:1fr}.sheet-head h2{font-size:1.65rem}
@@ -880,13 +898,12 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     <div class="sheet-foot"><button type="button" class="ghost-btn" id="cd-del" hidden style="color:var(--danger)">Eliminar competidor</button><span style="flex:1"></span><button type="button" class="ghost-btn" id="cd-cancel">Cancelar</button><button type="submit" class="primary pill" id="cd-save">Guardar</button></div>
   </form>
 </dialog>
-<dialog id="num-dialog">
-  <form id="num-form" class="sheet" novalidate>
-    <div class="sheet-head"><div><p>COMPETENCIA</p><h2>Cargar números</h2></div><button type="button" class="round-x" id="nd-x" aria-label="Cerrar">×</button></div>
-    <div class="sheet-body" id="nd-fields"></div>
-    <p class="form-error" id="nd-error" role="alert" hidden></p>
-    <div class="sheet-foot"><span></span><span><button type="button" class="ghost-btn" id="nd-cancel">Cancelar</button> <button type="submit" class="primary pill" id="nd-save">Guardar números</button></span></div>
-  </form>
+<dialog id="mat-dialog">
+  <div class="sheet">
+    <div class="sheet-head"><div><p>COMPETENCIA</p><h2 id="md-title">Material</h2></div><button type="button" class="round-x" id="md-x" aria-label="Cerrar">×</button></div>
+    <div class="sheet-body" id="md-body"></div>
+    <div class="sheet-foot"><span></span><button type="button" class="primary pill" id="md-done">Listo</button></div>
+  </div>
 </dialog>
 
 <!-- Confirmar eliminación -->
@@ -1284,6 +1301,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     if ((k === 'plan' || k === 'team') && !isAdmin()) k = 'inicio'; // el Editor no gestiona equipo ni plan
     current = k; filter = 'todos'; query = ''; $('#search').value = '';
     if (k === 'stats') guideSeen('stats');
+    if (k === 'comp' && comp.loaded) loadComp().then(() => { if (current === 'comp') { renderComp(); compPoll(); } });
     document.querySelectorAll('[data-filter]').forEach(x => x.setAttribute('aria-pressed', x.dataset.filter === 'todos'));
     buildNav(); render(); window.scrollTo({ top: 0 });
   }
@@ -2101,7 +2119,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       { id: 'prev', t: 'Mirá cómo queda tu sitio', d: 'Abrí la vista previa antes de publicar algo grande.', done: !!seen.preview, go: '#preview', b: 'Abrir vista previa' },
       { id: 'promo', t: 'Creá tu primera promoción', d: 'Banner y descuento en los precios, con fecha de inicio y fin.', done: (cache.promos || []).length > 0, go: 'promos', b: 'Ir a Promociones' },
       { id: 'push', t: 'Activá las notificaciones', d: 'Recibí avisos en el celular o la computadora.', done: !!push.sub, go: '#push', b: 'Activar' },
-      { id: 'comp', t: 'Cargá un competidor', d: 'Pegá sus links y compará los números con los tuyos.', done: comp.list.some(c => !c.is_own), go: 'comp', b: 'Ir a Competencia' },
+      { id: 'comp', t: 'Generá tu primer análisis de competencia', d: 'Cargá hasta 5 competidores y la IA te cuenta qué están haciendo hoy.', done: doneReps().length > 0, go: 'comp', b: 'Ir a Competencia' },
       { id: 'stats', t: 'Mirá tus estadísticas', d: 'Visitas, clics a WhatsApp y productos más agregados al carrito.', done: !!seen.stats, go: 'stats', b: 'Ver estadísticas' },
     ];
     if (isAdmin() && helpTeam != null) steps.push({ id: 'team', t: 'Sumá a quien te ayude a cargar contenido', d: 'Hasta 3 personas, como Editor o Administrador.', done: helpTeam >= 2, go: 'team', b: 'Ir a Equipo' });
@@ -2129,7 +2147,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     ['Cambiar las fotos y el video fijos del sitio', '<ol><li>Entrá a <b>Fotos y videos del sitio</b>.</li><li>Tocá el lugar que querés cambiar (portada del Inicio, banner de Para negocios, video del Producto…).</li><li>Subí la nueva foto y tocá <b>Guardar cambios</b>.</li></ol>', 'sitio', 'Ir a Fotos del sitio'],
     ['Entender las estadísticas', '<p>En <b>Estadísticas</b> ves cuánta gente visitó el sitio, cuántos tocaron el botón de WhatsApp y qué productos se agregan más al carrito. Podés elegir los últimos 7, 30 o 90 días.</p><p class="tip">Se miden sin cookies ni datos personales.</p>', 'stats', 'Ver estadísticas'],
     ['Recibir avisos en el celular', '<ol><li>Tocá la <b>campana</b>, arriba a la derecha.</li><li>Tocá el engranaje y luego <b>Activar notificaciones</b>.</li><li>Aceptá el permiso del navegador.</li></ol><p>Podés elegir qué avisos querés: clics a WhatsApp, productos en el carrito y agenda.</p><p class="tip">En iPhone: abrí el panel en Safari, tocá Compartir → “Agregar a inicio” y abrilo desde ese ícono.</p>', '#push', 'Activar ahora'],
-    ['Comparar con la competencia', '<ol><li>Entrá a <b>Competencia</b> → <b>Agregar competidor</b> (hasta 5).</li><li>Pegá sus links de redes y web.</li><li>Cada tanto tocá <b>Cargar números</b> con sus seguidores, publicaciones y precios.</li></ol><p>El panel arma la tabla, el gráfico de evolución y unas frases con las conclusiones.</p>', 'comp', 'Ir a Competencia'],
+    ['Analizar a la competencia', '<ol><li>Entrá a <b>Competencia</b> → <b>Agregar competidor</b> (hasta 5) y pegá los links de su web, tienda y redes.</li><li>Para lo que la IA no puede leer sola (Instagram, TikTok, Facebook), tocá <b>Material</b> y pegá textos o subí capturas.</li><li>Tocá <b>Generar análisis</b>. Tarda entre 1 y 3 minutos.</li></ol><p>El informe te cuenta qué comunica cada competidor, qué ofertas y campañas tienen hoy, y qué oportunidades ves para tu marca.</p><p class="tip">Tenés 2 análisis por mes. Si uno falla, no se descuenta.</p>', 'comp', 'Ir a Competencia'],
   ];
   const HOWTO_ADMIN = ['Sumar a alguien del equipo', '<ol><li>Entrá a <b>Equipo</b> → <b>Invitar</b>.</li><li>Escribí su email, elegí el rol y una contraseña inicial.</li><li>Compartile el acceso por WhatsApp: al entrar por primera vez va a elegir la suya.</li></ol><p><b>Administrador:</b> todo, incluido el equipo y el plan. <b>Editor:</b> contenido, imágenes, estadísticas e historial.</p>', 'team', 'Ir a Equipo'];
   const FAQ = [
@@ -2164,16 +2182,8 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     if (e.target.closest('[data-guide-x]')) { gset({ dismissed: true }); guideStrip(); }
   });
 
-  // ── Competencia: competidores, números con historial y comparativa (sin IA) ──
-  const METRICS = [
-    { k: 'ig_followers', l: 'Instagram · seguidores', s: 'seguidores en Instagram', grp: 'Seguidores' },
-    { k: 'tt_followers', l: 'TikTok · seguidores', s: 'seguidores en TikTok', grp: 'Seguidores' },
-    { k: 'fb_followers', l: 'Facebook · seguidores', s: 'seguidores en Facebook', grp: 'Seguidores' },
-    { k: 'yt_subscribers', l: 'YouTube · suscriptores', s: 'suscriptores en YouTube', grp: 'Seguidores' },
-    { k: 'posts_month', l: 'Publicaciones por mes', s: 'publicaciones por mes', grp: 'Actividad' },
-    { k: 'avg_likes', l: 'Me gusta promedio por publicación', s: 'me gusta por publicación', grp: 'Actividad' },
-    { k: 'price', l: 'Precio del producto comparable', s: 'precio', grp: 'Precio', price: true },
-  ];
+  // ── Competencia: análisis de contenido con IA (qué comunican y qué hacen hoy) ──
+  const AI_LIMIT = 2; // análisis por mes (el cupo real lo controla la base)
   const NETS = { instagram: ['Instagram', /instagram\.com/i], tiktok: ['TikTok', /tiktok\.com/i], facebook: ['Facebook', /(facebook|fb)\.com/i], youtube: ['YouTube', /(youtube\.com|youtu\.be)/i], x: ['X', /(^|\.)(x|twitter)\.com/i], linkedin: ['LinkedIn', /linkedin\.com/i], tienda: ['Tienda', /(mercadolibre|tiendanube|shopify|mitienda|empretienda|vtex)/i], web: ['Web', null], otro: ['Otro', null] };
   const detectNet = u => { for (const [k, [, re]] of Object.entries(NETS)) if (re && re.test(u)) return k; return 'web'; };
   const normUrl = u => {
@@ -2181,137 +2191,123 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     if (!/^[a-z]+:\/\//i.test(u)) u = 'https://' + u;
     try { const x = new URL(u); if (!['https:', 'http:'].includes(x.protocol) || !x.hostname.includes('.')) return null; x.protocol = 'https:'; return x.href.length <= 250 ? x.href : null; } catch (e) { return null; }
   };
-  const comp = { list: [], snaps: [], loaded: false, metric: 'ig_followers', err: '' };
-  const cfd = d => new Date(d + 'T12:00:00').toLocaleDateString('es-AR', { day: 'numeric', month: 'short' });
-  const daysAgo = d => Math.floor((Date.now() - Date.parse(d + 'T12:00:00')) / 864e5);
-  const agoText = d => { const n = daysAgo(d); return n <= 0 ? 'hoy' : n === 1 ? 'ayer' : `hace ${n} días`; };
-  const cval = (k, v) => (METRICS.find(m => m.k === k)?.price ? '$' : '') + nf.format(v);
-  const snapsOf = id => comp.snaps.filter(x => x.competitor_id === id);
-  function latestOf(id) { const vals = {}; let date = null; snapsOf(id).forEach(x => { Object.assign(vals, x.metrics); date = x.taken_on; }); return { vals, date }; }
+  const comp = { list: [], mats: [], reports: [], usage: { used: 0, bonus: 0 }, loaded: false, err: '', sel: null, poll: null, msg: '' };
+  const cfd = d => new Date(String(d).slice(0, 10) + 'T12:00:00').toLocaleDateString('es-AR', { day: 'numeric', month: 'long' });
+  const daysAgo = d => Math.floor((Date.now() - Date.parse(d)) / 864e5);
+  const compMonth = () => new Date(Date.now() - 3 * 36e5).toISOString().slice(0, 7);
+  const quotaLeft = () => Math.max(0, AI_LIMIT + (comp.usage.bonus || 0) - (comp.usage.used || 0));
+  const runningRep = () => comp.reports.find(r => r.status === 'running');
+  const doneReps = () => comp.reports.filter(r => r.status === 'done');
 
   async function loadComp() {
-    const [a, b] = await Promise.all([
+    const [a, m, r, u] = await Promise.all([
       sb.from('competitors').select('*').order('position').order('created_at'),
-      sb.from('competitor_snapshots').select('competitor_id, taken_on, metrics').order('taken_on'),
+      sb.from('competitor_material').select('id, competitor_id, kind, content, storage_path, network, note, created_at').order('created_at', { ascending: false }),
+      sb.from('competitor_reports').select('id, month, status, data, error, created_at, finished_at').order('created_at', { ascending: false }).limit(12),
+      sb.from('ai_usage').select('used, bonus').eq('month', compMonth()).maybeSingle(),
     ]);
-    if (a.error || b.error) { comp.err = (a.error || b.error).message; } else { comp.err = ''; comp.list = a.data || []; comp.snaps = b.data || []; }
+    const bad = a.error || m.error || r.error;
+    if (bad) { comp.err = bad.message; } else { comp.err = ''; comp.list = a.data || []; comp.mats = m.data || []; comp.reports = r.data || []; comp.usage = (u && u.data) || { used: 0, bonus: 0 }; }
     comp.loaded = true;
+    if (!comp.sel || !comp.reports.some(x => x.id === comp.sel)) { const d = doneReps()[0]; comp.sel = d ? d.id : null; }
+  }
+  function compPoll() {
+    clearInterval(comp.poll); comp.poll = null;
+    if (!runningRep()) return;
+    comp.poll = setInterval(async () => {
+      const had = runningRep();
+      await loadComp();
+      if (!runningRep()) { clearInterval(comp.poll); comp.poll = null; const fin = comp.reports.find(x => x.id === (had && had.id)); if (fin && fin.status === 'done') comp.sel = fin.id; if (current === 'comp') renderComp(); pushPaint(); }
+    }, 5000);
   }
 
-  function compInsights(own, others) {
-    const out = [], ents = [own, ...others].map(c => ({ c, ...latestOf(c.id) }));
-    const get = (e, k) => (typeof e.vals[k] === 'number' ? e.vals[k] : null);
-    METRICS.filter(m => !m.price).forEach(m => {
-      const me = ents[0], mine = get(me, m.k);
-      const rivals = ents.slice(1).filter(e => get(e, m.k) != null).sort((x, y) => get(y, m.k) - get(x, m.k));
-      if (mine == null || !rivals.length) return;
-      const top = rivals[0], tv = get(top, m.k);
-      if (tv > mine) out.push({ t: 'bad', x: `${top.c.name} te supera en ${m.s}: ${nf.format(tv)} contra ${nf.format(mine)}${mine > 0 ? ` (${Math.round((tv - mine) / mine * 100)}% más)` : ''}.` });
-      else if (tv < mine) out.push({ t: 'good', x: `Liderás en ${m.s}: ${nf.format(mine)}, ${tv > 0 ? `${Math.round((mine - tv) / tv * 100)}% más que ` : 'por encima de '}${top.c.name}.` });
-      else out.push({ t: 'info', x: `Estás igualado con ${top.c.name} en ${m.s}.` });
-    });
-    const me = ents[0], mp = get(me, 'price'), rp = ents.slice(1).map(e => get(e, 'price')).filter(v => v != null);
-    if (mp != null && rp.length) {
-      const avg = rp.reduce((a, v) => a + v, 0) / rp.length, d = Math.round((mp - avg) / avg * 100);
-      out.push({ t: 'info', x: d === 0 ? `Tu precio es igual al promedio de la competencia (${cval('price', Math.round(avg))}).` : `Tu precio está ${Math.abs(d)}% ${d < 0 ? 'por debajo' : 'por encima'} del promedio de la competencia (${cval('price', Math.round(avg))}).` });
-    }
-    // crecimiento entre la primera y la última carga de cada métrica de seguidores
-    const growth = [];
-    ents.forEach(e => METRICS.filter(m => !m.price && m.grp === 'Seguidores').forEach(m => {
-      const pts = snapsOf(e.c.id).filter(x => typeof x.metrics[m.k] === 'number');
-      if (pts.length < 2) return;
-      const f = pts[0], l = pts[pts.length - 1];
-      if (f.metrics[m.k] > 0) growth.push({ e, m, f, l, p: Math.round((l.metrics[m.k] - f.metrics[m.k]) / f.metrics[m.k] * 100) });
-    }));
-    growth.filter(g => Math.abs(g.p) >= 5).sort((a, b) => Math.abs(b.p) - Math.abs(a.p)).slice(0, 3).forEach(g =>
-      out.push({ t: g.p >= 0 ? (g.e.c.is_own ? 'good' : 'info') : (g.e.c.is_own ? 'bad' : 'info'), x: `${g.e.c.is_own ? 'Tu marca' : g.e.c.name} ${g.p >= 0 ? 'creció' : 'bajó'} ${Math.abs(g.p)}% en ${g.m.s} desde el ${cfd(g.f.taken_on)}.` }));
-    ents.filter(e => !e.date).forEach(e => out.push({ t: 'info', x: `Todavía no cargaste números de ${e.c.is_own ? 'tu marca' : e.c.name}.` }));
-    return out.slice(0, 9);
-  }
-
-  function compLine(entities) {
-    const pts = entities.map(e => ({ e, p: snapsOf(e.id).filter(x => typeof x.metrics[comp.metric] === 'number').map(x => ({ d: x.taken_on, v: x.metrics[comp.metric] })) })).filter(r => r.p.length);
-    const dates = [...new Set(pts.flatMap(r => r.p.map(q => q.d)))].sort();
-    if (dates.length < 2) return '<p class="cp-empty">Para ver la evolución cargá números en al menos dos fechas distintas.</p>';
-    const host = $('#cp-chart'), W = Math.max(300, (host && host.clientWidth) || 640), H = 260, m = { l: 46, r: 16, t: 14, b: 28 }, iw = W - m.l - m.r, ih = H - m.t - m.b;
-    const max = niceMax(Math.max(...pts.flatMap(r => r.p.map(q => q.v)), 1));
-    const X = d => m.l + dates.indexOf(d) * iw / (dates.length - 1), Y = v => m.t + ih - v / max * ih;
-    const ticks = [0, 1, 2, 3, 4].map(k => max / 4 * k);
-    const mk = METRICS.find(x => x.k === comp.metric), xl = [...new Set([0, Math.floor((dates.length - 1) / 2), dates.length - 1])];
-    const lines = pts.map(({ e, p }) => `<path d="${p.map((q, i) => `${i ? 'L' : 'M'}${X(q.d).toFixed(1)},${Y(q.v).toFixed(1)}`).join('')}" fill="none" stroke="${esc(e.color)}" stroke-width="${e.is_own ? 3 : 2}" stroke-linejoin="round" stroke-linecap="round"/>` +
-      p.map(q => `<circle cx="${X(q.d).toFixed(1)}" cy="${Y(q.v).toFixed(1)}" r="${e.is_own ? 4 : 3}" fill="${esc(e.color)}" stroke="var(--w)" stroke-width="2"><title>${esc(e.name)} · ${cfd(q.d)} · ${cval(comp.metric, q.v)}</title></circle>`).join('')).join('');
-    const summary = pts.map(({ e, p }) => `${e.name}: ${cval(comp.metric, p[p.length - 1].v)}`).join('. ');
-    const table = `<details style="margin-top:.6rem"><summary style="cursor:pointer;color:var(--mut);font-size:.82rem">Ver como tabla</summary><div class="cp-scroll"><table class="cp-table"><thead><tr><th>Fecha</th>${pts.map(r => `<th>${esc(r.e.name)}</th>`).join('')}</tr></thead><tbody>${dates.map(d => `<tr><td>${cfd(d)}</td>${pts.map(r => { const q = r.p.find(z => z.d === d); return `<td>${q ? cval(comp.metric, q.v) : '—'}</td>`; }).join('')}</tr>`).join('')}</tbody></table></div></details>`;
-    return `<div class="cp-legend">${pts.map(r => `<span><i style="background:${esc(r.e.color)}"></i>${esc(r.e.name)}</span>`).join('')}</div>
-      <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(mk.l)} entre el ${cfd(dates[0])} y el ${cfd(dates[dates.length - 1])}. ${esc(summary)}">
-      ${ticks.map(t => `<line x1="${m.l}" x2="${W - m.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="var(--div)"/><text x="${m.l - 8}" y="${Y(t) + 4}" text-anchor="end">${nf.format(Math.round(t))}</text>`).join('')}
-      ${xl.map((i, k) => `<text x="${X(dates[i])}" y="${H - 8}" text-anchor="${k === 0 ? 'start' : i === dates.length - 1 ? 'end' : 'middle'}">${cfd(dates[i])}</text>`).join('')}${lines}</svg>${table}`;
+  const chipsOf = arr => (arr || []).map(x => `<span class="chip">${esc(x)}</span>`).join('');
+  const ulOf = arr => (arr && arr.length ? `<ul>${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '<p class="cp-note">Sin datos.</p>');
+  function reportHtml(rep) {
+    const d = rep.data || {}, byName = Object.fromEntries(comp.list.map(c => [c.name, c]));
+    const conf = { alta: 'Confianza alta', media: 'Confianza media', baja: 'Confianza baja' };
+    return `<div class="cp-rep">
+      <h4>Resumen</h4><p>${esc(d.resumen || '')}</p>
+      <div class="cp-trio"><div><h4>Tendencias</h4>${ulOf(d.tendencias)}</div><div><h4>Oportunidades</h4>${ulOf(d.oportunidades)}</div><div><h4>Ideas para tu marca</h4>${ulOf(d.acciones)}</div></div>
+      <h4 style="margin-top:1.2rem">Por competidor</h4>
+      ${(d.competidores || []).map(c => `<article class="cp-rc" style="--c:${esc((byName[c.nombre] || {}).color || '#6366f1')}"><b>${esc(c.nombre)}</b> <span class="chip">${esc(conf[c.confianza] || conf.baja)}</span>
+        <div class="chips">${chipsOf(c.canales)}</div>
+        <h4>Qué comunican</h4><p>${esc(c.que_comunica)}</p>
+        <h4>Tono</h4><p>${esc(c.tono)}</p>
+        <h4>Ofertas, precios y campañas de hoy</h4>${ulOf(c.ofertas)}
+        <h4>Contenido y formatos</h4><p>${esc(c.contenido)}</p>
+        <h4>Novedades</h4><p>${esc(c.novedades)}</p>
+        <h4>Fuentes</h4><div class="cp-src">${(c.fuentes_leidas || []).map(u => `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(u)}</a>`).join('') || '<span class="cp-note">No se pudo leer ninguna página.</span>'}</div>
+        ${(c.no_accesible || []).length ? `<p class="cp-note" style="margin:.5rem 0 0">No se pudieron leer: ${(c.no_accesible || []).map(esc).join(', ')}. Para sumarlas, pegá sus textos o capturas en “Material”.</p>` : ''}</article>`).join('')}
+      ${(d.no_analizados || []).length ? `<p class="cp-note">No se pudo analizar: ${d.no_analizados.map(esc).join(', ')}.</p>` : ''}
+      <p class="cp-note" style="margin-top:1rem">Informe generado con IA a partir de lo que se pudo leer. Verificá los datos importantes antes de decidir.</p></div>`;
   }
 
   function renderComp() {
     const host = $('#compview');
-    if (!comp.loaded) { host.innerHTML = '<div class="sx-card"><p class="cp-empty">Cargando…</p></div>'; loadComp().then(() => { renderComp(); pushPaint(); }); return; }
+    if (!comp.loaded) { host.innerHTML = '<div class="sx-card"><p class="cp-empty">Cargando…</p></div>'; loadComp().then(() => { renderComp(); compPoll(); pushPaint(); }); return; }
     if (comp.err) { host.innerHTML = `<div class="sx-card"><p class="cp-empty">No se pudo cargar la competencia: ${esc(comp.err)}</p></div>`; return; }
-    const own = comp.list.find(c => c.is_own), others = comp.list.filter(c => !c.is_own), all = own ? [own, ...others] : others;
-    const ents = all.map(c => ({ c, ...latestOf(c.id) }));
-    const card = ({ c, date }) => {
-      const stale = date && daysAgo(date) > 14;
-      return `<article class="cp-card" style="--c:${esc(c.color)}"><div class="cp-top"><i class="cp-dot"></i><b>${esc(c.name)}</b>${c.is_own ? '<span class="chip v">Tu marca</span>' : ''}${stale ? '<span class="chip">Desactualizado</span>' : ''}</div>
+    const others = comp.list.filter(c => !c.is_own), run = runningRep(), left = quotaLeft();
+    const lastErr = comp.reports[0] && comp.reports[0].status === 'error' ? comp.reports[0] : null;
+    const card = c => {
+      const n = comp.mats.filter(m => m.competitor_id === c.id).length;
+      return `<article class="cp-card" style="--c:${esc(c.color)}"><div class="cp-top"><i class="cp-dot"></i><b>${esc(c.name)}</b></div>
         <div class="cp-links">${(c.links || []).map(l => `<a class="cp-link" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc((NETS[l.network] || NETS.otro)[0])} ↗</a>`).join('') || '<span class="cp-meta">Sin links todavía</span>'}</div>
-        <p class="cp-meta">${date ? `Últimos números: ${cfd(date)} (${agoText(date)})` : 'Sin números cargados'}</p>
-        <div class="cp-act"><button type="button" data-ca="nums" data-id="${c.id}">Cargar números</button><button type="button" data-ca="edit" data-id="${c.id}">Editar</button></div></article>`;
+        ${c.notes ? `<p class="cp-meta">${esc(c.notes)}</p>` : ''}
+        <p class="cp-meta">${n ? `${n} material${n === 1 ? '' : 'es'} cargado${n === 1 ? '' : 's'}` : 'Sin material extra'}</p>
+        <div class="cp-act"><button type="button" data-ca="mat" data-id="${c.id}">Material</button><button type="button" data-ca="edit" data-id="${c.id}">Editar</button></div></article>`;
     };
-    const rows = METRICS.filter(m => ents.some(e => typeof e.vals[m.k] === 'number'));
-    const mine = ents[0] && ents[0].c.is_own ? ents[0] : null;
-    const tbl = rows.length ? `<div class="cp-scroll"><table class="cp-table"><thead><tr><th>Métrica</th>${ents.map(e => `<th style="--c:${esc(e.c.color)}"><i></i>${esc(e.c.name)}</th>`).join('')}</tr></thead><tbody>
-      ${rows.map(m => {
-        const vs = ents.map(e => (typeof e.vals[m.k] === 'number' ? e.vals[m.k] : null)), best = m.price ? null : Math.max(...vs.filter(v => v != null));
-        return `<tr><td>${esc(m.l)}</td>${vs.map((v, i) => {
-          if (v == null) return '<td class="flat">—</td>';
-          const base = mine && typeof mine.vals[m.k] === 'number' ? mine.vals[m.k] : null;
-          const diff = i > 0 && base ? Math.round((v - base) / base * 100) : null;
-          const cls = m.price ? 'flat' : diff > 0 ? 'down' : diff < 0 ? 'up' : 'flat'; // para vos: que el rival tenga más es "malo"
-          return `<td class="${v === best && vs.filter(x => x === best).length === 1 ? 'best' : ''}">${cval(m.k, v)}${diff != null ? `<small class="${cls}">${diff > 0 ? '▲' : diff < 0 ? '▼' : '='} ${Math.abs(diff)}% vs. vos</small>` : ''}</td>`;
-        }).join('')}</tr>`;
-      }).join('')}</tbody></table></div>` : '<p class="cp-empty">Cargá los números de tu marca y de al menos un competidor para ver la comparativa.</p>';
-    const ins = own ? compInsights(own, others) : [];
+    const sel = comp.reports.find(r => r.id === comp.sel && r.status === 'done');
+    const runBtn = `<button type="button" class="primary" data-ca="run" ${!others.length || run || !left ? 'disabled' : ''}>Generar análisis</button>`;
     host.innerHTML = `
-      <div class="sx-bar-top"><div><span class="top-label">PANEL DE ADMINISTRACIÓN</span><h1 style="font:700 2.1rem var(--f-d);margin:.2rem 0">Competencia</h1><p style="margin:0;color:var(--mut)">Comparás tu marca con hasta 5 competidores a partir de los números que cargás. Todo se calcula en el panel.</p></div>
-        <div style="display:flex;gap:.5rem;flex-wrap:wrap"><button type="button" class="secondary" data-ca="nums" data-id="">Cargar números</button><button type="button" class="primary" data-ca="new">+ Agregar competidor</button></div></div>
-      <div class="cp-cards">${ents.map(card).join('')}</div>
-      ${others.length ? '' : '<div class="sx-card"><p class="cp-empty">Sumá tu primer competidor con el botón “Agregar competidor”. Pegás sus links y después cargás sus números cada tanto.</p></div>'}
-      <div class="sx-card"><h3>Comparativa</h3><p class="sub">Último número cargado de cada uno. En verde el que va primero; abajo de cada número, la diferencia contra tu marca.</p>${tbl}</div>
-      ${ins.length ? `<div class="sx-card"><h3>Lectura automática</h3><p class="sub">Frases armadas con reglas fijas a partir de tus números (sin IA).</p><ul class="cp-ins">${ins.map(i => `<li class="${i.t}"><i></i><span>${esc(i.x)}</span></li>`).join('')}</ul></div>` : ''}
-      <div class="sx-card"><h3>Evolución</h3><p class="sub">Cómo cambió cada número entre cargas.</p>
-        <div class="admin-tabs" role="group" aria-label="Métrica" style="margin-bottom:.8rem;flex-wrap:wrap">${METRICS.map(m => `<button type="button" data-cm="${m.k}" aria-pressed="${m.k === comp.metric}">${esc(m.l)}</button>`).join('')}</div>
-        <div class="cp-chart" id="cp-chart"></div></div>`;
-    $('#cp-chart').innerHTML = compLine(all);
+      <div class="sx-bar-top"><div><span class="top-label">PANEL DE ADMINISTRACIÓN</span><h1 style="font:700 2.1rem var(--f-d);margin:.2rem 0">Competencia</h1><p style="margin:0;color:var(--mut)">Cargá hasta 5 competidores y la IA analiza qué comunican y qué están haciendo hoy.</p></div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center"><span class="cp-note">${left} de ${AI_LIMIT} análisis disponibles este mes</span><button type="button" class="secondary" data-ca="new" ${others.length >= 5 ? 'disabled' : ''}>+ Agregar competidor</button>${runBtn}</div></div>
+      <div class="cp-cards">${others.map(card).join('')}</div>
+      ${others.length ? '' : '<div class="sx-card"><p class="cp-empty">Sumá tu primer competidor con “Agregar competidor”. Pegá los links de su web, su tienda y sus redes. Lo que no se pueda leer solo (como Instagram) lo podés sumar pegando textos o capturas en “Material”.</p></div>'}
+      ${run ? `<div class="sx-card"><div class="cp-run"><span class="sp" aria-hidden="true"></span><div><b>Analizando a tus competidores…</b><div class="cp-note">Empezó ${new Date(run.created_at).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}. Tarda entre 1 y 3 minutos. Podés seguir usando el panel; te avisamos cuando termine.</div></div></div></div>` : ''}
+      ${lastErr && !run ? `<div class="sx-card" role="alert"><b>El último análisis no se pudo completar.</b><p class="cp-note" style="margin:.3rem 0 0">${esc(lastErr.error || 'Probá de nuevo en unos minutos.')}</p></div>` : ''}
+      ${comp.msg ? `<div class="sx-card" role="status"><p style="margin:0">${esc(comp.msg)}</p></div>` : ''}
+      <div class="sx-card"><div class="sx-head"><div><h3>Último informe</h3><p class="sub">${sel ? `Generado el ${esc(cfd(sel.finished_at || sel.created_at))}` : 'Todavía no generaste ninguno.'}</p></div>
+        ${doneReps().length > 1 ? `<label class="cp-note">Ver informe de <select id="cp-hist" style="width:auto;display:inline-block;padding:.35rem .6rem">${doneReps().map(r => `<option value="${r.id}" ${r.id === comp.sel ? 'selected' : ''}>${esc(cfd(r.finished_at || r.created_at))}</option>`).join('')}</select></label>` : ''}</div>
+        ${sel ? reportHtml(sel) : '<p class="cp-empty">Cuando generes tu primer análisis, el informe aparece acá: resumen de la categoría, tendencias, oportunidades y el detalle de cada competidor.</p>'}</div>`;
   }
-
-  $('#compview').addEventListener('click', e => {
-    const cm = e.target.closest('[data-cm]'); if (cm) { comp.metric = cm.dataset.cm; return renderComp(); }
-    const b = e.target.closest('[data-ca]'); if (!b) return;
-    if (b.dataset.ca === 'new') return openComp(null);
-    if (b.dataset.ca === 'edit') return openComp(comp.list.find(c => c.id === b.dataset.id));
-    if (b.dataset.ca === 'nums') return openNums(b.dataset.id);
+  $('#compview').addEventListener('change', e => { if (e.target.id === 'cp-hist') { comp.sel = e.target.value; renderComp(); } });
+  $('#compview').addEventListener('click', async e => {
+    const b = e.target.closest('[data-ca]'); if (!b || b.disabled) return;
+    const a = b.dataset.ca;
+    if (a === 'new') return openComp(null);
+    if (a === 'edit') return openComp(comp.list.find(c => c.id === b.dataset.id));
+    if (a === 'mat') return openMat(b.dataset.id);
+    if (a === 'run') return runAnalysis();
   });
-  let cpResize; window.addEventListener('resize', () => { clearTimeout(cpResize); cpResize = setTimeout(() => { if (current === 'comp' && comp.loaded && $('#cp-chart')) $('#cp-chart').innerHTML = compLine(comp.list); }, 150); });
+
+  async function runAnalysis() {
+    const left = quotaLeft();
+    if (!(await askConfirm({ title: 'Generar análisis de la competencia', text: `Se usa 1 de tus ${left} análisis disponibles de este mes. Tarda entre 1 y 3 minutos y podés seguir usando el panel.`, ok: 'Generar análisis' }))) return;
+    comp.msg = '';
+    try {
+      const { data, error } = await sb.functions.invoke('competencia', { body: { action: 'run' } });
+      if (error) { let m = error.message; try { m = (await error.context.json()).error || m; } catch (e2) {} throw new Error(m); }
+      if (!data || !data.ok) throw new Error((data && data.error) || 'No se pudo iniciar el análisis.');
+      await loadComp(); renderComp(); compPoll();
+    } catch (e) { comp.msg = e.message || String(e); await loadComp().catch(() => {}); renderComp(); }
+  }
 
   // Alta y edición de un competidor
   let cEdit = null;
   const lkRow = (l = {}) => `<div class="lk"><select aria-label="Red">${Object.entries(NETS).map(([k, [n]]) => `<option value="${k}" ${k === (l.network || 'web') ? 'selected' : ''}>${n}</option>`).join('')}</select><input type="text" inputmode="url" placeholder="https://instagram.com/…" value="${esc(l.url || '')}" aria-label="Link" maxlength="250"><button type="button" data-rmlk aria-label="Quitar link">×</button></div>`;
   function openComp(c) {
     cEdit = c;
-    $('#cd-kicker').textContent = c && c.is_own ? 'TU MARCA' : c ? 'EDITAR COMPETIDOR' : 'NUEVO COMPETIDOR';
+    $('#cd-kicker').textContent = c ? 'EDITAR COMPETIDOR' : 'NUEVO COMPETIDOR';
     $('#cd-title').textContent = c ? c.name : 'Competidor';
     const palette = ['#2563eb', '#16a34a', '#d97706', '#7c3aed', '#0891b2'], used = comp.list.map(x => x.color);
     const color = c ? c.color : palette.find(x => !used.includes(x)) || '#6366f1';
     $('#cd-fields').innerHTML = `
-      <label class="fld full">Nombre<input name="name" maxlength="60" value="${esc(c ? c.name : '')}" ${c && c.is_own ? 'readonly' : ''} required placeholder="Nombre de la marca"></label>
-      <label class="fld">Color en los gráficos<input name="color" type="color" value="${esc(color)}" ${c && c.is_own ? 'disabled' : ''} style="height:44px;padding:.2rem"></label>
-      <div><span class="fld-l">Links (redes y web)</span><div id="cd-links">${((c && c.links) || []).map(lkRow).join('') || lkRow()}</div><button type="button" class="secondary" id="cd-addlk" style="margin-top:.2rem">+ Agregar link</button><small style="display:block;margin-top:.4rem;color:var(--mut)">Pegá el link y se reconoce la red. Son accesos directos para consultar sus números.</small></div>
-      <label class="fld full">Notas (opcional)<textarea name="notes" rows="3" maxlength="400" placeholder="Qué vende, a quién apunta, qué los diferencia…">${esc(c ? c.notes || '' : '')}</textarea></label>`;
-    $('#cd-del').hidden = !c || c.is_own; $('#cd-error').hidden = true; $('#cd-save').textContent = c ? 'Guardar cambios' : 'Agregar competidor';
+      <label class="fld full">Nombre<input name="name" maxlength="60" value="${esc(c ? c.name : '')}" required placeholder="Nombre de la marca"></label>
+      <label class="fld">Color<input name="color" type="color" value="${esc(color)}" style="height:44px;padding:.2rem"></label>
+      <div><span class="fld-l">Links (web, tienda y redes)</span><div id="cd-links">${((c && c.links) || []).map(lkRow).join('') || lkRow()}</div><button type="button" class="secondary" id="cd-addlk" style="margin-top:.2rem">+ Agregar link</button><small style="display:block;margin-top:.4rem;color:var(--mut)">Pegá el link y se reconoce la red. La IA lee las webs, tiendas y YouTube; las redes como Instagram o TikTok no se pueden leer solas, para esas usá “Material”.</small></div>
+      <label class="fld full">Notas (opcional)<textarea name="notes" rows="3" maxlength="400" placeholder="Qué vende, a quién apunta, por qué lo considerás competencia…">${esc(c ? c.notes || '' : '')}</textarea></label>`;
+    $('#cd-del').hidden = !c; $('#cd-error').hidden = true; $('#cd-save').textContent = c ? 'Guardar cambios' : 'Agregar competidor';
     $('#comp-dialog').showModal();
   }
   $('#cd-fields').addEventListener('click', e => {
@@ -2334,8 +2330,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       const u = normUrl(raw); if (!u) return err(`“${raw}” no es un link válido. Pegá la dirección completa, por ejemplo instagram.com/marca.`);
       if (seen.has(u)) continue; seen.add(u); links.push({ network: row.querySelector('select').value, url: u });
     }
-    const row = { name, links, notes: String(f.get('notes') || '').trim() || null };
-    if (!(cEdit && cEdit.is_own)) row.color = f.get('color');
+    const row = { name, links, color: f.get('color'), notes: String(f.get('notes') || '').trim() || null };
     const btn = $('#cd-save'); btn.disabled = true;
     let r;
     if (cEdit) r = await sb.from('competitors').update(row).eq('id', cEdit.id);
@@ -2345,45 +2340,73 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     cdClose(); await loadComp(); renderComp(); pushPaint(); toast(cEdit ? 'Cambios guardados' : 'Competidor agregado');
   });
   $('#cd-del').addEventListener('click', async () => {
-    if (!cEdit || cEdit.is_own) return;
-    if (!(await askConfirm({ title: `¿Eliminar a ${cEdit.name}?`, text: 'Se borran también todos sus números cargados. No se puede deshacer.', ok: 'Eliminar' }))) return;
+    if (!cEdit) return;
+    if (!(await askConfirm({ title: `¿Eliminar a ${cEdit.name}?`, text: 'Se borra también su material cargado. Los informes ya generados no cambian. No se puede deshacer.', ok: 'Eliminar' }))) return;
+    const paths = comp.mats.filter(m => m.competitor_id === cEdit.id && m.storage_path).map(m => m.storage_path);
     const { error } = await sb.from('competitors').delete().eq('id', cEdit.id);
     if (error) { const el = $('#cd-error'); el.textContent = 'No se pudo eliminar: ' + error.message; el.hidden = false; return; }
+    if (paths.length) sb.storage.from('upsky-competencia').remove(paths).catch(() => {});
     cdClose(); await loadComp(); renderComp(); pushPaint(); toast('Competidor eliminado');
   });
 
-  // Carga de números (una "foto" por competidor y por día)
-  const ndToday = () => ld(new Date());
-  function openNums(id) {
-    const own = comp.list.find(c => c.is_own);
-    $('#nd-fields').innerHTML = `<div class="nf-grid">
-      <label class="fld">Competidor<select name="cid">${comp.list.map(c => `<option value="${c.id}" ${c.id === (id || (own && own.id)) ? 'selected' : ''}>${esc(c.name)}${c.is_own ? ' (tu marca)' : ''}</option>`).join('')}</select></label>
-      <label class="fld">Fecha de los números<input name="date" type="date" value="${ndToday()}" max="${ndToday()}"></label>
-      ${['Seguidores', 'Actividad', 'Precio'].map(g => `<p class="nf-h full">${g === 'Precio' ? 'Precio (pesos)' : g}</p>${METRICS.filter(m => m.grp === g).map(m => `<label class="fld">${esc(m.l)}<input name="${m.k}" type="number" min="0" step="any" inputmode="decimal"></label>`).join('')}`).join('')}
-      <p class="full" id="nd-hint" style="margin:0;color:var(--mut);font-size:.82rem"></p></div>`;
-    $('#nd-error').hidden = true; ndRefresh(); $('#num-dialog').showModal();
+  // Material: textos pegados y capturas de lo que no se puede leer solo (Instagram, TikTok, Facebook…)
+  let matFor = null;
+  const MAT_NETS = ['instagram', 'tiktok', 'facebook', 'youtube', 'x', 'linkedin', 'web', 'otro'];
+  async function matPaint() {
+    const c = comp.list.find(x => x.id === matFor); if (!c) return;
+    const mine = comp.mats.filter(m => m.competitor_id === c.id);
+    const imgPaths = mine.filter(m => m.storage_path).map(m => m.storage_path);
+    let urls = {};
+    if (imgPaths.length) { try { const { data } = await sb.storage.from('upsky-competencia').createSignedUrls(imgPaths, 3600); (data || []).forEach(x => { if (x.signedUrl) urls[x.path] = x.signedUrl; }); } catch (e) {} }
+    $('#md-title').textContent = c.name;
+    $('#md-body').innerHTML = `
+      <p class="cp-note" style="margin:0">Sumá lo que la IA no puede leer sola: pegá el texto de sus últimas publicaciones o subí capturas de pantalla (publicaciones, historias, anuncios). Hasta 10 por competidor; se usan en el próximo análisis.</p>
+      <div class="md-list">${mine.map(m => `<div class="md-item">${m.storage_path ? `<img src="${esc(urls[m.storage_path] || '')}" alt="Captura" ${BAD}>` : ''}<div><b>${m.kind === 'imagen' ? 'Captura' : 'Texto'}${m.network ? ' · ' + esc((NETS[m.network] || NETS.otro)[0]) : ''}</b>${m.note ? `<small>${esc(m.note)}</small>` : ''}<small>${m.kind === 'texto' ? esc(m.content.slice(0, 140)) + (m.content.length > 140 ? '…' : '') : ''} · ${esc(cfd(m.created_at))}</small></div><button type="button" data-mdel="${m.id}" aria-label="Borrar" title="Borrar">×</button></div>`).join('') || '<p class="cp-note">Todavía no cargaste material.</p>'}</div>
+      <p class="cp-note" style="margin:0">${mine.length} de 10 materiales</p>
+      <div style="border-top:1px solid var(--div);padding-top:1rem;display:grid;gap:.7rem">
+        <label class="fld full">Pegar texto<textarea id="md-text" rows="4" maxlength="6000" placeholder="Pegá acá los textos de sus publicaciones, descripciones de anuncios, etc."></textarea></label>
+        <div style="display:grid;grid-template-columns:150px 1fr;gap:.6rem"><label class="fld">De dónde es<select id="md-net">${MAT_NETS.map(k => `<option value="${k}">${NETS[k][0]}</option>`).join('')}</select></label><label class="fld">Nota (opcional)<input id="md-note" maxlength="200" placeholder="Ej.: último reel, anuncio de verano"></label></div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap"><button type="button" class="secondary" id="md-addtext">Guardar texto</button><label class="secondary" style="cursor:pointer;display:inline-block;padding:.6rem 1.1rem;border:1px solid var(--div);border-radius:var(--r);font-weight:600">Subir captura(s)<input type="file" id="md-file" accept="image/jpeg,image/png,image/webp" multiple hidden></label></div>
+        <p class="form-error" id="md-error" role="alert" hidden></p>
+      </div>`;
   }
-  function ndRefresh() {
-    const f = $('#nd-fields'), cid = f.querySelector('[name=cid]').value, date = f.querySelector('[name=date]').value;
-    const prev = latestOf(cid), same = snapsOf(cid).find(x => x.taken_on === date);
-    METRICS.forEach(m => { const i = f.querySelector(`[name=${m.k}]`); i.value = same && typeof same.metrics[m.k] === 'number' ? same.metrics[m.k] : ''; i.placeholder = typeof prev.vals[m.k] === 'number' ? `Último: ${nf.format(prev.vals[m.k])}` : 'Sin dato'; });
-    $('#nd-hint').textContent = same ? `Ya hay números cargados el ${cfd(date)}: se muestran acá y se reemplazan al guardar.` : prev.date ? `Último dato: ${cfd(prev.date)}. Completá solo lo que quieras actualizar.` : 'Todavía no hay números de este competidor. Completá solo lo que sepas.';
-  }
-  $('#nd-fields').addEventListener('change', e => { if (e.target.name === 'cid' || e.target.name === 'date') ndRefresh(); });
-  const ndClose = () => $('#num-dialog').close();
-  $('#nd-x').addEventListener('click', ndClose); $('#nd-cancel').addEventListener('click', ndClose);
-  $('#num-form').addEventListener('submit', async e => {
-    e.preventDefault();
-    const err = m => { const el = $('#nd-error'); el.textContent = m; el.hidden = false; };
-    const f = new FormData(e.target), metrics = {};
-    for (const m of METRICS) { const v = String(f.get(m.k) ?? '').trim(); if (v === '') continue; const n = Number(v); if (!isFinite(n) || n < 0) return err(`“${m.l}” tiene que ser un número de 0 en adelante.`); metrics[m.k] = n; }
-    if (!Object.keys(metrics).length) return err('Cargá al menos un número.');
-    const date = f.get('date'); if (!date || date > ndToday()) return err('La fecha no puede ser futura.');
-    const btn = $('#nd-save'); btn.disabled = true;
-    const { error } = await sb.from('competitor_snapshots').upsert({ competitor_id: f.get('cid'), taken_on: date, metrics }, { onConflict: 'competitor_id,taken_on' });
-    btn.disabled = false;
-    if (error) return err('No se pudo guardar: ' + error.message);
-    ndClose(); await loadComp(); renderComp(); pushPaint(); toast('Números guardados');
+  const mdErr = m => { const el = $('#md-error'); if (!el) return; el.textContent = m; el.hidden = !m; };
+  function openMat(id) { matFor = id; $('#md-body').innerHTML = '<p class="cp-note">Cargando…</p>'; $('#mat-dialog').showModal(); matPaint(); }
+  const mdClose = () => { $('#mat-dialog').close(); loadComp().then(() => { if (current === 'comp') renderComp(); }); };
+  $('#md-x').addEventListener('click', mdClose); $('#md-done').addEventListener('click', mdClose);
+  async function matReload() { await loadComp(); await matPaint(); }
+  $('#md-body').addEventListener('click', async e => {
+    const del = e.target.closest('[data-mdel]');
+    if (del) {
+      const m = comp.mats.find(x => x.id === del.dataset.mdel); if (!m) return;
+      const { error } = await sb.from('competitor_material').delete().eq('id', m.id);
+      if (error) return mdErr('No se pudo borrar: ' + error.message);
+      if (m.storage_path) sb.storage.from('upsky-competencia').remove([m.storage_path]).catch(() => {});
+      return matReload();
+    }
+    if (e.target.closest('#md-addtext')) {
+      const text = $('#md-text').value.trim(); if (!text) return mdErr('Pegá algún texto para guardar.');
+      mdErr('');
+      const { error } = await sb.from('competitor_material').insert({ competitor_id: matFor, kind: 'texto', content: text, network: $('#md-net').value, note: $('#md-note').value.trim() || null });
+      if (error) return mdErr('No se pudo guardar: ' + error.message);
+      return matReload();
+    }
+  });
+  $('#md-body').addEventListener('change', async e => {
+    if (e.target.id !== 'md-file') return;
+    const files = [...e.target.files]; e.target.value = ''; mdErr('');
+    let upErr = '';
+    for (const f of files) {
+      try {
+        if (!/^image\/(jpeg|png|webp)$/.test(f.type)) throw new Error('Solo se aceptan imágenes JPG, PNG o WebP.');
+        const blob = await shrink(f), path = `${matFor}/${Date.now()}-${Math.random().toString(36).slice(2, 7)}.jpg`;
+        const up = await sb.storage.from('upsky-competencia').upload(path, blob, { contentType: 'image/jpeg' });
+        if (up.error) throw up.error;
+        const ins = await sb.from('competitor_material').insert({ competitor_id: matFor, kind: 'imagen', storage_path: path, network: $('#md-net').value, note: $('#md-note').value.trim() || null });
+        if (ins.error) { sb.storage.from('upsky-competencia').remove([path]).catch(() => {}); throw ins.error; }
+      } catch (err) { upErr = 'No se pudo subir la captura: ' + (err.message || err); break; }
+    }
+    await matReload(); if (upErr) mdErr(upErr);
   });
 
   // ── Notificaciones push (cada persona las activa en su dispositivo) ──────────
@@ -2488,9 +2511,10 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       const ini = Date.parse(it.data.publicar_desde || '');
       if (ini <= now && now - ini <= 864e5 && ini > 0) out.push({ id: `pub-${it.id}-${it.data.publicar_desde}`, icon: ICON.check, tone: 'green', title: `Se publicó: ${SECTIONS[it._s].title(it.data) || 'contenido programado'}`, sub: `Ya se ve en la web · ${SECTIONS[it._s].label}`, link: it._s });
     });
-    if (comp.loaded && comp.list.some(c => !c.is_own)) {
-      const wk = Math.floor(now / (7 * 864e5));
-      comp.list.forEach(c => { const { date } = latestOf(c.id); if (!date || daysAgo(date) > 14) out.push({ id: `comp-${c.id}-${wk}`, icon: ICON.scale, tone: 'violet', title: `Actualizá los números de ${c.is_own ? 'tu marca' : c.name}`, sub: date ? `Último dato ${agoText(date)}` : 'Todavía no cargaste números', link: 'comp' }); });
+    if (comp.loaded) {
+      const last = doneReps()[0];
+      if (last && daysAgo(last.finished_at || last.created_at) <= 7) out.push({ id: `comp-rep-${last.id}`, icon: ICON.scale, tone: 'violet', title: 'Tu informe de competencia está listo', sub: `Generado el ${cfd(last.finished_at || last.created_at)}`, link: 'comp' });
+      else if (comp.list.some(c => !c.is_own) && quotaLeft() > 0 && (!last || daysAgo(last.finished_at || last.created_at) > 35)) out.push({ id: `comp-gen-${Math.floor(now / (7 * 864e5))}`, icon: ICON.scale, tone: 'violet', title: 'Generá tu análisis de competencia', sub: last ? 'Hace más de un mes que no actualizás el informe' : 'Todavía no generaste ninguno', link: 'comp' });
     }
     if (pushOk() && !push.sub && Notification.permission !== 'denied') out.push({ id: 'push-on', icon: ICON.bell, tone: 'violet', title: 'Activá las notificaciones', sub: 'Recibí avisos en el celular o la computadora, aunque el panel esté cerrado', link: '#push' });
     return out.filter(i => !nhidden(i.id));

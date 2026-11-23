@@ -58,3 +58,13 @@ La campana de la barra superior activa las notificaciones en el dispositivo de c
 - `migrations/009_notificaciones_push.sql` (ya aplicada): tablas `push_subscriptions`, `push_config` (privada) y `push_log`, el aviso desde `analytics_events` y la tarea horaria `push-agenda`.
 - `supabase/functions/push`: se despliega con `--no-verify-jwt` (valida ella misma la sesión del equipo o el secreto interno). Genera sola las claves VAPID la primera vez y las guarda en `push_config`; no hay que cargar ningún secreto a mano.
 - `sw.js` y `manifest.webmanifest`: service worker y manifiesto del panel. En iPhone hay que agregar el panel a la pantalla de inicio para recibir avisos.
+
+## Competencia (análisis con IA)
+
+Se cargan hasta 5 competidores con sus links. La función `supabase/functions/competencia` lee las webs, tiendas y YouTube con la herramienta de lectura web de Claude, suma el material que cargó el cliente (textos pegados y capturas de Instagram, TikTok, etc., que no se pueden leer solos) y guarda un informe en `competitor_reports`: resumen de la categoría, tendencias, oportunidades, ideas y el detalle de cada competidor.
+
+- **Cupo:** 2 análisis por mes (`ai_usage`). Se reserva al empezar y se devuelve si el análisis falla. Para darle uno extra a un cliente: `update ai_usage set bonus = bonus + 1 where month = 'AAAA-MM';`
+- **Clave de Claude:** secreto `ANTHROPIC_API_KEY` en Supabase (Edge Functions → Secrets). Sin ella la función avisa con un mensaje claro y no gasta cupo.
+- **Costo estimado:** el uso real de cada informe queda en `competitor_reports.usage` (tokens y costo estimado en dólares).
+- **Despliegue:** `supabase functions deploy competencia --no-verify-jwt`. `migrations/011_competencia_ia.sql` ya está aplicada.
+- La tabla `competitor_snapshots` (números cargados a mano) quedó sin uso en el panel.
