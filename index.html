@@ -43,7 +43,7 @@ button{cursor:pointer}
 .primary:disabled{opacity:.6;cursor:wait}
 .secondary{background:var(--w);border-color:var(--div)}.secondary:hover{background:var(--vs)}
 .danger{background:var(--danger);color:#fff}
-.logout-btn{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#e8e8ee;border-radius:99px;padding:.6rem 1rem;font-weight:600;font-size:.85rem;transition:background .15s,border-color .15s,color .15s}
+.logout-btn-old{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#e8e8ee;border-radius:99px;padding:.6rem 1rem;font-weight:600;font-size:.85rem;transition:background .15s,border-color .15s,color .15s}
 .logout-btn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3);color:#fff}
 .linklike{background:none;border:0;padding:0;color:inherit;text-decoration:underline;opacity:.85}
 
@@ -107,7 +107,24 @@ input:focus,select:focus,textarea:focus{border-color:var(--v)}
 .admin-nav.active::before{content:'';position:absolute;left:-1rem;top:20%;bottom:20%;width:4px;border-radius:0 4px 4px 0;background:var(--v)}
 .admin-nav.active svg{color:var(--v)}
 .admin-nav .n{margin-left:auto;font-size:.75rem;background:rgba(255,255,255,.18);padding:.05rem .5rem;border-radius:99px}
-.sidebar-bottom{margin-top:auto;display:grid;gap:.5rem;font-size:.85rem}
+.sidebar-bottom{margin-top:auto;display:grid;gap:.6rem;font-size:.85rem;position:relative}
+#nav{gap:.1rem}
+.nav-g{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:0;color:#8d8d99;padding:.85rem .75rem .35rem;font:600 .68rem var(--f-u);letter-spacing:.12em;text-transform:uppercase;text-align:left}
+.nav-g:hover{color:#c9c9d2}.nav-g svg{width:12px;height:12px;transition:transform .15s;flex:none}.nav-g[aria-expanded=false] svg{transform:rotate(-90deg)}
+.nav-g .nd{margin-left:auto;margin-right:.5rem}
+.nav-items{display:grid;gap:.1rem}
+.nd{width:8px;height:8px;border-radius:50%;background:var(--v);flex:none;box-shadow:0 0 0 3px rgba(236,31,122,.22)}
+.admin-nav .nd{margin-left:auto}
+.um-btn{display:flex;align-items:center;gap:.65rem;width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:.55rem .65rem;color:#fff;text-align:left}
+.um-btn:hover,.um-btn[aria-expanded=true]{background:rgba(255,255,255,.12)}
+.um-av{flex:none;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#ec1f7a,#7c3aed);display:grid;place-items:center;font:700 .8rem var(--f-u);color:#fff}
+.um-t{flex:1;min-width:0;line-height:1.25}.um-t b{display:block;font-size:.84rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.um-t small{display:block;color:#a4a4ad;font-size:.72rem}
+.um-btn>svg{width:14px;height:14px;color:#a4a4ad;flex:none}
+.um-menu{position:absolute;left:0;right:0;bottom:calc(100% + 8px);background:#1b1722;border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:.35rem;box-shadow:0 14px 40px rgba(0,0,0,.45);z-index:30;display:grid;gap:.1rem}
+.um-menu button{display:flex;align-items:center;gap:.65rem;background:none;border:0;color:#e8e8ee;padding:.6rem .7rem;border-radius:10px;text-align:left;font-size:.86rem}
+.um-menu button:hover{background:rgba(255,255,255,.1)}.um-menu svg{width:17px;height:17px;flex:none;color:#b9b9c2}
+.um-menu hr{border:0;border-top:1px solid rgba(255,255,255,.1);margin:.25rem .3rem}
+.um-menu .out{color:#ff8aa6}
 .site-card{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:.7rem .8rem;display:grid;gap:.2rem;background:radial-gradient(90% 80% at 100% 100%,rgba(236,31,122,.35),transparent 70%),rgba(255,255,255,.03)}
 .site-card svg{width:15px;height:15px;color:var(--v)}
 .site-card b{font-size:.8rem;line-height:1.25}
@@ -695,7 +712,10 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   .admin-shell{grid-template-columns:1fr}
   .admin-sidebar{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;padding:.75rem;margin:10px 10px 0;border-radius:22px}
   #nav{display:flex;flex-wrap:wrap;order:3;width:100%;flex:none;overflow:visible;margin-right:0;padding-right:0}
-  .sidebar-bottom{margin:0 0 0 auto;display:flex;gap:.6rem;align-items:center}.logout-btn{width:auto;padding:.4rem .9rem}.site-card{padding:.4rem .7rem;border-radius:99px}.site-card svg,.site-card b,.site-card span{display:none}.sidebar-bottom .site-btn{margin:0;border:0;background:transparent;padding:0}
+  .admin-sidebar{overflow:visible}
+  .sidebar-bottom{margin:0 0 0 auto;display:flex;gap:.6rem;align-items:center}.sidebar-bottom .site-btn{margin:0;border:0;background:transparent;padding:0}
+  .um-btn{width:auto;padding:.3rem}.um-t,.um-btn>svg{display:none}.um-menu{left:auto;right:0;bottom:auto;top:calc(100% + 8px);width:220px}
+  .nav-g{display:none}.nav-items,.nav-items[hidden]{display:contents!important}.nav-grp{display:contents}
   .admin-row{grid-template-columns:96px 1fr}
   .admin-actions{grid-column:1/-1;justify-content:flex-start}
   .thumb{width:96px;height:72px}
@@ -778,14 +798,11 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     <div class="admin-brand" role="img" aria-label="Conectado Content Studio"><img class="brand-i" src="favicon-192.png" alt="" width="56" height="56"><span class="brand-s">Conectado</span><span class="brand-p">Content Studio</span></div>
     <nav id="nav" aria-label="Secciones"></nav>
     <div class="sidebar-bottom">
-      <div class="site-card">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg>
-        <b>Tu sitio, siempre actualizado</b>
-        <span>Cada cambio que guardes se publica en la web.</span>
-        <a class="site-btn" data-site href="#" target="_blank" rel="noopener">Ver sitio web ↗</a>
+      <a class="site-btn" data-site href="#" target="_blank" rel="noopener">Ver sitio web ↗</a>
+      <div class="um-wrap">
+        <button type="button" class="um-btn" id="um-btn" aria-haspopup="true" aria-expanded="false" hidden></button>
+        <div class="um-menu" id="um-menu" hidden role="menu"></div>
       </div>
-      <div class="me" id="me" hidden></div>
-      <button type="button" id="logout" class="logout-btn">Cerrar sesión</button>
     </div>
   </aside>
 
@@ -855,6 +872,10 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
       </div>
     </header>
 
+    <div class="admin-tabs" id="biz-tabs" role="group" aria-label="Para negocios" hidden style="margin-bottom:.8rem">
+      <button type="button" data-biz="mayorista" aria-pressed="false">Precios por mayor</button>
+      <button type="button" data-biz="pasos_negocios" aria-pressed="false">Cómo funciona</button>
+    </div>
     <div class="admin-toolbar">
       <div class="admin-tabs" role="group" aria-label="Estado">
         <button data-filter="todos" aria-pressed="true">Todos</button>
@@ -1222,7 +1243,6 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 
   async function showApp() {
     $('#login').hidden = true; $('#app').hidden = false;
-    $('#me').hidden = false; $('#me').innerHTML = `<b>${esc(me.name || me.email)}</b>${esc(ROLE_NAME[me.role] || '')}${me.is_support ? ' · Soporte' : ''}`;
     if (!isAdmin() && (current === 'plan' || current === 'team')) current = 'inicio';
     buildNav();
     await Promise.all(Object.keys(SECTIONS).map(load));
@@ -1270,7 +1290,6 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     $('#pw-toggle').setAttribute('aria-label', show2 ? 'Ocultar contraseña' : 'Mostrar contraseña');
   });
   const signOut = async () => { await sb.auth.signOut(); showLogin(); };
-  $('#logout').addEventListener('click', signOut);
   $('#noaccess-out').addEventListener('click', signOut);
 
   // ── Datos ───────────────────────────────────────────────────────────────────
@@ -1281,19 +1300,74 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   }
 
   // ── Navegación y lista ──────────────────────────────────────────────────────
+  // Menú agrupado: Contenido · Marketing · Análisis. Equipo, Mi plan y Ayuda viven en el menú del usuario.
+  const NAVKEY = 'upsky-cms-nav-v1';
+  const nget = () => { try { return JSON.parse(localStorage.getItem(NAVKEY)) || { closed: {} }; } catch (e) { return { closed: {} }; } };
+  const nset = o => { try { localStorage.setItem(NAVKEY, JSON.stringify(o)); } catch (e) {} };
+  const navTree = () => [
+    { g: 'Contenido', id: 'contenido', items: [
+      { k: 'productos', l: 'Catálogo', icon: SECTIONS.productos.icon }, { k: 'eventos', l: 'Eventos', icon: SECTIONS.eventos.icon },
+      { k: 'comunidad', l: 'Comunidad', icon: SECTIONS.comunidad.icon }, { k: 'sitio', l: 'Fotos del sitio', icon: SECTIONS.sitio.icon },
+      { k: 'negocios', l: 'Para negocios', icon: SECTIONS.mayorista.icon, views: ['mayorista', 'pasos_negocios'], go: 'mayorista' }] },
+    { g: 'Marketing', id: 'marketing', items: [{ k: 'promos', l: 'Promociones', icon: SECTIONS.promos.icon }, { k: 'comp', l: 'Competencia', icon: ICON.scale }] },
+    { g: 'Análisis', id: 'analisis', items: [{ k: 'stats', l: 'Estadísticas', icon: ICON.chart }, { k: 'hist', l: 'Historial', icon: ICON.hist }] },
+  ];
+  const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+  const isIn = (it, cur) => it.k === cur || (it.views || []).includes(cur);
   function buildNav() {
-    $('#nav').innerHTML = `<button class="admin-nav${current === 'inicio' ? ' active' : ''}" data-view="inicio" ${current === 'inicio' ? 'aria-current="page"' : ''}>${ICON.home}<span>Inicio</span></button>` + Object.entries(SECTIONS).map(([k, s]) =>
-      `<button class="admin-nav${k === current ? ' active' : ''}" data-view="${k}" ${k === current ? 'aria-current="page"' : ''}>
-         ${s.icon}<span>${esc(s.label)}</span><span class="n">${counts[k] ?? ''}</span></button>`).join('') +
-      `<button class="admin-nav nav-sep${current === 'stats' ? ' active' : ''}" data-view="stats" ${current === 'stats' ? 'aria-current="page"' : ''}>${ICON.chart}<span>Estadísticas</span></button>` +
-      `<button class="admin-nav${current === 'comp' ? ' active' : ''}" data-view="comp" ${current === 'comp' ? 'aria-current="page"' : ''}>${ICON.scale}<span>Competencia</span></button>` +
-      `<button class="admin-nav${current === 'hist' ? ' active' : ''}" data-view="hist" ${current === 'hist' ? 'aria-current="page"' : ''}>${ICON.hist}<span>Historial</span></button>` +
-      `<button class="admin-nav${current === 'help' ? ' active' : ''}" data-view="help" ${current === 'help' ? 'aria-current="page"' : ''}>${ICON.help}<span>Ayuda</span></button>` +
-      (isAdmin() ? `<button class="admin-nav${current === 'team' ? ' active' : ''}" data-view="team" ${current === 'team' ? 'aria-current="page"' : ''}>${ICON.users}<span>Equipo</span></button>` +
-        `<button class="admin-nav${current === 'plan' ? ' active' : ''}" data-view="plan" ${current === 'plan' ? 'aria-current="page"' : ''}>${ICON.card}<span>Mi plan</span></button>` : '');
+    const closed = nget().closed || {};
+    const btn = it => `<button class="admin-nav${isIn(it, current) ? ' active' : ''}" data-view="${it.go || it.k}" data-nk="${it.k}" ${isIn(it, current) ? 'aria-current="page"' : ''}>${it.icon}<span>${esc(it.l)}</span><i class="nd" hidden></i></button>`;
+    $('#nav').innerHTML = btn({ k: 'inicio', l: 'Inicio', icon: ICON.home }) + navTree().map(g => {
+      const hasActive = g.items.some(it => isIn(it, current)), open = hasActive || !closed[g.id];
+      return `<div class="nav-grp"><button type="button" class="nav-g" data-g="${g.id}" aria-expanded="${open}" aria-controls="ng-${g.id}"><span>${g.g}</span><i class="nd" hidden></i>${CHEV}</button><div class="nav-items" id="ng-${g.id}" ${open ? '' : 'hidden'}>${g.items.map(btn).join('')}</div></div>`;
+    }).join('');
+    paintNavDots();
+    paintUserMenu();
   }
+  // Punto de color: solo donde hay algo que atender (no contadores)
+  function paintNavDots(items) {
+    let list; try { list = items || notifItems(); } catch (e) { list = []; }
+    const seen = nget().seen || {};
+    const hot = new Set(list.filter(x => !seen[x.id]).map(x => x.link).filter(l => l && l !== '#push'));
+    document.querySelectorAll('#nav .admin-nav').forEach(b => {
+      const it = [{ k: 'inicio' }, ...navTree().flatMap(g => g.items)].find(x => x.k === b.dataset.nk);
+      b.querySelector('.nd').hidden = !(it && [it.k, ...(it.views || [])].some(v => hot.has(v)) && !isIn(it, current));
+    });
+    document.querySelectorAll('#nav .nav-g').forEach(h => { h.querySelector('.nd').hidden = h.getAttribute('aria-expanded') === 'true' || !h.nextElementSibling.querySelector('.nd:not([hidden])'); });
+  }
+  // Al entrar a una sección se apaga su punto; la campana conserva el aviso hasta que lo descartes
+  function navSeen(k) {
+    let list; try { list = notifItems(); } catch (e) { return; }
+    const st = nget(), seen = { ...(st.seen || {}) }; let ch = false;
+    list.forEach(x => { if (x.link === k && !seen[x.id]) { seen[x.id] = true; ch = true; } });
+    if (ch) { st.seen = Object.fromEntries(Object.entries(seen).slice(-60)); nset(st); }
+  }
+  const initials = n => String(n || '?').trim().split(/[\s@.]+/).filter(Boolean).slice(0, 2).map(x => x[0].toUpperCase()).join('') || '?';
+  function paintUserMenu() {
+    const b = $('#um-btn'); if (!b || !me) return;
+    b.hidden = false;
+    b.innerHTML = `<span class="um-av" aria-hidden="true">${esc(initials(me.name || me.email))}</span><span class="um-t"><b>${esc(me.name || me.email)}</b><small>${esc(ROLE_NAME[me.role] || '')}${me.is_support ? ' · Soporte' : ''}</small></span>${CHEV}`;
+    const item = (v, ic, l) => `<button type="button" role="menuitem" data-um="${v}">${ic}${l}</button>`;
+    $('#um-menu').innerHTML = item('help', ICON.help, 'Ayuda') + (isAdmin() ? item('team', ICON.users, 'Equipo') + item('plan', ICON.card, 'Mi plan') : '') + '<hr>' + `<button type="button" role="menuitem" class="out" data-um="out">${svg('<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>')}Cerrar sesión</button>`;
+  }
+  const umClose = () => { const m = $('#um-menu'); if (m && !m.hidden) { m.hidden = true; $('#um-btn').setAttribute('aria-expanded', 'false'); } };
+  $('#um-btn').addEventListener('click', e => { e.stopPropagation(); const m = $('#um-menu'); m.hidden = !m.hidden; $('#um-btn').setAttribute('aria-expanded', String(!m.hidden)); });
+  $('#um-menu').addEventListener('click', e => {
+    e.stopPropagation(); const b = e.target.closest('[data-um]'); if (!b) return; umClose();
+    if (b.dataset.um === 'out') return signOut();
+    setView(b.dataset.um);
+  });
+  document.addEventListener('click', umClose);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') umClose(); });
 
   $('#nav').addEventListener('click', e => {
+    const g = e.target.closest('[data-g]');
+    if (g) {
+      const open = g.getAttribute('aria-expanded') !== 'true', st = nget();
+      if (!open && $('#' + g.getAttribute('aria-controls')).querySelector('.admin-nav.active')) return;
+      /* el grupo de la sección en uso queda abierto */ st.closed = { ...(st.closed || {}), [g.dataset.g]: !open }; nset(st);
+      g.setAttribute('aria-expanded', String(open)); $('#' + g.getAttribute('aria-controls')).hidden = !open; return paintNavDots();
+    }
     const b = e.target.closest('[data-view]'); if (!b) return;
     setView(b.dataset.view);
   });
@@ -1301,10 +1375,13 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     if ((k === 'plan' || k === 'team') && !isAdmin()) k = 'inicio'; // el Editor no gestiona equipo ni plan
     current = k; filter = 'todos'; query = ''; $('#search').value = '';
     if (k === 'stats') guideSeen('stats');
+    navSeen(k);
     if (k === 'comp' && comp.loaded) loadComp().then(() => { if (current === 'comp') { renderComp(); compPoll(); } });
     document.querySelectorAll('[data-filter]').forEach(x => x.setAttribute('aria-pressed', x.dataset.filter === 'todos'));
     buildNav(); render(); window.scrollTo({ top: 0 });
   }
+
+  $('#biz-tabs').addEventListener('click', e => { const b = e.target.closest('[data-biz]'); if (b) setView(b.dataset.biz); });
 
   document.querySelectorAll('[data-filter]').forEach(b => b.addEventListener('click', () => {
     filter = b.dataset.filter;
@@ -1325,6 +1402,8 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     if (current === 'hist') return loadHist();
     if (current === 'team') return loadTeam();
     const S = SECTIONS[current];
+    const biz = ['mayorista', 'pasos_negocios'].includes(current); $('#biz-tabs').hidden = !biz;
+    document.querySelectorAll('[data-biz]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.biz === current)));
     $('#view-title').textContent = S.label;
     $('#view-desc').textContent = S.desc;
     $('#new-item').textContent = '+ Agregar'; $('#new-item').hidden = !!S.fixed;
@@ -2536,6 +2615,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     const items = notifItems(), nbEl = $('#nb');
     if (nbEl) { nbEl.hidden = !items.length; nbEl.textContent = items.length > 9 ? '9+' : String(items.length); }
     $('#push-btn').setAttribute('aria-label', items.length ? `Notificaciones (${items.length} sin leer)` : 'Notificaciones');
+    paintNavDots(items);
     const host = $('#push-menu'); if (!host || host.hidden) return;
     if (notif.view === 'settings') {
       host.innerHTML = `<div class="nh"><button type="button" class="back" data-na="back">‹ Volver</button><b>Ajustes de avisos</b><span><button type="button" data-na="close" aria-label="Cerrar">${ICON.xmark}</button></span></div>${pushSettingsHtml()}`;
