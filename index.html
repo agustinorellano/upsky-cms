@@ -2121,7 +2121,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   });
 
   // ── Mi plan (suscripción) · DEMOSTRACIÓN: precios de ejemplo y estado simulado ──
-  // Cuando se conecte Stripe, "estado" saldrá de la base y los botones abrirán Checkout / el portal.
+  // Cuando se conecte la pasarela de cobro, "estado" saldrá de la base y los botones abrirán el pago / el portal.
   const PLAN_CFG = { currency: 'USD', locale: 'es-AR', annualDiscount: 0.15 };
   const PLANS = [
     { id: 'basico', name: 'Básico', tag: 'El panel de contenido y el mantenimiento de tu sitio.', price: 100, features: [
@@ -2133,6 +2133,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   ];
   let planState = { plan: 'basico', period: 'mes' };
   try { Object.assign(planState, JSON.parse(localStorage.getItem('upsky-cms-plan') || '{}')); } catch (e) {}
+  if ((PLANS.find(x => x.id === planState.plan) || {}).soon || !PLANS.some(x => x.id === planState.plan)) planState.plan = 'basico'; // un plan "próximamente" no puede ser el actual
   const savePlan = () => { try { localStorage.setItem('upsky-cms-plan', JSON.stringify(planState)); } catch (e) {} };
   const money = n => new Intl.NumberFormat(PLAN_CFG.locale, { style: 'currency', currency: PLAN_CFG.currency, maximumFractionDigits: 0 }).format(n);
   const perMonth = pl => planState.period === 'anio' ? Math.round(pl.price * (1 - PLAN_CFG.annualDiscount)) : pl.price;
@@ -2142,7 +2143,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     const cur = PLANS.find(x => x.id === planState.plan) || PLANS[0], anual = planState.period === 'anio';
     const total = anual ? perMonth(cur) * 12 : cur.price;
     $('#plan').innerHTML = `
-      <div class="pl-demo">Vista de demostración: el Básico (US$ 100) es el valor definido; los otros dos planes son de ejemplo. Todavía no se cobra nada. El cobro real con Stripe se conecta en el siguiente paso.</div>
+      <div class="pl-demo">Vista de demostración: el Básico (US$ 100) es el valor definido; los otros dos planes son de ejemplo. Todavía no se cobra nada. El cobro real se conecta en el siguiente paso.</div>
       <header class="admin-top"><span class="top-label">SUSCRIPCIÓN</span><h1>Mi plan</h1><p>Elegí el plan de UP SKY, mirá tu próximo cobro y administrá tu suscripción.</p></header>
       <div class="pl-current">
         <div><span class="k">Plan actual</span><h2>${esc(cur.name)} <span class="pl-pill">Activo</span></h2><span style="color:#b9b9c2;font-size:.88rem">${esc(cur.tag)}</span></div>
@@ -2161,7 +2162,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
           <div class="pl-price"><b>${money(perMonth(pl))}</b><span>por mes</span>${anual ? `<span class="pl-save">−${Math.round(PLAN_CFG.annualDiscount * 100)}%</span>` : ''}</div>
           <p class="pl-sub">${anual ? `Se cobra ${money(perMonth(pl) * 12)} por año` : ''}</p>
           <ul class="pl-feat">${pl.features.map((f, i) => { const t = f.t || f, soon = !!f.soon || pl.soon, head = i === 0 && pl.id !== 'basico'; return `<li${head ? ' class="all"' : ''}>${head ? '' : ICON.check}<span>${esc(t)}${soon && !head && !pl.soon ? ' <em class="pl-soon">Próximamente</em>' : ''}</span></li>`; }).join('')}</ul>
-          <button type="button" class="pl-cta" data-choose="${pl.id}" ${isCur ? 'disabled' : ''}>${isCur ? 'Plan actual' : 'Elegir ' + esc(pl.name)}</button></article>`;
+          <button type="button" class="pl-cta" data-choose="${pl.id}" ${isCur || pl.soon ? 'disabled' : ''}>${pl.soon ? 'Próximamente' : isCur ? 'Plan actual' : 'Elegir ' + esc(pl.name)}</button></article>`;
       }).join('')}</div>
       <p class="pl-note">Crecimiento ya incluye estadísticas, publicación programada, historial, promociones y hasta 3 usuarios con roles. Las funciones de Pro se irán sumando.</p>
       <div class="pl-hist"><h2>Historial de pagos</h2><div class="pl-empty">Todavía no hay pagos registrados. Cuando se conecte el cobro, acá vas a ver cada pago y su factura.</div></div>`;
@@ -2169,8 +2170,8 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   $('#plan').addEventListener('click', e => {
     const per = e.target.closest('[data-period]'); if (per) { planState.period = per.dataset.period; savePlan(); return renderPlan(); }
     const ch = e.target.closest('[data-choose]');
-    if (ch) { planState.plan = ch.dataset.choose; savePlan(); renderPlan(); return toast(`Simulación: ahora estás en el plan ${PLANS.find(x => x.id === planState.plan).name}. No se cobró nada.`); }
-    if (e.target.closest('[data-plan-manage]')) toast('Disponible cuando se conecte el cobro con Stripe (portal de facturación).');
+    if (ch && !(PLANS.find(x => x.id === ch.dataset.choose) || {}).soon) { planState.plan = ch.dataset.choose; savePlan(); renderPlan(); return toast(`Simulación: ahora estás en el plan ${PLANS.find(x => x.id === planState.plan).name}. No se cobró nada.`); }
+    if (e.target.closest('[data-plan-manage]')) toast('Disponible cuando se conecte el cobro (portal de facturación).');
   });
 
   // ── Tema claro / oscuro (claro por defecto; solo afecta al panel) ───────────
