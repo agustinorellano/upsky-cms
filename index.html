@@ -510,7 +510,8 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 .pl-bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
 .pl-bar h2{margin:0;font:600 1.15rem var(--f-u)}
 .pl-save{color:var(--ok);font-size:.78rem;font-weight:700;margin-left:.3rem}
-.pl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;align-items:stretch}
+.pl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.1rem;align-items:stretch}
+.pl-grid:has(.pl-card:only-child){margin-top:.4rem;grid-template-columns:minmax(0,520px);justify-content:center}
 .pl-card{position:relative;background:var(--w);border:1.5px solid var(--div);border-radius:24px;padding:1.6rem 1.5rem 1.5rem;display:flex;flex-direction:column;gap:1rem;box-shadow:var(--sh);transition:transform .15s,box-shadow .15s}
 .pl-card:hover{transform:translateY(-2px);box-shadow:var(--shh)}
 .pl-card.hl{border-color:var(--v);box-shadow:0 18px 50px rgba(236,31,122,.18)}
@@ -1139,7 +1140,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   SECTIONS.productos.galHint = 'En vasos, la foto 1 es del primer color, la 2 del segundo, etc.';
   Object.entries(SECTIONS).forEach(([k, S]) => {
     S.fields.forEach(f => { if (ADV[k].includes(f.key)) f.adv = true; if (f.type === 'select' || f.key === 'presentacion') f.full = true; Object.assign(f, AFFIX[f.key] || {}); });
-    // Publicación programada (plan Crecimiento): fechas opcionales guardadas junto al contenido
+    // Publicación programada : fechas opcionales guardadas junto al contenido
     if (S.fixed) return;
     S.fields.push({ key: 'publicar_desde', label: k === 'promos' ? 'Empieza el' : 'Publicar desde', type: 'datetime', sched: true }, { key: 'ocultar_desde', label: k === 'promos' ? 'Termina el' : 'Ocultar desde', type: 'datetime', sched: true });
   });
@@ -1830,7 +1831,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   $('#pv-pages').addEventListener('click', e => { const b = e.target.closest('[data-pg]'); if (!b) return; pv.page = b.dataset.pg; renderPreview(); });
   $('#pv-device').addEventListener('click', e => { const b = e.target.closest('[data-dev]'); if (!b) return; pv.dev = b.dataset.dev; renderPreview(); });
 
-  // ── Estadísticas (plan Crecimiento) ──────────────────────────────────────────
+  // ── Estadísticas  ──────────────────────────────────────────
   const PAGE_L = { inicio: 'Inicio', catalogo: 'Catálogo', negocios: 'Para negocios', eventos: 'Eventos', evento: 'Detalle de evento', producto: 'Producto' };
   let sx = { days: 30, data: null, loading: false, error: null, table: false };
   const nf = new Intl.NumberFormat('es-AR');
@@ -1940,7 +1941,7 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   $('#sxview').addEventListener('focusin', e => { const b = e.target.closest('.sx-bar'); if (b) { const r = b.getBoundingClientRect(); showBar(b, r.left + r.width / 2, r.top); } });
   $('#sxview').addEventListener('focusout', () => { barTip.hidden = true; });
 
-  // ── Historial de cambios con deshacer (plan Crecimiento) ─────────────────────
+  // ── Historial de cambios con deshacer  ─────────────────────
   let hx = { rows: null, group: 'todas', loading: false, error: null };
   const HX_GROUPS = [['todas', 'Todo'], ['productos', 'Catálogo'], ['negocios', 'Para negocios'], ['eventos', 'Eventos'], ['comunidad', 'Comunidad'], ['sitio', 'Fotos del sitio'], ['promos', 'Promociones']];
   const inGroup = (g, sec) => g === 'todas' || (g === 'negocios' ? sec === 'mayorista' || sec === 'pasos_negocios' : g === sec);
@@ -2123,17 +2124,16 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
   // ── Mi plan (suscripción) · DEMOSTRACIÓN: precios de ejemplo y estado simulado ──
   // Cuando se conecte la pasarela de cobro, "estado" saldrá de la base y los botones abrirán el pago / el portal.
   const PLAN_CFG = { currency: 'USD', locale: 'es-AR', annualDiscount: 0.15 };
+  // Un solo plan: el sitio es a medida y el panel incluye todo lo que ya está construido.
   const PLANS = [
-    { id: 'basico', name: 'Básico', tag: 'El panel de contenido y el mantenimiento de tu sitio.', price: 100, features: [
-      'Mantenimiento de la página web incluido', 'Editar Catálogo, Para negocios y Eventos', 'Subida de imágenes', 'Vista previa del sitio', '1 usuario administrador', 'Soporte por mail y WhatsApp'] },
-    { id: 'crecimiento', name: 'Crecimiento', tag: 'Para medir resultados y crecer.', price: 200, hl: true, features: [
-      'Todo lo del Básico, más:', 'Estadísticas de visitas y clics', 'Publicación programada', 'Historial de cambios con deshacer', 'Promociones con fecha de inicio y fin', 'Hasta 3 usuarios con roles'] },
-    { id: 'pro', name: 'Pro', tag: 'Para vender y gestionar pedidos.', price: 350, soon: true, features: [
-      'Todo lo del Crecimiento, más:', 'Pedidos dentro del panel, con estados', 'Lista de precios por mayorista', 'Pago online en el sitio, con stock', 'Avisos automáticos de pedidos', 'Soporte prioritario e informe mensual'] },
+    { id: 'completo', name: 'Plan a medida', tag: 'Tu sitio a medida, con el panel completo y el mantenimiento incluidos.', price: 100, features: [
+      'Mantenimiento de la página web incluido', 'Editar Catálogo, Para negocios, Eventos, Comunidad y Fotos del sitio', 'Subida de imágenes y videos', 'Vista previa del sitio',
+      'Estadísticas de visitas y clics', 'Publicación programada', 'Historial de cambios con deshacer', 'Promociones con fecha de inicio y fin',
+      'Análisis de competencia con IA (2 por mes)', 'Avisos en el celular y la computadora', 'Hasta 3 usuarios con roles', 'Soporte por mail y WhatsApp'] },
   ];
-  let planState = { plan: 'basico', period: 'mes' };
+  let planState = { plan: 'completo', period: 'mes' };
   try { Object.assign(planState, JSON.parse(localStorage.getItem('upsky-cms-plan') || '{}')); } catch (e) {}
-  if ((PLANS.find(x => x.id === planState.plan) || {}).soon || !PLANS.some(x => x.id === planState.plan)) planState.plan = 'basico'; // un plan "próximamente" no puede ser el actual
+  if ((PLANS.find(x => x.id === planState.plan) || {}).soon || !PLANS.some(x => x.id === planState.plan)) planState.plan = PLANS[0].id; // un plan "próximamente" no puede ser el actual
   const savePlan = () => { try { localStorage.setItem('upsky-cms-plan', JSON.stringify(planState)); } catch (e) {} };
   const money = n => new Intl.NumberFormat(PLAN_CFG.locale, { style: 'currency', currency: PLAN_CFG.currency, maximumFractionDigits: 0 }).format(n);
   const perMonth = pl => planState.period === 'anio' ? Math.round(pl.price * (1 - PLAN_CFG.annualDiscount)) : pl.price;
@@ -2143,28 +2143,28 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     const cur = PLANS.find(x => x.id === planState.plan) || PLANS[0], anual = planState.period === 'anio';
     const total = anual ? perMonth(cur) * 12 : cur.price;
     $('#plan').innerHTML = `
-      <div class="pl-demo">Vista de demostración: el Básico (US$ 100) es el valor definido; los otros dos planes son de ejemplo. Todavía no se cobra nada. El cobro real se conecta en el siguiente paso.</div>
-      <header class="admin-top"><span class="top-label">SUSCRIPCIÓN</span><h1>Mi plan</h1><p>Elegí el plan de UP SKY, mirá tu próximo cobro y administrá tu suscripción.</p></header>
+      <div class="pl-demo">Vista de demostración: el precio es de ejemplo hasta definirlo. Todavía no se cobra nada. El cobro real se conecta en el siguiente paso.</div>
+      <header class="admin-top"><span class="top-label">SUSCRIPCIÓN</span><h1>Mi plan</h1><p>Mirá qué incluye tu plan, tu próximo cobro y administrá tu suscripción.</p></header>
       <div class="pl-current">
         <div><span class="k">Plan actual</span><h2>${esc(cur.name)} <span class="pl-pill">Activo</span></h2><span style="color:#b9b9c2;font-size:.88rem">${esc(cur.tag)}</span></div>
         <div class="pl-meta"><span>Próximo cobro</span><b>${nextCharge()}</b><span>${money(total)} ${anual ? 'por año' : 'por mes'}</span></div>
         <button type="button" class="pl-ghost" data-plan-manage>Administrar suscripción</button>
       </div>
-      <div class="pl-bar"><h2>Planes disponibles</h2>
+      <div class="pl-bar"><h2>Qué incluye tu plan</h2>
         <div class="seg" role="group" aria-label="Periodicidad"><button data-period="mes" aria-pressed="${!anual}">Mensual</button><button data-period="anio" aria-pressed="${anual}">Anual</button></div>
       </div>
       <div class="pl-grid">${PLANS.map(pl => {
         const isCur = pl.id === cur.id;
         return `<article class="pl-card${pl.hl ? ' hl' : ''}${isCur ? ' cur' : ''}">
-          ${isCur ? '<span class="pl-ribbon">Tu plan</span>' : pl.hl ? '<span class="pl-ribbon">Recomendado</span>' : ''}
+          ${isCur ? '<span class="pl-ribbon">Tu plan</span>' : ''}
           <h3>${esc(pl.name)}${pl.soon ? '<span class="pl-soon">Próximamente</span>' : ''}</h3>
           <p class="pl-tag">${esc(pl.tag)}</p>
           <div class="pl-price"><b>${money(perMonth(pl))}</b><span>por mes</span>${anual ? `<span class="pl-save">−${Math.round(PLAN_CFG.annualDiscount * 100)}%</span>` : ''}</div>
           <p class="pl-sub">${anual ? `Se cobra ${money(perMonth(pl) * 12)} por año` : ''}</p>
-          <ul class="pl-feat">${pl.features.map((f, i) => { const t = f.t || f, soon = !!f.soon || pl.soon, head = i === 0 && pl.id !== 'basico'; return `<li${head ? ' class="all"' : ''}>${head ? '' : ICON.check}<span>${esc(t)}${soon && !head && !pl.soon ? ' <em class="pl-soon">Próximamente</em>' : ''}</span></li>`; }).join('')}</ul>
+          <ul class="pl-feat">${pl.features.map((f, i) => { const t = f.t || f, soon = !!f.soon || pl.soon, head = false; return `<li${head ? ' class="all"' : ''}>${head ? '' : ICON.check}<span>${esc(t)}${soon && !head && !pl.soon ? ' <em class="pl-soon">Próximamente</em>' : ''}</span></li>`; }).join('')}</ul>
           <button type="button" class="pl-cta" data-choose="${pl.id}" ${isCur || pl.soon ? 'disabled' : ''}>${pl.soon ? 'Próximamente' : isCur ? 'Plan actual' : 'Elegir ' + esc(pl.name)}</button></article>`;
       }).join('')}</div>
-      <p class="pl-note">Crecimiento ya incluye estadísticas, publicación programada, historial, promociones y hasta 3 usuarios con roles. Las funciones de Pro se irán sumando.</p>
+      <p class="pl-note">Si más adelante sumamos funciones nuevas (por ejemplo, pedidos dentro del panel), se avisa antes de cualquier cambio de precio.</p>
       <div class="pl-hist"><h2>Historial de pagos</h2><div class="pl-empty">Todavía no hay pagos registrados. Cuando se conecte el cobro, acá vas a ver cada pago y su factura.</div></div>`;
   }
   $('#plan').addEventListener('click', e => {
