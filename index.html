@@ -507,6 +507,18 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
 .pl-meta b{display:block;font:700 1.5rem var(--f-d)}.pl-meta span{color:#b9b9c2;font-size:.82rem}
 .pl-ghost{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:99px;padding:.7rem 1.3rem;font-weight:600;white-space:nowrap}
 .pl-ghost:hover{background:rgba(255,255,255,.18)}
+.pl-one{display:grid;grid-template-columns:minmax(300px,.85fr) 1.15fr;border-radius:26px;overflow:hidden;box-shadow:var(--sh);border:1px solid var(--div);background:var(--w)}
+.pl-left{display:flex;flex-direction:column;gap:.9rem;align-items:flex-start;color:#fff;padding:2rem 2rem 2.1rem;background:radial-gradient(70% 55% at 90% 8%,rgba(236,31,122,.42),transparent 100%),linear-gradient(160deg,#0a0a0c 40%,#240a1b 100%)}
+.pl-left .k{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:#ff8fc2;font-weight:700}
+.pl-left h2{margin:0;font:700 2rem/1.05 var(--f-d);display:flex;gap:.7rem;align-items:center;flex-wrap:wrap}
+.pl-lead{margin:0;color:#c4c4cc;font-size:.9rem;line-height:1.45}
+.pl-bigprice{display:flex;align-items:baseline;gap:.5rem;margin-top:.6rem}.pl-bigprice b{font:700 3.4rem/1 var(--f-d)}.pl-bigprice span{color:#c4c4cc}.pl-bigprice em{font-style:normal;font-weight:700;font-size:.8rem;color:#8ff0b8}
+.pl-left .seg.seg{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18)}.pl-left .seg.seg button{color:#e8e8ee}
+.pl-left .seg.seg button[aria-pressed=true]{background:var(--v);color:#fff}
+.pl-left .pl-meta{margin-top:auto;padding-top:1rem}.pl-left .pl-meta span{display:block}
+.pl-right{padding:2rem 2.2rem}.pl-right h2{margin:0 0 1.1rem;font:600 1.1rem var(--f-u)}
+.pl-right .pl-feat{border:0;padding:0;grid-template-columns:1fr 1fr;gap:.85rem 1.6rem}
+@media (max-width:860px){.pl-one{grid-template-columns:1fr}.pl-left{padding:1.5rem}.pl-right{padding:1.5rem}.pl-right .pl-feat{grid-template-columns:1fr}.pl-bigprice b{font-size:2.8rem}}
 .pl-bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
 .pl-bar h2{margin:0;font:600 1.15rem var(--f-u)}
 .pl-save{color:var(--ok);font-size:.78rem;font-weight:700;margin-left:.3rem}
@@ -2145,25 +2157,22 @@ button.stat:hover{box-shadow:var(--shh);transform:translateY(-1px)}
     $('#plan').innerHTML = `
       <div class="pl-demo">Vista de demostración: el precio es de ejemplo hasta definirlo. Todavía no se cobra nada. El cobro real se conecta en el siguiente paso.</div>
       <header class="admin-top"><span class="top-label">SUSCRIPCIÓN</span><h1>Mi plan</h1><p>Mirá qué incluye tu plan, tu próximo cobro y administrá tu suscripción.</p></header>
-      <div class="pl-current">
-        <div><span class="k">Plan actual</span><h2>${esc(cur.name)} <span class="pl-pill">Activo</span></h2><span style="color:#b9b9c2;font-size:.88rem">${esc(cur.tag)}</span></div>
-        <div class="pl-meta"><span>Próximo cobro</span><b>${nextCharge()}</b><span>${money(total)} ${anual ? 'por año' : 'por mes'}</span></div>
-        <button type="button" class="pl-ghost" data-plan-manage>Administrar suscripción</button>
-      </div>
-      <div class="pl-bar"><h2>Qué incluye tu plan</h2>
-        <div class="seg" role="group" aria-label="Periodicidad"><button data-period="mes" aria-pressed="${!anual}">Mensual</button><button data-period="anio" aria-pressed="${anual}">Anual</button></div>
-      </div>
-      <div class="pl-grid">${PLANS.map(pl => {
-        const isCur = pl.id === cur.id;
-        return `<article class="pl-card${pl.hl ? ' hl' : ''}${isCur ? ' cur' : ''}">
-          ${isCur ? '<span class="pl-ribbon">Tu plan</span>' : ''}
-          <h3>${esc(pl.name)}${pl.soon ? '<span class="pl-soon">Próximamente</span>' : ''}</h3>
-          <p class="pl-tag">${esc(pl.tag)}</p>
-          <div class="pl-price"><b>${money(perMonth(pl))}</b><span>por mes</span>${anual ? `<span class="pl-save">−${Math.round(PLAN_CFG.annualDiscount * 100)}%</span>` : ''}</div>
-          <p class="pl-sub">${anual ? `Se cobra ${money(perMonth(pl) * 12)} por año` : ''}</p>
-          <ul class="pl-feat">${pl.features.map((f, i) => { const t = f.t || f, soon = !!f.soon || pl.soon, head = false; return `<li${head ? ' class="all"' : ''}>${head ? '' : ICON.check}<span>${esc(t)}${soon && !head && !pl.soon ? ' <em class="pl-soon">Próximamente</em>' : ''}</span></li>`; }).join('')}</ul>
-          <button type="button" class="pl-cta" data-choose="${pl.id}" ${isCur || pl.soon ? 'disabled' : ''}>${pl.soon ? 'Próximamente' : isCur ? 'Plan actual' : 'Elegir ' + esc(pl.name)}</button></article>`;
-      }).join('')}</div>
+      <section class="pl-one" aria-labelledby="pl-name">
+        <div class="pl-left">
+          <span class="k">Plan actual</span>
+          <h2 id="pl-name">${esc(cur.name)} <span class="pl-pill">Activo</span></h2>
+          <p class="pl-lead">${esc(cur.tag)}</p>
+          <div class="pl-bigprice"><b>${money(perMonth(cur))}</b><span>por mes</span>${anual ? `<em>−${Math.round(PLAN_CFG.annualDiscount * 100)}%</em>` : ''}</div>
+          <p class="pl-lead" style="margin:0">${anual ? `Se cobra ${money(total)} por año` : 'Facturación mensual'}</p>
+          <div class="seg" role="group" aria-label="Periodicidad"><button data-period="mes" aria-pressed="${!anual}">Mensual</button><button data-period="anio" aria-pressed="${anual}">Anual</button></div>
+          <div class="pl-meta"><span>Próximo cobro</span><b>${nextCharge()}</b></div>
+          <button type="button" class="pl-ghost" data-plan-manage>Administrar suscripción</button>
+        </div>
+        <div class="pl-right">
+          <h2>Qué incluye</h2>
+          <ul class="pl-feat">${cur.features.map(f => `<li>${ICON.check}<span>${esc(f)}</span></li>`).join('')}</ul>
+        </div>
+      </section>
       <p class="pl-note">Si más adelante sumamos funciones nuevas (por ejemplo, pedidos dentro del panel), se avisa antes de cualquier cambio de precio.</p>
       <div class="pl-hist"><h2>Historial de pagos</h2><div class="pl-empty">Todavía no hay pagos registrados. Cuando se conecte el cobro, acá vas a ver cada pago y su factura.</div></div>`;
   }
